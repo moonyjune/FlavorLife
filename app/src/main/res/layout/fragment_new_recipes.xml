@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/padding_root_for_list"
+        android:layout_marginLeft="@dimen/padding_root_for_list"
+        android:layout_marginRight="@dimen/padding_root_for_list"
+        android:layout_marginStart="@dimen/padding_root_for_list"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="1dp"
+            android:fadeScrollbars="true"
+            android:listSelector="@android:color/transparent"
+            android:paddingBottom="@dimen/fragment_root_padding_item"
+            android:scrollbarFadeDuration="@integer/scrollbar_fade_duration" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <FrameLayout
+        android:id="@id/tab_new_recipes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

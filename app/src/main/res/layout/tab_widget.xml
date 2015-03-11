@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/new_recipes"
+        style="@style/TabWidget"
+        android:drawableTop="@drawable/ic_launcher"
+        android:text="Recipes"
+        android:textColor="@drawable/text_color_selected" />
+
+    <TextView
+        android:id="@+id/follows"
+        style="@style/TabWidget_MarginLeft"
+        android:drawableTop="@drawable/ic_launcher"
+        android:text="Follows"
+        android:textColor="@drawable/text_color_selected" />
+
+    <TextView
+        android:id="@+id/home"
+        style="@style/TabWidget_MarginLeft"
+        android:drawableTop="@drawable/ic_launcher"
+        android:text="Home"
+        android:textColor="@drawable/text_color_selected" />
+
+    <TextView
+        android:id="@+id/messages"
+        style="@style/TabWidget_MarginLeft"
+        android:drawableTop="@drawable/ic_launcher"
+        android:text="Messages"
+        android:textColor="@drawable/text_color_selected" />
+
+    <TextView
+        android:id="@+id/create_recipe"
+        style="@style/TabWidget_MarginLeft"
+        android:drawableTop="@drawable/ic_launcher"
+        android:text="Create"
+        android:textColor="@drawable/text_color_selected" />
+</LinearLayout>

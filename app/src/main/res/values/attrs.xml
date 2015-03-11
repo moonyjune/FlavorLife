@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextViewSwitcher">
+        <attr name="defaultBackgroundDrawable" format="reference" />
+        <attr name="selectedBackgroundDrawable" format="reference" />
+        <attr name="selected" format="boolean" />
+        <attr name="textColorDefault" format="color" />
+        <attr name="textColorSelected" format="color" />
+    </declare-styleable>
+    <declare-styleable name="TabIndicator">
+        <attr name="gapBetweenItems" format="dimension" />
+    </declare-styleable>
+</resources>

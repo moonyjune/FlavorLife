@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="app_name">FlavorLife</string>
+    <string name="waiting">Waiting&#8230;</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="ok">OK</string>
+    <string name="retry">Retry</string>
+    <string name="error_no_connection">No internet</string>
+    <string name="error_timeout">Timeout</string>
+    <string name="error_server">Server error</string>
+    <string name="error_authenticate">Authenticate error</string>
+    <string name="error_unknown">Unknow error</string>
+    <string name="action_bar_title_recipes">Recipes</string>
+    <string name="action_bar_title_follows">Follows</string>
+    <string name="acion_bar_title_home">Home</string>
+    <string name="action_bar_title_messages">Messages</string>
+    <string name="action_bar_title_create_recipe">Create Recipe</string>
+
+</resources>

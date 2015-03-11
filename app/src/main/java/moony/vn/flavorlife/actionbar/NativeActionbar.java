@@ -1,0 +1,166 @@
+package moony.vn.flavorlife.actionbar;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.activities.MainActivity;
+import moony.vn.flavorlife.fragments.CreateRecipeFragment;
+import moony.vn.flavorlife.fragments.FollowsFragment;
+import moony.vn.flavorlife.fragments.HomeFragment;
+import moony.vn.flavorlife.fragments.MessagesFragment;
+import moony.vn.flavorlife.fragments.NewRecipesFragment;
+import moony.vn.flavorlife.navigationmanager.NavigationManager;
+
+public class NativeActionbar implements CustomActionbar {
+    protected NavigationManager mNavigationManager;
+    private MainActivity mMainActivity;
+    private ActionBar mActionBar;
+    private int mCurrentResId = R.layout.actionbar_title;
+    private TextView mTitle;
+
+    @Override
+    public void initialize(NavigationManager navigationManager,
+                           ActionBarActivity activity) {
+        mNavigationManager = navigationManager;
+        mMainActivity = (MainActivity) activity;
+        mActionBar = activity.getSupportActionBar();
+        mNavigationManager.addOnBackStackChangedListener(backStackChangedListener);
+        mActionBar.setBackgroundDrawable(null);
+        mActionBar.setDisplayShowCustomEnabled(true);
+        mActionBar.setDisplayHomeAsUpEnabled(false);
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setCustomView(mCurrentResId);
+        findChildViews();
+        setupChildViews();
+    }
+
+    private OnBackStackChangedListener backStackChangedListener = new OnBackStackChangedListener() {
+        @Override
+        public void onBackStackChanged() {
+            int count = mNavigationManager.getBackStackEntryCountCurrentPlace();
+            if (count <= 0) {
+                int placeHolder = mNavigationManager.getCurrentPlaceholder();
+                switch (placeHolder) {
+                    case R.id.tab_new_recipes:
+                    case R.id.tab_follows:
+                    case R.id.tab_home:
+                    case R.id.tab_messages:
+                    case R.id.tab_create_recipe:
+                        syncActionBar(mNavigationManager.getTab(placeHolder));
+                        break;
+                    default:
+                        syncActionBar(mNavigationManager.getActivePage());
+                        break;
+                }
+            } else {
+                syncActionBar(mNavigationManager.getActivePage());
+            }
+        }
+    };
+
+    @Override
+    public void syncActionBar(Fragment activePage) {
+        if (activePage == null)
+            return;
+        int newResId = findResourceIdForActionbar(activePage);
+        if (newResId != mCurrentResId) {
+            mCurrentResId = newResId;
+            removeAllChildViews();
+            mActionBar.setCustomView(mCurrentResId);
+            findChildViews();
+            setupChildViews();
+        }
+        syncChildViews(activePage);
+        syncActionBarVisibility(activePage);
+    }
+
+    @Override
+    public void dispose() {
+        mNavigationManager.removeOnBackStackChangedListener(backStackChangedListener);
+        mMainActivity = null;
+        mNavigationManager = null;
+        mActionBar = null;
+    }
+
+    @Override
+    public void hide() {
+        mActionBar.hide();
+    }
+
+    @Override
+    public void show() {
+        mActionBar.show();
+    }
+
+    protected int findResourceIdForActionbar(Fragment activePage) {
+        // TODO check fragment and return layout actionbar for that fragment. (1
+        // layout for group fragment)
+        return R.layout.actionbar;
+
+    }
+
+    protected void findChildViews() {
+        // TODO find child view in Actionbar.
+        View actionbarView = mActionBar.getCustomView();
+
+        mTitle = (TextView) actionbarView.findViewById(R.id.title);
+    }
+
+    protected void removeAllChildViews() {
+        View actionbarView = mActionBar.getCustomView();
+        if (actionbarView instanceof ViewGroup) {
+            ((ViewGroup) actionbarView).removeAllViews();
+        }
+    }
+
+    protected void setupChildViews() {
+        // TODO setup for child view (ex:click listener)
+        setupTitle();
+    }
+
+    private void setupTitle() {
+        if (mTitle == null) return;
+        mTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do nothing
+            }
+        });
+    }
+
+    protected void syncChildViews(Fragment activePage) {
+        syncTitle(activePage);
+    }
+
+    private void syncTitle(Fragment activePage) {
+        if (mTitle == null) return;
+        mTitle.setVisibility(View.VISIBLE);
+        int resId = R.string.app_name;
+        if (activePage instanceof NewRecipesFragment) {
+            resId = R.string.action_bar_title_recipes;
+        } else if (activePage instanceof FollowsFragment) {
+            resId = R.string.action_bar_title_follows;
+        } else if (activePage instanceof HomeFragment) {
+            resId = R.string.acion_bar_title_home;
+        } else if (activePage instanceof MessagesFragment) {
+            resId = R.string.action_bar_title_messages;
+        } else if (activePage instanceof CreateRecipeFragment) {
+            resId = R.string.action_bar_title_create_recipe;
+        }
+
+        mTitle.setText(resId);
+    }
+
+    private void syncActionBarVisibility(Fragment activePage) {
+        mActionBar.show();
+    }
+
+}
+
