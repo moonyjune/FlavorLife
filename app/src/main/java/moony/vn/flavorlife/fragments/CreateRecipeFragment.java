@@ -3,13 +3,12 @@ package moony.vn.flavorlife.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ntq.fragments.NFragmentSwitcher;
+import com.ntq.fragments.NFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ import moony.vn.flavorlife.layout.TabIndicator;
 /**
  * Created by moony on 3/1/15.
  */
-public class CreateRecipeFragment extends TabRootDefaultFragment {
+public class CreateRecipeFragment extends NFragment {
     private ViewPager mRecipeViewPager;
     private TabIndicator mTabIndicator;
     private RecipePagerAdapter mRecipePagerAdapter;
@@ -35,12 +34,13 @@ public class CreateRecipeFragment extends TabRootDefaultFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecipeViewPager = (ViewPager) view.findViewById(R.id.view_content);
-        mTabIndicator = (TabIndicator) view.findViewById(R.id.tab_indicator);
+        mTabIndicator = (TabIndicator) view.findViewById(R.id.cnr_vp_tab_indicator);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mActionbar.syncActionBar(this);
         mRecipePagerAdapter = new RecipePagerAdapter(getFragmentManager());
         mRecipeViewPager.setAdapter(mRecipePagerAdapter);
         mTabIndicator.setViewPager(mRecipeViewPager, getListTabName());
@@ -52,11 +52,6 @@ public class CreateRecipeFragment extends TabRootDefaultFragment {
         listTabName.add("Instruction");
         listTabName.add("Introduction");
         return listTabName;
-    }
-
-    @Override
-    public int getTabRootId() {
-        return R.layout.tab_create_recipe;
     }
 
     @Override

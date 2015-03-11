@@ -2,7 +2,7 @@ package moony.vn.flavorlife.utils;
 
 import android.content.Context;
 
-import moony.vn.flavorlife.FlavorLifeApplacation;
+import moony.vn.flavorlife.FlavorLifeApplication;
 
 import com.ntq.utils.BasePrefers;
 
@@ -11,7 +11,7 @@ public class AppPrefers extends BasePrefers {
 
     public static AppPrefers getInstance() {
         if (sAppPrefers == null) {
-            sAppPrefers = new AppPrefers(FlavorLifeApplacation.get());
+            sAppPrefers = new AppPrefers(FlavorLifeApplication.get());
         }
         return sAppPrefers;
     }

@@ -86,11 +86,11 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
         focusTab(R.id.home);
     }
 
-    public void focusMessages() {
+    public void focusMessagesTab() {
         focusTab(R.id.messages);
     }
 
-    public void focusCreateRecipe() {
+    public void focusCreateRecipeTab() {
         focusTab(R.id.create_recipe);
     }
 

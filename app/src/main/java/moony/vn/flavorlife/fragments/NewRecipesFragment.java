@@ -17,7 +17,7 @@ import moony.vn.flavorlife.api.model.FlPaginatedList;
 /**
  * Created by moony on 3/1/15.
  */
-public class NewRecipesFragment extends TabRootFragment {
+public class NewRecipesFragment extends FlListFragment {
 
     @Override
     protected int getLayoutRes() {
@@ -25,12 +25,13 @@ public class NewRecipesFragment extends TabRootFragment {
     }
 
     @Override
-    public int getTabRootId() {
-        return R.id.tab_new_recipes;
+    protected FlPaginatedList getFlPaginatedList() {
+        return new DfeGetNewRecipes(mApi);
     }
 
     @Override
-    protected FlPaginatedList getFlPaginatedList() {
-        return new DfeGetNewRecipes(mApi);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActionbar.syncActionBar(this);
     }
 }

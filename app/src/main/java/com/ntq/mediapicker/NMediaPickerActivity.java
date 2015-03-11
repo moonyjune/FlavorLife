@@ -1,10 +1,5 @@
 package com.ntq.mediapicker;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -25,18 +20,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.ntq.activities.NActivity;
-
-import moony.vn.flavorlife.FlavorLifeApplacation;
-import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.actionbar.CustomActionbar;
-import moony.vn.flavorlife.api.Api;
-import moony.vn.flavorlife.navigationmanager.NavigationManager;
-import moony.vn.flavorlife.analytics.AppAnalytics;
-
 import com.ntq.imageloader.NImageLoader;
 import com.ntq.mediapicker.RecursiveFileObserver.OnFileCreatedListener;
 import com.ntq.utils.PhotoUtils;
 import com.ntq.utils.VideoUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import moony.vn.flavorlife.FlavorLifeApplication;
+import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.actionbar.CustomActionbar;
+import moony.vn.flavorlife.analytics.AppAnalytics;
+import moony.vn.flavorlife.api.Api;
+import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
 /**
  *
@@ -277,7 +276,7 @@ public class NMediaPickerActivity extends NActivity implements
 
     @Override
     public NImageLoader getImageLoader() {
-        return FlavorLifeApplacation.get().getImageLoader();
+        return FlavorLifeApplication.get().getImageLoader();
     }
 
     @Override

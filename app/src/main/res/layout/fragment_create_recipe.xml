@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <moony.vn.flavorlife.layout.TabIndicator
-        android:id="@id/tab_indicator"
+        android:id="@id/cnr_vp_tab_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,8 +19,7 @@
         android:id="@id/view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tab_indicator"
-        android:paddingBottom="40dp" />
+        android:layout_below="@id/cnr_vp_tab_indicator" />
 
     <FrameLayout
         android:id="@id/tab_create_recipe"

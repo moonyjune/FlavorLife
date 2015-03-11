@@ -19,7 +19,7 @@ import moony.vn.flavorlife.api.ApiImpl;
 import moony.vn.flavorlife.api.ApiProvider;
 
 public class FlavorLifeApplication extends Application implements ApiProvider {
-    private static FlavorLifeApplication mFlavorLifeApplacation;
+    private static FlavorLifeApplication mFlavorLifeApplication;
     private RequestQueue mRequestQueue;
     private Cache mCache;
     private NImageLoader mNtqImageLoader;
@@ -28,7 +28,7 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
     @Override
     public void onCreate() {
         super.onCreate();
-        mFlavorLifeApplacation = this;
+        mFlavorLifeApplication = this;
         mCache = new DiskBasedCache(getCacheDir("caches"));
         mRequestQueue = new RequestQueue(mCache, createNetwork());
         mNtqImageLoader = new NImageLoaderImpl(getApplicationContext());
@@ -41,11 +41,11 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
     }
 
     public static FlavorLifeApplication get() {
-        return mFlavorLifeApplacation;
+        return mFlavorLifeApplication;
     }
 
     private static File getCacheDir(String name) {
-        File file = new File(mFlavorLifeApplacation.getCacheDir(), name);
+        File file = new File(mFlavorLifeApplication.getCacheDir(), name);
         file.mkdirs();
         return file;
     }

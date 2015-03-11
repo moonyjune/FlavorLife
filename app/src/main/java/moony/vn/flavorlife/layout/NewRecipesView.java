@@ -55,7 +55,6 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
 
     public void display(Recipe recipe) {
         mRecipe = recipe;
-
     }
 
     @Override

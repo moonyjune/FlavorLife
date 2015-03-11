@@ -29,13 +29,16 @@ public class LoginFragment extends NFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_fb:
-                ((MainActivity) getActivity()).showMain();
+                mNavigationManager.showNewRecipes();
+//                getActivity().finish();
                 break;
             case R.id.login_gplus:
-                ((MainActivity) getActivity()).showMain();
+                mNavigationManager.showNewRecipes();
+                getActivity().finish();
                 break;
             case R.id.login_twitter:
-                ((MainActivity) getActivity()).showMain();
+                mNavigationManager.showNewRecipes();
+                getActivity().finish();
                 break;
         }
     }

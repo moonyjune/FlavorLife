@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/red"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
@@ -21,7 +22,6 @@
             android:dividerHeight="1dp"
             android:fadeScrollbars="true"
             android:listSelector="@android:color/transparent"
-            android:paddingBottom="@dimen/fragment_root_padding_item"
             android:scrollbarFadeDuration="@integer/scrollbar_fade_duration" />
     </android.support.v4.widget.SwipeRefreshLayout>
 

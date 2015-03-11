@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.ntq.fragments.NFragmentSwitcher;
@@ -17,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.activities.MainActivity;
 
 /**
  * Created by moony on 3/4/15.

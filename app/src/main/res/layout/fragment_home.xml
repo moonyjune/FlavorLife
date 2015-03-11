@@ -9,8 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="?actionBarSize">
+        android:paddingRight="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +71,7 @@
             android:text="Cooking inspiration\nCooking inspiration\nCooking inspiration\nCooking inspiration" />
 
         <moony.vn.flavorlife.layout.TabIndicator
-            android:id="@id/tab_indicator"
+            android:id="@id/hf_vp_tab_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -84,7 +83,8 @@
         <android.support.v4.view.ViewPager
             android:id="@id/view_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/blue_light" />
     </LinearLayout>
 
     <FrameLayout

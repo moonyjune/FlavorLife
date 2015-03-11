@@ -9,26 +9,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.activities.MainActivity;
+import moony.vn.flavorlife.activities.BaseActivity;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
 import moony.vn.flavorlife.fragments.FollowsFragment;
 import moony.vn.flavorlife.fragments.HomeFragment;
+import moony.vn.flavorlife.fragments.LoginFragment;
 import moony.vn.flavorlife.fragments.MessagesFragment;
 import moony.vn.flavorlife.fragments.NewRecipesFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
 public class NativeActionbar implements CustomActionbar {
     protected NavigationManager mNavigationManager;
-    private MainActivity mMainActivity;
+    private BaseActivity mBaseActivity;
     private ActionBar mActionBar;
     private int mCurrentResId = R.layout.actionbar_title;
     private TextView mTitle;
+    private TextView mBack;
+    private TextView mMenu;
 
     @Override
     public void initialize(NavigationManager navigationManager,
                            ActionBarActivity activity) {
         mNavigationManager = navigationManager;
-        mMainActivity = (MainActivity) activity;
+        mBaseActivity = (BaseActivity) activity;
         mActionBar = activity.getSupportActionBar();
         mNavigationManager.addOnBackStackChangedListener(backStackChangedListener);
         mActionBar.setBackgroundDrawable(null);
@@ -84,24 +87,13 @@ public class NativeActionbar implements CustomActionbar {
     @Override
     public void dispose() {
         mNavigationManager.removeOnBackStackChangedListener(backStackChangedListener);
-        mMainActivity = null;
+        mBaseActivity = null;
         mNavigationManager = null;
         mActionBar = null;
     }
 
-    @Override
-    public void hide() {
-        mActionBar.hide();
-    }
-
-    @Override
-    public void show() {
-        mActionBar.show();
-    }
-
     protected int findResourceIdForActionbar(Fragment activePage) {
-        // TODO check fragment and return layout actionbar for that fragment. (1
-        // layout for group fragment)
+        // TODO check fragment and return layout actionbar for that fragment. (1 layout for group fragment)
         return R.layout.actionbar;
 
     }
@@ -111,6 +103,8 @@ public class NativeActionbar implements CustomActionbar {
         View actionbarView = mActionBar.getCustomView();
 
         mTitle = (TextView) actionbarView.findViewById(R.id.title);
+        mBack = (TextView) actionbarView.findViewById(R.id.back);
+        mMenu = (TextView) actionbarView.findViewById(R.id.menu);
     }
 
     protected void removeAllChildViews() {
@@ -123,6 +117,36 @@ public class NativeActionbar implements CustomActionbar {
     protected void setupChildViews() {
         // TODO setup for child view (ex:click listener)
         setupTitle();
+        setupBack();
+        setupMenu();
+    }
+
+    private void setupMenu() {
+        if (mMenu == null) return;
+        mMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBaseActivity.getMenu().showMenu(true);
+                // unlock slide menu
+                if (!mBaseActivity.getMenu().isSlidingEnabled())
+                    mBaseActivity.getMenu().setSlidingEnabled(true);
+            }
+        });
+    }
+
+    private void setupBack() {
+        if (mBack == null) return;
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNavigationManager.getActivePage() instanceof OnBackButtonListener) {
+                    boolean handled = ((OnBackButtonListener) mNavigationManager.getActivePage()).onBackButtonClicked();
+                    if (!handled) mNavigationManager.goBack();
+                } else {
+                    mNavigationManager.goBack();
+                }
+            }
+        });
     }
 
     private void setupTitle() {
@@ -137,6 +161,26 @@ public class NativeActionbar implements CustomActionbar {
 
     protected void syncChildViews(Fragment activePage) {
         syncTitle(activePage);
+        syncBack(activePage);
+        syncMenu(activePage);
+    }
+
+    private void syncMenu(Fragment activePage) {
+        if (mMenu == null) return;
+        if (activePage instanceof LoginFragment) {
+            mMenu.setVisibility(View.GONE);
+        } else {
+            mMenu.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void syncBack(Fragment activePage) {
+        if (mBack == null) return;
+        if (activePage instanceof LoginFragment || activePage instanceof NewRecipesFragment) {
+            mBack.setVisibility(View.GONE);
+        } else {
+            mBack.setVisibility(View.VISIBLE);
+        }
     }
 
     private void syncTitle(Fragment activePage) {
@@ -156,6 +200,16 @@ public class NativeActionbar implements CustomActionbar {
         }
 
         mTitle.setText(resId);
+    }
+
+    @Override
+    public void hide() {
+        mActionBar.hide();
+    }
+
+    @Override
+    public void show() {
+        mActionBar.show();
     }
 
     private void syncActionBarVisibility(Fragment activePage) {

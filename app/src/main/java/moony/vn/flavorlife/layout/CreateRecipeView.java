@@ -2,22 +2,11 @@ package moony.vn.flavorlife.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.LinearLayout;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.activities.MainActivity;
 
 /**
  * Created by moony on 3/1/15.

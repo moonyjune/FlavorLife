@@ -14,12 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.ntq.imageloader.NImageLoader;
+
 import moony.vn.flavorlife.actionbar.CustomActionbar;
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.api.Api;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
-
-import com.ntq.imageloader.NImageLoader;
 
 /**
  * This is base fragment. <br>

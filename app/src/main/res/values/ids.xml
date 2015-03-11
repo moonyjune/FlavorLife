@@ -43,5 +43,9 @@
     <item name="recipe_cooking_time" type="id" />
     <item name="recipe_author" type="id" />
     <item name="recipe_kind" type="id" />
+    <item name="back" type="id" />
+    <item name="menu" type="id" />
+    <item name="hf_vp_tab_indicator" type="id" />
+    <item name="cnr_vp_tab_indicator" type="id" />
 
 </resources>

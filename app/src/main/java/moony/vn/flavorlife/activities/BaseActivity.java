@@ -21,7 +21,7 @@ import com.ntq.api.model.OnDataChangedListener;
 import com.ntq.imageloader.NImageLoader;
 import com.ntq.utils.OSUtils;
 
-import moony.vn.flavorlife.FlavorLifeApplacation;
+import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.actionbar.CustomActionBarFactory;
 import moony.vn.flavorlife.actionbar.CustomActionbar;
@@ -43,7 +43,6 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     protected TabWidget mTabWidget;
     private ProgressDialog mProgressDialog;
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +50,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
             supportRequestWindowFeature(Window.FEATURE_ACTION_BAR);
         }
         setContentView(R.layout.activity_base);
+        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
         setUpSlidingMenu();
         initView();
         mNavigationManager = new NavigationManager(this);
@@ -97,27 +97,23 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
 
     @Override
     public NImageLoader getImageLoader() {
-        return FlavorLifeApplacation.get().getImageLoader();
+        return FlavorLifeApplication.get().getImageLoader();
     }
 
     @Override
     public Api getDfeApi() {
-        return FlavorLifeApplacation.get().getDfeApi();
+        return FlavorLifeApplication.get().getDfeApi();
     }
 
     @Override
     public AppAnalytics getAnalytics() {
-        return FlavorLifeApplacation.get().getAnalytic();
+        return FlavorLifeApplication.get().getAnalytic();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        if (mNavigationManager.getActivePage() instanceof VerifyCodeFragment) {
-//            ((VerifyCodeFragment) mNavigationManager.getActivePage()).goBack();
-//        } else {
-//            if (!mNavigationManager.goBack()) super.onBackPressed();
-//        }
+        overridePendingTransition(R.anim.trans_right_in, R.anim.trans_right_out);
     }
 
     @Override
@@ -145,33 +141,35 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     }
 
     @Override
-    public void onShopNewsTabSelected() {
-        mNavigationManager.showShopNews();
+    public void onNewRecipesTabSelected() {
+        mNavigationManager.showNewRecipes();
     }
 
     @Override
-    public void onVirtualMallTabSelected() {
-        mNavigationManager.showVirtualMall();
+    public void onFollowsTabSelected() {
+        mNavigationManager.showFollows();
     }
 
     @Override
-    public void onMallNewsTabSelected() {
-        mNavigationManager.showMallNews();
+    public void onHomeTabSelected() {
+        mNavigationManager.showHome();
     }
 
     @Override
-    public void onPickupTabSelected() {
-        mNavigationManager.showEvent();
+    public void onMessageTabSelected() {
+        mNavigationManager.showMessages();
     }
 
     @Override
-    public void onCouponTabSelected() {
-        mNavigationManager.showCoupon();
+    public void onCreateRecipeTabSelected() {
+        mNavigationManager.showCreateNewRecipe();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        //TODO animation
+        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
         mMenu.showContent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -184,84 +182,22 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     @Override
     protected void onResume() {
         super.onResume();
-        if (this instanceof ShopNewsActivity) {
-            mTabWidget.focusShopNewsTab();
-        } else if (this instanceof VirtualMallActivity) {
-            mTabWidget.focusVirtualMall();
-        } else if (this instanceof MallNewsActivity) {
-            mTabWidget.focusMallNews();
-        } else if (this instanceof EventActivity) {
-            mTabWidget.focusEvent();
-        } else if (this instanceof CouponActivity) {
-            mTabWidget.focusCoupon();
+        if (this instanceof NewRecipesActivity) {
+            mTabWidget.focusNewRecipesTab();
+        } else if (this instanceof FollowsActivity) {
+            mTabWidget.focusFollowsTab();
+        } else if (this instanceof HomeActivity) {
+            mTabWidget.focusHomeTab();
+        } else if (this instanceof MessagesActivity) {
+            mTabWidget.focusMessagesTab();
+        } else if (this instanceof CreateNewRecipeActivity) {
+            mTabWidget.focusCreateRecipeTab();
         }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.show_shop_news:
-                if (this instanceof ShopNewsActivity)
-                    mMenu.showContent();
-                else mNavigationManager.showShopNews();
-                break;
-
-            case R.id.show_mall_news:
-                if (this instanceof MallNewsActivity)
-                    mMenu.showContent();
-                else mNavigationManager.showMallNews();
-                break;
-
-            case R.id.virtualmall:
-                if (this instanceof VirtualMallActivity)
-                    mMenu.showContent();
-                else mNavigationManager.showVirtualMall();
-                break;
-            case R.id.event_list:
-                if (this instanceof EventActivity)
-                    mMenu.showContent();
-                else
-                    mNavigationManager.showEvent();
-                break;
-            case R.id.coupon_list:
-                if (this instanceof CouponActivity)
-                    mMenu.showContent();
-                else mNavigationManager.showCoupon();
-                break;
-            default:
-                break;
-        }
     }
-
-
-    private OnDataChangedListener mDeactiveListener = new OnDataChangedListener() {
-        @Override
-        public void onDataChanged() {
-            dismissDialog();
-            if (mSaveInstanceStateCalled) return;
-            //TODO clear and show LoginFragment
-            mNavigationManager.showMain(true);
-        }
-    };
-
-    private Response.ErrorListener mDeactiveErrorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            dismissDialog();
-            if (mSaveInstanceStateCalled) return;
-            AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
-            builder.setMessage(ErrorStrings.get(BaseActivity.this, error));
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    //do nothing right now
-                }
-            });
-
-            Dialog dialog = builder.create();
-            dialog.show();
-        }
-    };
 
     private void showDialog() {
         if (mProgressDialog == null) {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ntq.fragments.NFragment;
 import com.ntq.fragments.NFragmentSwitcher;
 
 import moony.vn.flavorlife.R;
@@ -14,15 +15,17 @@ import moony.vn.flavorlife.R;
 /**
  * Created by moony on 3/1/15.
  */
-public class FollowsFragment extends TabRootDefaultFragment {
+public class FollowsFragment extends NFragment {
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActionbar.syncActionBar(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_follows, container, false);
     }
 
-    @Override
-    public int getTabRootId() {
-        return R.layout.tab_follows;
-    }
 }

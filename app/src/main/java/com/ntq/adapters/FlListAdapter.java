@@ -16,7 +16,7 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
  * Created by moony on 3/4/15.
  */
 public class FlListAdapter extends NListAdapter {
-    private static final int TOTAL_VIEW_COUNT = 5;
+    private static final int TOTAL_VIEW_COUNT = 4;
     private static final int NEW_RECIPE = 2;
     private static final int COOKBOOK = 3;
 

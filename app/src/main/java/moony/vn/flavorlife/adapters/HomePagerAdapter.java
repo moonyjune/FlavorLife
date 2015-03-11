@@ -12,7 +12,7 @@ import moony.vn.flavorlife.fragments.UserRecipesFragment;
  * Created by moony on 3/4/15.
  */
 public class HomePagerAdapter extends FragmentPagerAdapter {
-    private static final int NUMBER_ITEM = 2;
+    private final int NUMBER_ITEM = 2;
     private int mPosition;
 
     public enum TypeTabIndicator{

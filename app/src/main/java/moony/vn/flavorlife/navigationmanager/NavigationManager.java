@@ -1,103 +1,47 @@
 package moony.vn.flavorlife.navigationmanager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 
-import moony.vn.flavorlife.activities.MainActivity;
-import moony.vn.flavorlife.utils.MainThreadStack;
+import java.util.ArrayList;
+import java.util.Stack;
+
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.activities.BaseActivity;
+import moony.vn.flavorlife.activities.CreateNewRecipeActivity;
+import moony.vn.flavorlife.activities.FollowsActivity;
+import moony.vn.flavorlife.activities.HomeActivity;
+import moony.vn.flavorlife.activities.MainActivity;
+import moony.vn.flavorlife.activities.MessagesActivity;
+import moony.vn.flavorlife.activities.NewRecipesActivity;
+import moony.vn.flavorlife.utils.MainThreadStack;
 
+/**
+ * Created by moony on 3/11/15.
+ */
 public class NavigationManager {
-    protected MainActivity mActivity;
+    protected BaseActivity mActivity;
+
     @SuppressWarnings("rawtypes")
     protected final Stack mBackStack = new MainThreadStack();
     protected FragmentManager mFragmentManager;
     protected int mPlaceholder = R.id.content_layout;
 
-    protected MainActivity mMainActivity;
-    protected final Map<Integer, Stack> mBackStackList = new HashMap<Integer, Stack>();
-    protected List<Integer> mPlaceHolderList = new ArrayList<Integer>();
-    protected final Map<Integer, FragmentManager> mFragmentManagerList = new HashMap<Integer, FragmentManager>();
-    protected final Map<Integer, Fragment> mTabFragmentList = new HashMap<Integer, Fragment>();
-    private final List<OnNavigationTabChangeListener> mTabChangeListener = new ArrayList<NavigationManager.OnNavigationTabChangeListener>();
-    private final List<OnBackStackChangedListener> mOnBackStackChangedListeners = new ArrayList<OnBackStackChangedListener>();
-
-    protected int mCurrentTabSelected = Tabs.MAIN;
-    protected int mCurrentTabSelected_InTabIndicator = Tabs.HOME;
-
-    public NavigationManager(MainActivity mainactivity) {
-        mMainActivity = mainactivity;
-
-        FragmentManager fragmentManager = mMainActivity.getSupportFragmentManager();
-        fragmentManager.addOnBackStackChangedListener(simpleStackChangedListener);
-        mFragmentManagerList.put(Tabs.MAIN, fragmentManager);
-
-        mBackStackList.put(Tabs.MAIN, new MainThreadStack());
-        mPlaceHolderList.add(Tabs.MAIN);
+    public NavigationManager(BaseActivity baseActivity) {
+        mActivity = baseActivity;
+        mFragmentManager = mActivity.getSupportFragmentManager();
     }
 
-    public void addOnBackStackChangedListener(OnBackStackChangedListener backStackChangedListener) {
-        synchronized (mOnBackStackChangedListeners) {
-            mOnBackStackChangedListeners.add(backStackChangedListener);
-        }
+    public void addOnBackStackChangedListener(FragmentManager.OnBackStackChangedListener backStackChangedListener) {
+        mFragmentManager.addOnBackStackChangedListener(backStackChangedListener);
     }
 
-    public void removeOnBackStackChangedListener(
-            OnBackStackChangedListener onbackstackchangedlistener) {
-        mFragmentManager
-                .removeOnBackStackChangedListener(onbackstackchangedlistener);
-    }
-
-    public OnBackStackChangedListener simpleStackChangedListener = new OnBackStackChangedListener() {
-        @Override
-        public void onBackStackChanged() {
-            for (OnBackStackChangedListener listener : mOnBackStackChangedListeners)
-                listener.onBackStackChanged();
-        }
-    };
-
-    public interface OnNavigationTabChangeListener {
-        public void onNavigationTabChange(int tabId);
-    }
-
-    public void addTabChangeListener(
-            OnNavigationTabChangeListener tabChangeListener) {
-        synchronized (mTabChangeListener) {
-            mTabChangeListener.add(tabChangeListener);
-        }
-    }
-
-    public interface OnMainTabFocused {
-        public void onMainTabFocused();
-    }
-
-    private OnMainTabFocused mMainTabFocusedListener;
-
-    public void setRootSelectedListener(OnMainTabFocused mainTabFocused) {
-        this.mMainTabFocusedListener = mainTabFocused;
-    }
-
-    public Fragment getTab(int tabId) {
-        return mTabFragmentList.get(tabId);
-    }
-
-    public void setCurrentTabSelected(int placeHolder) {
-        mCurrentTabSelected = placeHolder;
-    }
-
-    public void setCurrentTabSelected_InTabIndicator(int tabId) {
-        mCurrentTabSelected_InTabIndicator = tabId;
+    public void removeOnBackStackChangedListener(FragmentManager.OnBackStackChangedListener onbackstackchangedlistener) {
+        mFragmentManager.removeOnBackStackChangedListener(onbackstackchangedlistener);
     }
 
     /**
@@ -106,7 +50,7 @@ public class NavigationManager {
      * @return true if can navigate, false otherwise.
      */
     protected boolean canNavigate() {
-        return mMainActivity != null && !mMainActivity.isStateSaved();
+        return mActivity == null || mActivity.isStateSaved() ? false : true;
     }
 
     /**
@@ -116,197 +60,78 @@ public class NavigationManager {
      * activity is in onSaveInstance())
      */
     public boolean goBack() {
-        if (mMainActivity == null || mMainActivity.isStateSaved()
-                || mBackStackList.size() == 0)
+        if (mActivity == null || mActivity.isStateSaved()
+                || mBackStack.isEmpty())
             return false;
-        Stack backStack = mBackStackList.get(mCurrentTabSelected);
-        //Neu' dang o Main va khong co fragment nao o tab nay & co tab khac' => remove fragment o Main va show tab khac'
-        if (mCurrentTabSelected == Tabs.MAIN && backStack != null && backStack.size() == 0 && mTabFragmentList.size() > 0) {
-            FragmentManager fm = getFragmentManagerByTab(mCurrentTabSelected);
-            if (fm != null) {
-                Fragment fragment = fm.findFragmentById(mCurrentTabSelected);
-                if (fragment != null)
-                    fm.beginTransaction().remove(fragment).commit();
-            }
-            mMainActivity.showTab(mCurrentTabSelected_InTabIndicator);
-            mCurrentTabSelected = mCurrentTabSelected_InTabIndicator;
-            return true;
-        }
-        if (backStack == null || backStack.size() <= 0) {
-            //get place holder that has stack of fragment. (order: LIFO)
-            for (int i = mPlaceHolderList.size() - 1; i >= 0; i--) {
-                int place = mPlaceHolderList.get(i);
-                backStack = mBackStackList.get(place);
-                if (backStack != null && backStack.size() > 0) {
-                    //check switch tab
-                    NavigationState state = (NavigationState) backStack.peek();
-                    if (state.placeholder != mCurrentTabSelected) {
-                        mCurrentTabSelected = place;
-                        notifyTabChange(state.placeholder);
-                        return true;
-                    }
-                    break;
-                }
-            }
-        }
-        //pop fragment from stack if true.
-        if (backStack != null && backStack.size() > 0) {
-            backStack.pop();
-            getFragmentManagerByTab(mCurrentTabSelected).popBackStack();
-            return true;
-        }
-        return false;
-    }
-
-    public void notifyTabChange(int placeholder) {
-        synchronized (mTabChangeListener) {
-            for (OnNavigationTabChangeListener tabChangeListener : mTabChangeListener) {
-                tabChangeListener.onNavigationTabChange(placeholder);
-            }
-        }
-    }
-
-    public void setPlaceHolder(int placeHolder) {
-        mPlaceholder = placeHolder;
+        mBackStack.pop();
+        mFragmentManager.popBackStack();
+        return true;
     }
 
     public void showPage(Fragment fragment) {
-        showPage(fragment, true, true, mCurrentTabSelected);
+        showPage(fragment, true, true, null);
     }
 
-    public void showPage(Fragment fragment, boolean hasAnimation, boolean isAddBackStack, int placeHolder) {
-        if (!canNavigate())
-            return;
-        FragmentTransaction transaction = getFragmentManagerByTab(placeHolder).beginTransaction();
-        if (hasAnimation)
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//            transaction.setCustomAnimations(R.anim.fragment_enter,
-//                    R.anim.fragment_exit, R.anim.fragment_pop_enter,
-//                    R.anim.fragment_pop_exit);
-        transaction.replace(placeHolder, fragment);
-        if (isAddBackStack) {
-            if (!(placeHolder == Tabs.MAIN && (getFragmentManagerByTab(placeHolder).findFragmentById(placeHolder) == null))) {
-                NavigationState navigationState = new NavigationState(placeHolder);
-                transaction.addToBackStack(navigationState.backStackName);
-                mBackStackList.get(placeHolder).push(navigationState);
-            }
-        }
-        transaction.commit();
-        if (placeHolder == Tabs.MAIN && mMainTabFocusedListener != null)
-            mMainTabFocusedListener.onMainTabFocused();
+    public void showPage(Fragment fragment, String name) {
+        showPage(fragment, true, true, name);
+    }
+
+    public void showPage(Fragment fragment, boolean hasAnimation) {
+        showPage(fragment, true, true, null);
+    }
+
+    public void showPageWithoutStack(Fragment fragment, String tag) {
+        showPage(fragment, true, false, tag);
     }
 
     public void showPageWithoutStack(Fragment fragment) {
-        showPage(fragment, true, false, mCurrentTabSelected);
+        showPageWithoutStack(fragment, null);
     }
 
-    public Fragment getActivePage() {
-        return getFragmentManagerByTab(mCurrentTabSelected).findFragmentById(mCurrentTabSelected);
-    }
+    @SuppressWarnings("unchecked")
+    public void showPage(Fragment fragment, boolean hasAnimation, boolean isAddBackStack, String name) {
+        if (!canNavigate())
+            return;
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        if (hasAnimation)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-    public void setUpTabs(int tabId, Fragment fragment) {
-        synchronized (mTabFragmentList) {
-            if (mTabFragmentList.get(tabId) == null)
-                mTabFragmentList.put(tabId, fragment);
-        }
-        synchronized (mBackStackList) {
-            if (mBackStackList.get(tabId) == null)
-                mBackStackList.put(tabId, new MainThreadStack());
-        }
-        synchronized (mPlaceHolderList) {
-            if (!mPlaceHolderList.contains(tabId))
-                mPlaceHolderList.add(tabId);
-        }
-    }
-
-    private FragmentManager getFragmentManagerByTab(final int tabId) {
-        FragmentManager fm = mFragmentManagerList.get(tabId);
-        if (fm == null) {
-            Fragment fragment = mTabFragmentList.get(tabId);
-            if (fragment == null) {
-                fragment = mMainActivity.getSupportFragmentManager().findFragmentById(tabId);
+        transaction.replace(mPlaceholder, fragment);
+        NavigationState navigationState = new NavigationState(mPlaceholder);
+        if (isAddBackStack) {
+            if (TextUtils.isEmpty(name)) {
+                name = navigationState.backStackName;
             }
-            fm = fragment.getChildFragmentManager();
-            mFragmentManagerList.put(tabId, fm);
-            fm.addOnBackStackChangedListener(simpleStackChangedListener);
+            transaction.addToBackStack(name);
+            mBackStack.push(navigationState);
         }
-        return fm;
+        transaction.commit();
     }
 
-    public int getBackStackEntryCount(int placeHolder) {
-        if (mFragmentManagerList.get(placeHolder) == null) return 0;
-        return mFragmentManagerList.get(placeHolder).getBackStackEntryCount();
-    }
-
-    public int getBackStackEntryCountCurrentPlace() {
-        return getBackStackEntryCount(mCurrentTabSelected);
-    }
 
     /**
      * Terminate resource that keep by this class. Must call in
-     * {@link Activity#onDestroy()}
+     * {@link android.app.Activity#onDestroy()}
      */
     public void terminate() {
         mActivity = null;
     }
 
     public int getCurrentPlaceholder() {
-        return mCurrentTabSelected;
-    }
-
-    public int getCurrentPlaceholderInBackstack() {
-        return !mBackStack.isEmpty() ? ((NavigationState) mBackStack.peek()).placeholder
-                : 0;
+        return mPlaceholder;
     }
 
     public boolean isBackStackEmpty() {
         return mFragmentManager.getBackStackEntryCount() <= 0 ? true : false;
     }
 
-    public boolean isPlaceHolderEmpty(int placeHolder) {
-        Stack stack = mBackStackList.get(placeHolder);
-        if (stack != null) {
-            for (Object object : stack) {
-                if (object instanceof NavigationState) {
-                    if (((NavigationState) object).placeholder == placeHolder) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+    public Fragment getActivePage() {
+        return mFragmentManager.findFragmentById(mPlaceholder);
     }
-
-    public boolean isCurrentPlaceHolderEmpty() {
-        return isPlaceHolderEmpty(mCurrentTabSelected);
-    }
-
-    public void clearAllBackStack() {
-        Iterator<Integer> iterator = mPlaceHolderList.iterator();
-        while (iterator.hasNext()) {
-            int placeHolder = iterator.next();
-            Stack stack = mBackStackList.get(placeHolder);
-            if (stack != null)
-                stack.clear();
-            FragmentManager fm = mFragmentManagerList.get(placeHolder);
-            if (fm != null)
-                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            if (placeHolder != Tabs.MAIN) {
-                mBackStackList.remove(placeHolder);
-                mTabFragmentList.remove(placeHolder);
-                mFragmentManagerList.remove(placeHolder);
-                iterator.remove();
-            }
-        }
-        mMainActivity.clearAllTab();
-        mCurrentTabSelected = Tabs.MAIN;
-        mCurrentTabSelected_InTabIndicator = Tabs.HOME;
-    }
-
 
     /**
      * Use for save state of Navigation Manager, called in
-     * {@link Activity#onSaveInstanceState(Bundle)}
+     * {@link android.app.Activity#onSaveInstanceState(android.os.Bundle)}
      *
      * @param bundle
      */
@@ -318,7 +143,7 @@ public class NavigationManager {
 
     /**
      * Use for restore state that saved in {@link #serialize(Bundle)}, called in
-     * {@link Activity#onCreate(Bundle)}
+     * {@link android.app.Activity#onCreate(Bundle)}
      *
      * @param bundle
      */
@@ -331,6 +156,142 @@ public class NavigationManager {
                 mBackStack.push(navigationState);
             }
 
+        }
+    }
+
+    public void clearStack(int placeHolder) {
+        //do nothing
+    }
+
+    /**
+     * Popback all fragment in FragmentManager until {@code tag}
+     *
+     * @param tag Use when show page. If null -> popback all fragment without root in activity.
+     */
+    public void clearStack(String tag) {
+        if (tag != null)
+            mFragmentManager.popBackStack(tag, 0);
+        else
+            mFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    public int getBackStackSize() {
+        return mBackStack.size();
+    }
+
+    public int getBackStackEntryCount(int placeHolder) {
+        return 0;
+    }
+
+    public void goBackToScreenWithId(int sizeBackStack) {
+        final Stack backStack = mBackStack;
+        if (sizeBackStack > 0) {
+            while (backStack.size() > sizeBackStack) {
+                backStack.pop();
+            }
+            mFragmentManager.popBackStack(sizeBackStack - 1, 0);
+        } else if (sizeBackStack == 0) {
+            while (backStack.size() > 0) {
+                backStack.pop();
+            }
+            mFragmentManager.popBackStack(0, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+    }
+
+    public int getBackStackEntryCountCurrentPlace() {
+        return 0;
+    }
+
+
+    public Fragment getTab(int id) {
+        return null;
+    }
+
+    /**
+     * Show tab without flags.
+     *
+     * @param cls
+     */
+    private void showTab(Class cls) {
+        showTab(cls, 0);
+    }
+
+    /**
+     * Show Tab with flags
+     *
+     * @param cls   Activity to show
+     * @param flags flags are flag value in {@link android.content.Intent} class. If flags==0 -> show without flags, prefers use {@link #showTab(Class)}
+     */
+    private void showTab(Class cls, int flags) {
+        Intent intent = new Intent(mActivity, cls);
+        if (flags != 0) {
+            intent.addFlags(flags);
+        }
+        mActivity.startActivity(intent);
+    }
+
+    /**
+     * Show Tab with flags
+     *
+     * @param cls   Activity to show
+     * @param flags If flags==0 -> show without flags,prefers use {@link #showTab(Class)}
+     */
+    private void showTab(Class cls, int flags, Bundle bundle) {
+        Intent intent = new Intent(mActivity, cls);
+        if (flags != 0) {
+            intent.addFlags(flags);
+        }
+        intent.putExtras(bundle);
+        mActivity.startActivity(intent);
+    }
+
+    public void showNewRecipes() {
+        showNewRecipes(false);
+    }
+
+    public void showNewRecipes(boolean isClearAllActivity) {
+        if (isClearAllActivity)
+            showTab(NewRecipesActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        else showTab(NewRecipesActivity.class);
+    }
+
+    /**
+     * Use {@link #showFollows(boolean)} with params=false.
+     */
+    public void showFollows() {
+        showFollows(false);
+    }
+
+    /**
+     * @param isClearAllStack If true then clear all fragment without root else just show
+     */
+    public void showFollows(boolean isClearAllStack) {
+        if (isClearAllStack) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(FollowsActivity.KEY_CLEAR_ALL_STACK, true);
+            showTab(FollowsActivity.class, 0, bundle);
+        } else {
+            showTab(FollowsActivity.class);
+        }
+    }
+
+    public void showHome() {
+        showTab(HomeActivity.class);
+    }
+
+    public void showMessages() {
+        showTab(MessagesActivity.class);
+    }
+
+    public void showCreateNewRecipe() {
+        showTab(CreateNewRecipeActivity.class);
+    }
+
+    public void showMain(boolean isClearAllActivity) {
+        if (isClearAllActivity) {
+            showTab(MainActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        } else {
+            showTab(MainActivity.class);
         }
     }
 
