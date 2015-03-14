@@ -33,7 +33,7 @@ public class CreateRecipeFragment extends NFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecipeViewPager = (ViewPager) view.findViewById(R.id.view_content);
+        mRecipeViewPager = (ViewPager) view.findViewById(R.id.cnrf_view_content);
         mTabIndicator = (TabIndicator) view.findViewById(R.id.cnr_vp_tab_indicator);
     }
 

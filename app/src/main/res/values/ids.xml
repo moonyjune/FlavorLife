@@ -27,7 +27,7 @@
     <item name="tab_messages" type="id" />
     <item name="tab_create_recipe" type="id" />
     <item name="tab_indicator" type="id" />
-    <item name="view_content" type="id" />
+    <item name="hf_view_content" type="id" />
     <item name="list" type="id" />
     <item name="swipe_refresh" type="id" />
     <item name="login_fb" type="id" />
@@ -47,5 +47,12 @@
     <item name="menu" type="id" />
     <item name="hf_vp_tab_indicator" type="id" />
     <item name="cnr_vp_tab_indicator" type="id" />
+    <item name="cnrf_view_content" type="id" />
+    <item name="item_ingredient" type="id" />
+    <item name="add_section" type="id" />
+    <item name="add_ingredient" type="id" />
+    <item name="list_section" type="id" />
+    <item name="list_item_section" type="id" />
+    <item name="ingredients" type="id" />
 
 </resources>

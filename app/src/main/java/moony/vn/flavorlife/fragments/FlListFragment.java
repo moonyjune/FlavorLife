@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.ntq.adapters.FlListAdapter;
+import moony.vn.flavorlife.adapters.FlListAdapter;
 import com.ntq.fragments.NFragmentSwitcher;
 
 import moony.vn.flavorlife.R;

@@ -33,7 +33,7 @@ public class HomeFragment extends NFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mTabIndicator = (TabIndicator) view.findViewById(R.id.hf_vp_tab_indicator);
-        mHomePager = (ViewPager) view.findViewById(R.id.view_content);
+        mHomePager = (ViewPager) view.findViewById(R.id.hf_view_content);
     }
 
     @Override

@@ -78,7 +78,7 @@
         fl:gapBetweenItems="2dp" />
 
     <android.support.v4.view.ViewPager
-        android:id="@id/view_content"
+        android:id="@id/hf_view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="40dp" />

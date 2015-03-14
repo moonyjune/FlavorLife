@@ -74,14 +74,13 @@
             android:id="@id/hf_vp_tab_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             fl:gapBetweenItems="2dp" />
 
         <android.support.v4.view.ViewPager
-            android:id="@id/view_content"
+            android:id="@id/hf_view_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/blue_light" />

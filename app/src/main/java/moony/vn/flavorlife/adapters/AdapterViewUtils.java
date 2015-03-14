@@ -1,4 +1,4 @@
-package com.ntq.adapters;
+package moony.vn.flavorlife.adapters;
 
 import android.content.Context;
 import android.view.View;

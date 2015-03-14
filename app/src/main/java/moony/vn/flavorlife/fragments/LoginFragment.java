@@ -30,7 +30,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.login_fb:
                 mNavigationManager.showNewRecipes();
-//                getActivity().finish();
+                getActivity().finish();
                 break;
             case R.id.login_gplus:
                 mNavigationManager.showNewRecipes();

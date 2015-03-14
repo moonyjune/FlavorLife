@@ -1,9 +1,10 @@
-package com.ntq.adapters;
+package moony.vn.flavorlife.adapters;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ntq.adapters.NListAdapter;
 import com.ntq.api.model.PaginatedList;
 import com.ntq.imageloader.NImageLoader;
 
@@ -16,7 +17,7 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
  * Created by moony on 3/4/15.
  */
 public class FlListAdapter extends NListAdapter {
-    private static final int TOTAL_VIEW_COUNT = 4;
+    private static final int TOTAL_VIEW_COUNT = 2;
     private static final int NEW_RECIPE = 2;
     private static final int COOKBOOK = 3;
 
@@ -58,7 +59,7 @@ public class FlListAdapter extends NListAdapter {
         } else if (item instanceof Cookbook) {
             return COOKBOOK;
         }
-        return -1;
+        throw new IllegalArgumentException("Invalid object type");
     }
 
     @Override

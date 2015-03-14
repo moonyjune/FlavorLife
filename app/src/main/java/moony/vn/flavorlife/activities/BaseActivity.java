@@ -168,7 +168,6 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        //TODO animation
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
         mMenu.showContent();
         Bundle extras = intent.getExtras();
