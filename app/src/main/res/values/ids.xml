@@ -60,5 +60,6 @@
     <item name="choose_picture" type="id" />
     <item name="vp_tab_indicator" type="id" />
     <item name="view_content" type="id" />
+    <item name="user_image" type="id" />
 
 </resources>

@@ -4,9 +4,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <moony.vn.flavorlife.layout.MessagesView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/padding_root_for_list"
+        android:layout_marginLeft="@dimen/padding_root_for_list"
+        android:layout_marginRight="@dimen/padding_root_for_list"
+        android:layout_marginStart="@dimen/padding_root_for_list"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="1dp"
+            android:fadeScrollbars="true"
+            android:listSelector="@android:color/transparent"
+            android:scrollbarFadeDuration="@integer/scrollbar_fade_duration" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
         android:id="@id/tab_messages"

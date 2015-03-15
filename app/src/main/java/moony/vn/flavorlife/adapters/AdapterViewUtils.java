@@ -8,11 +8,13 @@ import com.ntq.imageloader.NImageLoader;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Follow;
 import moony.vn.flavorlife.entities.Follower;
+import moony.vn.flavorlife.entities.Message;
 import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.layout.CookbookView;
 import moony.vn.flavorlife.layout.FollowsView;
 import moony.vn.flavorlife.layout.ItemFollowView;
 import moony.vn.flavorlife.layout.ItemFollowerView;
+import moony.vn.flavorlife.layout.ItemMessageView;
 import moony.vn.flavorlife.layout.NewRecipesView;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
@@ -52,5 +54,12 @@ public class AdapterViewUtils {
         return convertView;
     }
 
+    public static View getMessages(Context context, Message message, View convertView, NImageLoader imageLoader, NavigationManager navigationManager) {
+        if (convertView == null) {
+            convertView = new ItemMessageView(context, imageLoader, navigationManager);
+        }
+        ((ItemMessageView) convertView).display(message);
+        return convertView;
+    }
 
 }

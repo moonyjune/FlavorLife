@@ -12,6 +12,7 @@ import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Follow;
 import moony.vn.flavorlife.entities.Follower;
+import moony.vn.flavorlife.entities.Message;
 import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
@@ -19,11 +20,12 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
  * Created by moony on 3/4/15.
  */
 public class FlListAdapter extends NListAdapter {
-    private static final int TOTAL_VIEW_COUNT = 4;
+    private static final int TOTAL_VIEW_COUNT = 5;
     private static final int NEW_RECIPE = 2;
     private static final int COOKBOOK = 3;
     private static final int FOLLOW = 4;
     private static final int FOLLOWER = 5;
+    private static final int MESSAGE = 6;
 
     protected PaginatedList mPaginatedList;
     private NImageLoader mNImageLoader;
@@ -55,6 +57,8 @@ public class FlListAdapter extends NListAdapter {
                 return AdapterViewUtils.getFollows(mContext, (Follow) item, convertView, mNImageLoader, mNavigationManager);
             case FOLLOWER:
                 return AdapterViewUtils.getFollowers(mContext, (Follower) item, convertView, mNImageLoader, mNavigationManager);
+            case MESSAGE:
+                return AdapterViewUtils.getMessages(mContext, (Message) item, convertView, mNImageLoader, mNavigationManager);
         }
         return convertView;
     }
@@ -70,6 +74,8 @@ public class FlListAdapter extends NListAdapter {
             return FOLLOW;
         } else if (item instanceof Follower) {
             return FOLLOWER;
+        } else if (item instanceof Message) {
+            return MESSAGE;
         }
         throw new IllegalArgumentException("Invalid object type");
     }

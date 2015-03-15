@@ -11,14 +11,22 @@ import com.ntq.fragments.NFragment;
 import com.ntq.fragments.NFragmentSwitcher;
 
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.api.model.DfeGetMessages;
+import moony.vn.flavorlife.api.model.FlPaginatedList;
 
 /**
  * Created by moony on 3/1/15.
  */
-public class MessagesFragment extends NFragment {
+public class MessagesFragment extends FlListFragment {
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_messages, container, false);
+    protected FlPaginatedList getFlPaginatedList() {
+        return new DfeGetMessages(mApi);
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_messages;
     }
 
     @Override
