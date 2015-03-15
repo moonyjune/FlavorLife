@@ -33,8 +33,6 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     private InstructionExpandableAdapter mInstructionExpandableAdapter;
     private List<SectionInstruction> mSectionInstructions;
     private int mCurrentSection;
-    protected static final String IMAGE_PATH = "image_path";
-    private Uri mImageURI;
 
     public static InstructionFragment newInstance() {
         InstructionFragment instructionFragment = new InstructionFragment();
@@ -83,51 +81,6 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
                 return false;
             }
         });
-    }
-
-    public void startActivityCamera() {
-        mImageURI = getOutputFilePath("FlavorLife");
-        if (mImageURI != null) {
-            final Intent captureIntent = new Intent(
-                    android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageURI);
-            captureIntent.putExtra(IMAGE_PATH, mImageURI.getPath());
-            captureIntent.putExtra("return-data", true);
-            Intent intent = new Intent(
-                    Intent.ACTION_PICK,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            Intent chooserIntent = Intent.createChooser(intent,
-                    "Choose a picture from");
-            // Set camera intent to file chooser
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
-                    new Parcelable[]{captureIntent});
-            getActivity().startActivityForResult(chooserIntent, 101);
-        }
-    }
-
-    private Uri getOutputFilePath(String appName) {
-        File dir = null;
-        String state = Environment.getExternalStorageState();
-
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            dir = new File(Environment.getExternalStorageDirectory().toString() + "/DCIM/" + appName);
-            dir.mkdirs();
-        } else {
-            dir = new File(getActivity().getCacheDir().toString() + "/" + appName);
-        }
-        String timeStamp = new SimpleDateFormat("yyyy/MM/dd_HH:mm:ss").format(new Date());
-        String fileName = appName + "_" + timeStamp;
-        Uri mImageUri = Uri.fromFile(new File(dir, fileName + ".jpg"));
-
-        galleryAddPic(getActivity(), mImageUri);
-        return mImageUri;
-    }
-
-    public static void galleryAddPic(Context context, Uri uriFile) {
-        Intent mediaScanIntent = new Intent(
-                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        mediaScanIntent.setData(uriFile);
-        context.sendBroadcast(mediaScanIntent);
     }
 
     @Override
