@@ -58,5 +58,7 @@
     <item name="add_step" type="id" />
     <item name="instruction" type="id" />
     <item name="choose_picture" type="id" />
+    <item name="vp_tab_indicator" type="id" />
+    <item name="view_content" type="id" />
 
 </resources>

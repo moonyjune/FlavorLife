@@ -10,6 +10,8 @@ import com.ntq.imageloader.NImageLoader;
 
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.entities.Cookbook;
+import moony.vn.flavorlife.entities.Follow;
+import moony.vn.flavorlife.entities.Follower;
 import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
@@ -17,9 +19,11 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
  * Created by moony on 3/4/15.
  */
 public class FlListAdapter extends NListAdapter {
-    private static final int TOTAL_VIEW_COUNT = 2;
+    private static final int TOTAL_VIEW_COUNT = 4;
     private static final int NEW_RECIPE = 2;
     private static final int COOKBOOK = 3;
+    private static final int FOLLOW = 4;
+    private static final int FOLLOWER = 5;
 
     protected PaginatedList mPaginatedList;
     private NImageLoader mNImageLoader;
@@ -47,6 +51,10 @@ public class FlListAdapter extends NListAdapter {
                 return AdapterViewUtils.getRecipes(mContext, (Recipe) item, convertView, mNImageLoader, mNavigationManager);
             case COOKBOOK:
                 return AdapterViewUtils.getCookbooks(mContext, (Cookbook) item, convertView, mNImageLoader, mNavigationManager);
+            case FOLLOW:
+                return AdapterViewUtils.getFollows(mContext, (Follow) item, convertView, mNImageLoader, mNavigationManager);
+            case FOLLOWER:
+                return AdapterViewUtils.getFollowers(mContext, (Follower) item, convertView, mNImageLoader, mNavigationManager);
         }
         return convertView;
     }
@@ -58,6 +66,10 @@ public class FlListAdapter extends NListAdapter {
             return NEW_RECIPE;
         } else if (item instanceof Cookbook) {
             return COOKBOOK;
+        } else if (item instanceof Follow) {
+            return FOLLOW;
+        } else if (item instanceof Follower) {
+            return FOLLOWER;
         }
         throw new IllegalArgumentException("Invalid object type");
     }
