@@ -54,16 +54,17 @@ public class IngredientFragment extends NFragmentSwitcher implements View.OnClic
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
                 mPosition = i;
-                return true;
+                return false;
+            }
+        });
+        mIngredients.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
+                mPosition = i;
+                return false;
             }
         });
 
-        getView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mNavigationManager.showPage(RecipeDetailFragment.newInstance(new Recipe()));
-            }
-        });
     }
 
     @Override
@@ -90,4 +91,5 @@ public class IngredientFragment extends NFragmentSwitcher implements View.OnClic
         }
         mIngredientsExpandableAdapter.notifyDataSetChanged();
     }
+
 }

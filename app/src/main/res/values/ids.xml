@@ -54,5 +54,8 @@
     <item name="list_section" type="id" />
     <item name="list_item_section" type="id" />
     <item name="ingredients" type="id" />
+    <item name="finish" type="id" />
+    <item name="add_step" type="id" />
+    <item name="instruction" type="id" />
 
 </resources>

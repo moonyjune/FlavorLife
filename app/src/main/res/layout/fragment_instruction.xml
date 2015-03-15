@@ -6,9 +6,33 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ExpandableListView
+        android:id="@id/instruction"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SETUP INSTRUCTION" />
+        android:hint="Input section name" />
+
+    <Button
+        android:id="@id/add_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add section" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Step" />
+
+
+    <Button
+        android:id="@id/add_step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="add step" />
 
 </LinearLayout>

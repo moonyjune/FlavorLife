@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.List;
+
+import moony.vn.flavorlife.entities.Ingredient;
+import moony.vn.flavorlife.entities.SectionIngredient;
 import moony.vn.flavorlife.fragments.IngredientFragment;
 import moony.vn.flavorlife.fragments.InstructionFragment;
 import moony.vn.flavorlife.fragments.IntroductionFragment;
@@ -15,14 +19,14 @@ public class RecipePagerAdapter extends FragmentPagerAdapter {
     private static final int NUMBER_ITEM = 3;
     private int mPosition;
 
-    public enum TypeTabIndicator{
+    public enum TypeTabIndicator {
         INGREDIENT,
         INSTRUCTION,
         INTRODUCTION
     }
 
-    public TypeTabIndicator getTypeTabIndicator(){
-        switch (mPosition){
+    public TypeTabIndicator getTypeTabIndicator() {
+        switch (mPosition) {
             case 0:
                 return TypeTabIndicator.INGREDIENT;
             case 1:
@@ -40,7 +44,7 @@ public class RecipePagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         mPosition = position;
-        switch (getTypeTabIndicator()){
+        switch (getTypeTabIndicator()) {
             case INGREDIENT:
                 return IngredientFragment.newInstance();
             case INSTRUCTION:
