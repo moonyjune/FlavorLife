@@ -82,14 +82,14 @@ public class IngredientFragment extends NFragmentSwitcher implements View.OnClic
         switch (view.getId()) {
             case R.id.add_section:
                 mSectionIngredients.add(new SectionIngredient());
-//                mItemIngredientView.addSection(new SectionIngredient());
+                mIngredientsExpandableAdapter.notifyDataSetChanged();
                 break;
             case R.id.add_ingredient:
                 mSectionIngredients.get(mPosition).getListIngredients().add(new Ingredient());
-//                mItemIngredientView.addIngredient(new Ingredient());
+                mIngredientsExpandableAdapter.notifyDataSetChanged();
+                mIngredients.expandGroup(mPosition, true);
                 break;
         }
-        mIngredientsExpandableAdapter.notifyDataSetChanged();
     }
 
 }

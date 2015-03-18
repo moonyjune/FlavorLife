@@ -61,5 +61,7 @@
     <item name="vp_tab_indicator" type="id" />
     <item name="view_content" type="id" />
     <item name="user_image" type="id" />
+    <item name="list_ingredients" type="id" />
+    <item name="list_instruction" type="id" />
 
 </resources>

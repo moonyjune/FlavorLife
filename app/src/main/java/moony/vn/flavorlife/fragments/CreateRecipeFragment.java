@@ -41,7 +41,7 @@ public class CreateRecipeFragment extends NFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
-        mRecipePagerAdapter = new RecipePagerAdapter(getFragmentManager());
+        mRecipePagerAdapter = new RecipePagerAdapter(getChildFragmentManager());
         mRecipeViewPager.setAdapter(mRecipePagerAdapter);
         mTabIndicator.setViewPager(mRecipeViewPager, getListTabName());
     }

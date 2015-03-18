@@ -30,7 +30,7 @@ public class FollowsFragment extends NFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
-        mFollowsPagerAdapter = new FollowsPagerAdapter(getFragmentManager());
+        mFollowsPagerAdapter = new FollowsPagerAdapter(getChildFragmentManager());
         mViewPager.setAdapter(mFollowsPagerAdapter);
         mTabIndicator.setViewPager(mViewPager, getTabNames());
     }

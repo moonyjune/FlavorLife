@@ -1,27 +1,18 @@
 package moony.vn.flavorlife.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.ntq.fragments.NFragmentSwitcher;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.InstructionExpandableAdapter;
-import moony.vn.flavorlife.entities.SectionIngredient;
 import moony.vn.flavorlife.entities.SectionInstruction;
 import moony.vn.flavorlife.entities.Step;
 
@@ -93,11 +84,13 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
         switch (view.getId()) {
             case R.id.add_section:
                 mSectionInstructions.add(new SectionInstruction());
+                mInstructionExpandableAdapter.notifyDataSetChanged();
                 break;
             case R.id.add_step:
                 mSectionInstructions.get(mCurrentSection).getListSteps().add(new Step());
+                mInstructionExpandableAdapter.notifyDataSetChanged();
+                mInstructionListView.expandGroup(mCurrentSection, true);
                 break;
         }
-        mInstructionExpandableAdapter.notifyDataSetChanged();
     }
 }

@@ -40,7 +40,7 @@ public class HomeFragment extends NFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
-        mHomePagerAdapter = new HomePagerAdapter(getFragmentManager());
+        mHomePagerAdapter = new HomePagerAdapter(getChildFragmentManager());
         mHomePager.setAdapter(mHomePagerAdapter);
         mTabIndicator.setViewPager(mHomePager, getTabNames());
     }

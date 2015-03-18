@@ -17,8 +17,6 @@ import moony.vn.flavorlife.utils.ListViewUtils;
  * Created by moony on 3/14/15.
  */
 public class SectionIngredientView extends LinearLayout {
-//    private ListView mListItemSection;
-//    private ItemSectionIngredientAdapter mItemSectionIngredientAdapter;
 
     public SectionIngredientView(Context context) {
         super(context);
@@ -43,13 +41,9 @@ public class SectionIngredientView extends LinearLayout {
 
     private void init() {
         inflate(getContext(), R.layout.item_section_ingredient, this);
-//        mListItemSection = (ListView) findViewById(R.id.list_item_section);
     }
 
     public void display(SectionIngredient sectionIngredient) {
-//        mItemSectionIngredientAdapter = new ItemSectionIngredientAdapter(getContext(), 0, sectionIngredient.getListIngredients());
-//        mListItemSection.setAdapter(mItemSectionIngredientAdapter);
-//        ListViewUtils.setListViewHeightBasedOnChildren(mListItemSection);
     }
 
 }
