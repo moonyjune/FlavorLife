@@ -11,7 +11,16 @@ import java.util.List;
  */
 public class SectionInstruction {
     private String name;
+    private int numberSection;
     private List<Step> mListSteps = new ArrayList<Step>();
+
+    public int getNumberSection() {
+        return numberSection;
+    }
+
+    public void setNumberSection(int numberSection) {
+        this.numberSection = numberSection;
+    }
 
     public String getName() {
         return name;

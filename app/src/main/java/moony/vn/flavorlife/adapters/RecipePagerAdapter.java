@@ -18,6 +18,12 @@ import moony.vn.flavorlife.fragments.IntroductionFragment;
 public class RecipePagerAdapter extends FragmentPagerAdapter {
     private static final int NUMBER_ITEM = 3;
     private int mPosition;
+    private List<Fragment> mFragments;
+
+    public RecipePagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+        super(fm);
+        mFragments = fragments;
+    }
 
     public enum TypeTabIndicator {
         INGREDIENT,
@@ -43,20 +49,22 @@ public class RecipePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        mPosition = position;
-        switch (getTypeTabIndicator()) {
-            case INGREDIENT:
-                return IngredientFragment.newInstance();
-            case INSTRUCTION:
-                return InstructionFragment.newInstance();
-            case INTRODUCTION:
-                return IntroductionFragment.newInstance();
-        }
-        return null;
+//        mPosition = position;
+//        switch (getTypeTabIndicator()) {
+//            case INGREDIENT:
+//                return IngredientFragment.newInstance();
+//            case INSTRUCTION:
+//                return InstructionFragment.newInstance();
+//            case INTRODUCTION:
+//                return IntroductionFragment.newInstance();
+//        }
+//        return null;
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return NUMBER_ITEM;
+//        return NUMBER_ITEM;
+        return mFragments.size();
     }
 }

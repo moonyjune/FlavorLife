@@ -4,16 +4,16 @@ package moony.vn.flavorlife.entities;
  * Created by moony on 3/16/15.
  */
 public class User {
-    private String id;
+    private int id;
     private String name;
     private String email;
     private String introduction;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

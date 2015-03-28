@@ -3,14 +3,21 @@ package moony.vn.flavorlife.api;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import moony.vn.flavorlife.FlavorLifeApplication;
+import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.utils.DateFormatUtils;
 
 public class ApiImpl implements Api, ApiKey {
 
@@ -65,6 +72,18 @@ public class ApiImpl implements Api, ApiKey {
         String url = AppRequest.getUrl(toURL(API_GET_COOKBOOKS), list);
 
         AppRequest appRequest = new AppRequest(Request.Method.GET, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
+    }
+
+    @Override
+    public Request<JSONObject> createRecipe(Recipe recipe, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
+        String data = gson.toJson(recipe);
+        list.add(new BasicNameValuePair(DATA, data));
+        String url = AppRequest.getUrl(toURL(API_CREATE_RECIPE), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
         return mQueue.add(appRequest);
     }
 }

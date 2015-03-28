@@ -1,5 +1,6 @@
 package moony.vn.flavorlife.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,15 +10,21 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.ntq.fragments.NFragmentSwitcher;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.RequestCode;
 import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.layout.LevelView;
+import moony.vn.flavorlife.layout.TypeView;
 
 /**
  * Created by moony on 3/4/15.
@@ -25,6 +32,11 @@ import moony.vn.flavorlife.entities.Recipe;
 public class IntroductionFragment extends NFragmentSwitcher implements View.OnClickListener {
     protected static final String IMAGE_PATH = "image_path";
     private Uri mImageURI;
+    private TypeView mChooseType;
+    private Recipe mRecipe;
+    private ImageView mImageRecipe;
+    private EditText mIntroductionOfDish, mCookingTime, mTipNote, mAuthorEvaluation;
+    private LevelView mLevels;
 
     public static IntroductionFragment newInstance() {
         IntroductionFragment introductionFragment = new IntroductionFragment();
@@ -37,11 +49,27 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.choose_picture).setOnClickListener(this);
+        mImageRecipe = (ImageView) view.findViewById(R.id.image_recipe);
+        mIntroductionOfDish = (EditText) view.findViewById(R.id.introduction_dish);
+        mLevels = (LevelView) view.findViewById(R.id.recipe_level);
+        mChooseType = (TypeView) view.findViewById(R.id.choose_type);
+        mCookingTime = (EditText) view.findViewById(R.id.recipe_cooking_time);
+        mTipNote = (EditText) view.findViewById(R.id.recipe_tip_note);
+        mAuthorEvaluation = (EditText) view.findViewById(R.id.author_evaluation);
+
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mChooseType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChooseTypeRecipeDialogFragment chooseTypeRecipeDialogFragment = new ChooseTypeRecipeDialogFragment();
+                chooseTypeRecipeDialogFragment.setTargetFragment(IntroductionFragment.this, RequestCode.CODE_CHOOSE_TYPE);
+                chooseTypeRecipeDialogFragment.show(getFragmentManager(), null);
+            }
+        });
     }
 
     @Override
@@ -74,7 +102,7 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
             Intent chooserIntent = Intent.createChooser(intent, "Choose a picture from");
             // Set camera intent to file chooser
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{});
-            startActivityForResult(chooserIntent, 101);
+            startActivityForResult(chooserIntent, RequestCode.CODE_CHOOSE_PICTURE);
         }
     }
 
@@ -105,6 +133,41 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("Mj : onActivityResult");
+        System.out.println("Mj : onActivityResult : " + requestCode);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            switch (requestCode) {
+                case RequestCode.CODE_CHOOSE_TYPE:
+                    List<Integer> listTypes = data.getIntegerArrayListExtra("list_types");
+                    mChooseType.setTypes(listTypes);
+                    break;
+                case RequestCode.CODE_CHOOSE_PICTURE:
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public Recipe getRecipe() {
+        if (validInformation()) {
+            if (mRecipe == null) {
+                mRecipe = new Recipe();
+            }
+            return mRecipe;
+        } else {
+            return null;
+        }
+    }
+
+    private boolean validInformation() {
+        if (mIntroductionOfDish.getText().toString() == null || mIntroductionOfDish.getText().toString().isEmpty())
+            return false;
+        if (mLevels.getLevel() == 0) return false;
+        if (mChooseType.getListTypes().size() == 0) return false;
+        if (mCookingTime.getText().toString() == null || mCookingTime.getText().toString().isEmpty() ||
+                Integer.valueOf(mCookingTime.getText().toString()) <= 0)
+            return false;
+        return true;
     }
 }

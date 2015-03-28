@@ -11,7 +11,16 @@ import java.util.List;
  */
 public class SectionIngredient implements Parcelable {
     private String name;
+    private int numberSection;
     private List<Ingredient> mListIngredients = new ArrayList<Ingredient>();
+
+    public int getNumberSection() {
+        return numberSection;
+    }
+
+    public void setNumberSection(int numberSection) {
+        this.numberSection = numberSection;
+    }
 
     public String getName() {
         return name;

@@ -1,6 +1,7 @@
 package moony.vn.flavorlife;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -12,14 +13,21 @@ import com.ntq.imageloader.NImageLoader;
 import com.ntq.imageloader.NImageLoaderImpl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.api.Api;
 import moony.vn.flavorlife.api.ApiImpl;
 import moony.vn.flavorlife.api.ApiProvider;
+import moony.vn.flavorlife.entities.User;
 
 public class FlavorLifeApplication extends Application implements ApiProvider {
     private static FlavorLifeApplication mFlavorLifeApplication;
+    private User mUser;
     private RequestQueue mRequestQueue;
     private Cache mCache;
     private NImageLoader mNtqImageLoader;
@@ -34,6 +42,12 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
         mNtqImageLoader = new NImageLoaderImpl(getApplicationContext());
         mRequestQueue.start();
         mAppAnalytic = AppAnalytics.getInstance(this);
+        mUser = restoreUser();
+        if (mUser == null) {
+            mUser = new User();
+            mUser.setId(10);
+            storeUser();
+        }
     }
 
     private static Network createNetwork() {
@@ -61,5 +75,37 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
 
     public AppAnalytics getAnalytic() {
         return mAppAnalytic;
+    }
+
+    public void storeUser() {
+        try {
+            FileOutputStream fos = openFileOutput("user", Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(mUser);
+            os.close();
+        } catch (IOException e) {
+
+        }
+    }
+
+    public User restoreUser() {
+        try {
+            FileInputStream fis = openFileInput("user");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            User user = (User) is.readObject();
+            is.close();
+            return user;
+        } catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+        }
+        return null;
+    }
+
+    public User getUser() {
+        return mUser;
+    }
+
+    public void setUser(User mUser) {
+        this.mUser = mUser;
     }
 }

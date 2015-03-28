@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ntq.Config;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -22,6 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
+import moony.vn.flavorlife.Config;
 
 public class UploadImage extends AsyncTask<String, Void, String> {
     private static final String SERVER_IMAGE = Config.SERVER_IMAGES_URL;

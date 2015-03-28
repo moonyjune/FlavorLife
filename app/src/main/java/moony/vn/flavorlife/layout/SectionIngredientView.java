@@ -6,6 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.ItemSectionIngredientAdapter;
@@ -17,6 +18,7 @@ import moony.vn.flavorlife.utils.ListViewUtils;
  * Created by moony on 3/14/15.
  */
 public class SectionIngredientView extends LinearLayout {
+    private TextView mSectionName;
 
     public SectionIngredientView(Context context) {
         super(context);
@@ -41,9 +43,12 @@ public class SectionIngredientView extends LinearLayout {
 
     private void init() {
         inflate(getContext(), R.layout.item_section_ingredient, this);
+        mSectionName = (TextView) findViewById(R.id.section_name);
     }
 
     public void display(SectionIngredient sectionIngredient) {
+        if (sectionIngredient == null) return;
+        mSectionName.setText(sectionIngredient.getName());
     }
 
 }

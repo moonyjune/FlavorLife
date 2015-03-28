@@ -1,6 +1,7 @@
 package moony.vn.flavorlife.api;
 
-import com.ntq.Config;
+
+import moony.vn.flavorlife.Config;
 
 /**
  * Created by moony on 3/4/15.
@@ -14,7 +15,7 @@ public interface ApiKey {
     public static final String SKIP = "skip";
     public static final String TAKE = "take";
 
-
+    public static final String DATA = "data";
     public static final String BASE_URL = Config.SERVER_URL;
 
     public static final String API_LOGIN = "login";
@@ -22,4 +23,5 @@ public interface ApiKey {
     public static final String API_GET_NEW_RECIPES = "get_new_recipes";
     public static final String API_GET_USER_RECIPES = "get_user_recipes";
     public static final String API_GET_COOKBOOKS = "get_cookbooks";
+    public static final String API_CREATE_RECIPE = "create_recipe";
 }

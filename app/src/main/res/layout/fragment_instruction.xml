@@ -13,6 +13,7 @@
         android:layout_weight="1" />
 
     <EditText
+        android:id="@id/section_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Input section name" />
@@ -24,6 +25,7 @@
         android:text="add section" />
 
     <EditText
+        android:id="@id/instruction_step"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Step" />

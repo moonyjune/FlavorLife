@@ -126,10 +126,14 @@ public class NativeActionbar implements CustomActionbar {
         mMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBaseActivity.getMenu().showMenu(true);
-                // unlock slide menu
-                if (!mBaseActivity.getMenu().isSlidingEnabled())
-                    mBaseActivity.getMenu().setSlidingEnabled(true);
+                Fragment fragment = mNavigationManager.getActivePage();
+                if (fragment instanceof CreateRecipeFragment) {
+                    ((CreateRecipeFragment) fragment).request();
+                }
+//                mBaseActivity.getMenu().showMenu(true);
+//                // unlock slide menu
+//                if (!mBaseActivity.getMenu().isSlidingEnabled())
+//                    mBaseActivity.getMenu().setSlidingEnabled(true);
             }
         });
     }

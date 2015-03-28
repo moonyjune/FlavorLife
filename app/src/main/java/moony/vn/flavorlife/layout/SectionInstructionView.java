@@ -4,8 +4,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.ItemSectionIngredientAdapter;
@@ -17,6 +19,7 @@ import moony.vn.flavorlife.utils.ListViewUtils;
  * Created by moony on 3/14/15.
  */
 public class SectionInstructionView extends LinearLayout {
+    private TextView mSectionName;
     public SectionInstructionView(Context context) {
         super(context);
         init();
@@ -40,9 +43,11 @@ public class SectionInstructionView extends LinearLayout {
 
     private void init() {
         inflate(getContext(), R.layout.item_section_instruction, this);
+        mSectionName = (TextView) findViewById(R.id.section_name);
     }
 
     public void display(SectionInstruction sectionInstruction) {
+        mSectionName.setText(sectionInstruction.getName());
     }
 
 }

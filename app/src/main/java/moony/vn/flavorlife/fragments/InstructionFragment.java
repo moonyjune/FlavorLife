@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 
 import com.ntq.fragments.NFragmentSwitcher;
@@ -24,6 +25,7 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     private InstructionExpandableAdapter mInstructionExpandableAdapter;
     private List<SectionInstruction> mSectionInstructions;
     private int mCurrentSection;
+    private EditText mSectionName, mInputStep;
 
     public static InstructionFragment newInstance() {
         InstructionFragment instructionFragment = new InstructionFragment();
@@ -36,9 +38,20 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mInstructionListView = (ExpandableListView) view.findViewById(R.id.instruction);
+        mSectionName = (EditText) view.findViewById(R.id.section_name);
+        mInputStep = (EditText) view.findViewById(R.id.instruction_step);
         mSectionInstructions = new ArrayList<SectionInstruction>();
-        mSectionInstructions.add(new SectionInstruction());
-        mSectionInstructions.add(new SectionInstruction());
+        SectionInstruction sectionInstruction = new SectionInstruction();
+        sectionInstruction.setName("section");
+        sectionInstruction.setNumberSection(1);
+        Step step = new Step();
+        List<Step> steps = new ArrayList<>();
+        steps.add(step);
+        steps.add(step);
+        steps.add(step);
+        sectionInstruction.setListSteps(steps);
+        mSectionInstructions.add(sectionInstruction);
+        mSectionInstructions.add(sectionInstruction);
         mInstructionExpandableAdapter = new InstructionExpandableAdapter(getActivity(), mSectionInstructions);
         view.findViewById(R.id.add_section).setOnClickListener(this);
         view.findViewById(R.id.add_step).setOnClickListener(this);
@@ -83,14 +96,24 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_section:
-                mSectionInstructions.add(new SectionInstruction());
+                SectionInstruction sectionInstruction = new SectionInstruction();
+                sectionInstruction.setName(mSectionName.getText().toString());
+                sectionInstruction.setNumberSection(mSectionInstructions.size() + 1);
+                mSectionInstructions.add(sectionInstruction);
                 mInstructionExpandableAdapter.notifyDataSetChanged();
                 break;
             case R.id.add_step:
-                mSectionInstructions.get(mCurrentSection).getListSteps().add(new Step());
+                Step step = new Step();
+                step.setNumberStep(mSectionInstructions.get(mCurrentSection).getListSteps().size() + 1);
+                step.setContent(mInputStep.getText().toString());
+                mSectionInstructions.get(mCurrentSection).getListSteps().add(step);
                 mInstructionExpandableAdapter.notifyDataSetChanged();
                 mInstructionListView.expandGroup(mCurrentSection, true);
                 break;
         }
+    }
+
+    public List<SectionInstruction> getSectionInstructions() {
+        return mSectionInstructions;
     }
 }

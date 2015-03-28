@@ -4,16 +4,19 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.entities.Ingredient;
 import moony.vn.flavorlife.entities.Step;
 
 /**
  * Created by moony on 3/14/15.
  */
 public class ItemSectionInstructionView extends LinearLayout {
+    private TextView mStepName;
+    private EditText mStepContent;
     public ItemSectionInstructionView(Context context) {
         super(context);
         init();
@@ -37,9 +40,12 @@ public class ItemSectionInstructionView extends LinearLayout {
 
     private void init() {
         inflate(getContext(), R.layout.item_section_instruction_detail, this);
+        mStepName = (TextView) findViewById(R.id.step_name);
+        mStepContent = (EditText) findViewById(R.id.step_content);
     }
 
     public void display(Step step) {
-
+        mStepName.setText(step.getName());
+        mStepContent.setText(step.getContent());
     }
 }

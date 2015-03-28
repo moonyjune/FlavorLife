@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@id/image_recipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="200dp"
@@ -24,6 +25,7 @@
             android:src="@drawable/ic_launcher" />
 
         <EditText
+            android:id="@id/introduction_dish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|left"
@@ -42,7 +44,8 @@
                 android:padding="5dp"
                 android:text="Level" />
 
-            <EditText
+            <moony.vn.flavorlife.layout.LevelView
+                android:id="@id/recipe_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -61,28 +64,30 @@
                 android:text="Time" />
 
             <EditText
+                android:id="@id/recipe_cooking_time"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="5dp"
-                android:text="Kind" />
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="3"-->
+                <!--android:padding="5dp"-->
+                <!--android:text="Kind" />-->
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
+            <!--<EditText-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1" />-->
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -96,10 +101,12 @@
                 android:padding="5dp"
                 android:text="Type" />
 
-            <EditText
+            <moony.vn.flavorlife.layout.TypeView
+                android:id="@id/choose_type"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -127,6 +134,7 @@
             android:text="Tip / Note" />
 
         <EditText
+            android:id="@id/recipe_tip_note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|left"
@@ -140,6 +148,7 @@
             android:text="Author evaluation" />
 
         <EditText
+            android:id="@id/author_evaluation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top|left"

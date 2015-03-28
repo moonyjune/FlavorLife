@@ -13,6 +13,7 @@
         android:layout_weight="1" />
 
     <EditText
+        android:id="@id/section_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Input section name" />
@@ -29,18 +30,22 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@id/ingredient_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:hint="Name" />
 
         <EditText
+            android:id="@id/ingredient_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:hint="Value" />
+            android:hint="Value"
+            android:inputType="number" />
 
         <EditText
+            android:id="@id/ingredient_unit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"

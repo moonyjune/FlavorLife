@@ -63,5 +63,28 @@
     <item name="user_image" type="id" />
     <item name="list_ingredients" type="id" />
     <item name="list_instruction" type="id" />
+    <item name="ingredient_name" type="id" />
+    <item name="ingredient_value" type="id" />
+    <item name="ingredient_unit" type="id" />
+    <item name="section_name" type="id" />
+    <item name="view_ingredient_unit" type="id" />
+    <item name="view_ingredient_value" type="id" />
+    <item name="view_ingredient_name" type="id" />
+    <item name="instruction_step" type="id" />
+    <item name="step_name" type="id" />
+    <item name="step_content" type="id" />
+    <item name="level_1" type="id" />
+    <item name="level_5" type="id" />
+    <item name="level_4" type="id" />
+    <item name="level_3" type="id" />
+    <item name="level_2" type="id" />
+    <item name="type_1" type="id" />
+    <item name="type_3" type="id" />
+    <item name="type_2" type="id" />
+    <item name="ok" type="id" />
+    <item name="choose_type" type="id" />
+    <item name="introduction_dish" type="id" />
+    <item name="recipe_tip_note" type="id" />
+    <item name="author_evaluation" type="id" />
 
 </resources>
