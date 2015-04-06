@@ -53,17 +53,16 @@ public class IngredientFragment extends NFragmentSwitcher implements View.OnClic
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSectionIngredients = new ArrayList<SectionIngredient>();
-        SectionIngredient sectionIngredient = new SectionIngredient();
-        sectionIngredient.setName("section");
-        sectionIngredient.setNumberSection(1);
-        List<Ingredient> ingredients = new ArrayList<>();
-        Ingredient ingredient = new Ingredient();
-        ingredients.add(ingredient);
-        ingredients.add(ingredient);
-        ingredients.add(ingredient);
-        sectionIngredient.setListIngredients(ingredients);
-        mSectionIngredients.add(sectionIngredient);
-        mSectionIngredients.add(sectionIngredient);
+//        SectionIngredient sectionIngredient = new SectionIngredient();
+//        sectionIngredient.setName("section");
+//        sectionIngredient.setNumberSection(1);
+//        List<Ingredient> ingredients = new ArrayList<>();
+//        Ingredient ingredient = new Ingredient();
+//        ingredients.add(ingredient);
+//        ingredients.add(ingredasas//        ingredients.add(ingredient);
+//        sectionIngredient.setListIngredients(ingredients);
+//        mSectionIngredients.add(sectionIngredient);
+//        mSectionIngredients.add(sectionIngredient);
         mIngredientsExpandableAdapter = new IngredientsExpandableAdapter(getActivity(), mSectionIngredients);
         mIngredients.setAdapter(mIngredientsExpandableAdapter);
         mIngredients.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {

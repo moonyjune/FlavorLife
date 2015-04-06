@@ -35,7 +35,7 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     private TypeView mChooseType;
     private Recipe mRecipe;
     private ImageView mImageRecipe;
-    private EditText mIntroductionOfDish, mCookingTime, mTipNote, mAuthorEvaluation;
+    private EditText mName, mIntroductionOfDish, mCookingTime, mTipNote, mAuthorEvaluation;
     private LevelView mLevels;
 
     public static IntroductionFragment newInstance() {
@@ -50,6 +50,7 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.choose_picture).setOnClickListener(this);
         mImageRecipe = (ImageView) view.findViewById(R.id.image_recipe);
+        mName = (EditText) view.findViewById(R.id.recipe_name);
         mIntroductionOfDish = (EditText) view.findViewById(R.id.introduction_dish);
         mLevels = (LevelView) view.findViewById(R.id.recipe_level);
         mChooseType = (TypeView) view.findViewById(R.id.choose_type);
@@ -154,6 +155,17 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
             if (mRecipe == null) {
                 mRecipe = new Recipe();
             }
+            mRecipe.setName(mName.getText().toString());
+            mRecipe.setIntroduction(mIntroductionOfDish.getText().toString());
+            mRecipe.setAuthorComments(mAuthorEvaluation.getText().toString());
+            mRecipe.setLevel(mLevels.getLevel());
+            mRecipe.setType(mChooseType.getType());
+            mRecipe.setCookingTime(Integer.valueOf(mCookingTime.getText().toString()));
+            mRecipe.setKind(1);
+            mRecipe.setCreateTime(new Date());
+            mRecipe.setIdChapter(1);
+            mRecipe.setIdUser(1);
+            mRecipe.setImages("images");
             return mRecipe;
         } else {
             return null;
@@ -161,10 +173,12 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     }
 
     private boolean validInformation() {
+        if (mName.getText().toString() == null || mName.getText().toString().isEmpty())
+            return false;
         if (mIntroductionOfDish.getText().toString() == null || mIntroductionOfDish.getText().toString().isEmpty())
             return false;
         if (mLevels.getLevel() == 0) return false;
-        if (mChooseType.getListTypes().size() == 0) return false;
+//        if (mChooseType.getListTypes().size() == 0) return false;
         if (mCookingTime.getText().toString() == null || mCookingTime.getText().toString().isEmpty() ||
                 Integer.valueOf(mCookingTime.getText().toString()) <= 0)
             return false;

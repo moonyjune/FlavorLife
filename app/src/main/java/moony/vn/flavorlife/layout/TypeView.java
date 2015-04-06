@@ -56,11 +56,14 @@ public class TypeView extends LinearLayout {
         }
         for (int i = 0; i < listTypes.size(); i++) {
             mListTypes.get(listTypes.get(i)).setVisibility(VISIBLE);
-            mListTypes.get(listTypes.get(i)).getDrawable().setAlpha(255);
         }
     }
 
     public List<ImageView> getListTypes() {
         return mListTypes;
+    }
+
+    public int getType(){
+        return 1;
     }
 }

@@ -86,5 +86,6 @@
     <item name="introduction_dish" type="id" />
     <item name="recipe_tip_note" type="id" />
     <item name="author_evaluation" type="id" />
+    <item name="author_image" type="id" />
 
 </resources>

@@ -25,7 +25,7 @@ public class DfeGetCookbooks extends FlPaginatedList<Cookbook> {
 
     @Override
     protected Request<JSONObject> makeRequest(int skip, int take, Date requestDate) {
-        return mApi.getCookbooks(mUserId, this, this);
+        return mApi.getUserCookbooks(mUserId, this, this);
     }
 
     @Override

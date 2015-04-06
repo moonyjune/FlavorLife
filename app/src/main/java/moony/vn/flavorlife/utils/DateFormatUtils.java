@@ -5,5 +5,5 @@ package moony.vn.flavorlife.utils;
  */
 public class DateFormatUtils {
     public static final String REQUEST_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
 }

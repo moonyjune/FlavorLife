@@ -6,6 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ntq.imageloader.NImageLoader;
 
@@ -20,6 +21,7 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
 public class NewRecipesView extends LinearLayout implements View.OnClickListener {
     private NavigationManager mNavigationManager;
     private Recipe mRecipe;
+    private TextView mRecipeName;
 
     public NewRecipesView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -50,11 +52,14 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
 
     private void init(Context context) {
         inflate(context, R.layout.item_recipe, this);
+        mRecipeName = (TextView) findViewById(R.id.recipe_name);
         setOnClickListener(this);
     }
 
     public void display(Recipe recipe) {
+        if (recipe == null) return;
         mRecipe = recipe;
+        mRecipeName.setText(recipe.getName());
     }
 
     @Override

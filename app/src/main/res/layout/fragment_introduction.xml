@@ -25,6 +25,13 @@
             android:src="@drawable/ic_launcher" />
 
         <EditText
+            android:id="@id/recipe_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="NAME"
+            android:padding="5dp" />
+
+        <EditText
             android:id="@id/introduction_dish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,28 +72,28 @@
 
             <EditText
                 android:id="@id/recipe_cooking_time"
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:inputType="number" />
         </LinearLayout>
 
         <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
 
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="3"-->
-                <!--android:padding="5dp"-->
-                <!--android:text="Kind" />-->
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="3"-->
+        <!--android:padding="5dp"-->
+        <!--android:text="Kind" />-->
 
-            <!--<EditText-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1" />-->
+        <!--<EditText-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1" />-->
         <!--</LinearLayout>-->
 
         <LinearLayout

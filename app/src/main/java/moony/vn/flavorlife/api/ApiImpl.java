@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,9 +23,11 @@ import moony.vn.flavorlife.utils.DateFormatUtils;
 public class ApiImpl implements Api, ApiKey {
 
     private final RequestQueue mQueue;
+    private final SimpleDateFormat mRequestTimeFormat;
 
     public ApiImpl(RequestQueue requestQueue) {
         mQueue = requestQueue;
+        mRequestTimeFormat = new SimpleDateFormat(DateFormatUtils.REQUEST_TIME_FORMAT);
     }
 
     public String toURL(String api) {
@@ -32,10 +35,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> register(String email, String introduction, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> register(String email, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new BasicNameValuePair(EMAIL, email));
-        list.add(new BasicNameValuePair(INTRODUCTION, introduction));
         String url = AppRequest.getUrl(toURL(API_REGISTER), list);
 
         AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
@@ -43,10 +45,13 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getNewRecipes(int skip, int take, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getNewRecipes(int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
         list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
+        if (requestDate != null) {
+            list.add(new BasicNameValuePair(REQUEST_TIME, mRequestTimeFormat.format(requestDate)));
+        }
         String url = AppRequest.getUrl(toURL(API_GET_NEW_RECIPES), list);
 
         AppRequest appRequest = new AppRequest(Request.Method.GET, url, null, listener, errorListener);
@@ -66,13 +71,43 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getCookbooks(int user_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getUserCookbooks(int user_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new BasicNameValuePair(USER_ID, String.valueOf(user_id)));
         String url = AppRequest.getUrl(toURL(API_GET_COOKBOOKS), list);
 
         AppRequest appRequest = new AppRequest(Request.Method.GET, url, null, listener, errorListener);
         return mQueue.add(appRequest);
+    }
+
+    @Override
+    public Request<JSONObject> getRecipeDetail(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> getFollows(int user_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> getFollowers(int user_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> getBookDetail(int book_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> login(String email, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> updateProfile(String email, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
     }
 
     @Override
@@ -85,5 +120,65 @@ public class ApiImpl implements Api, ApiKey {
 
         AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
         return mQueue.add(appRequest);
+    }
+
+    @Override
+    public Request<JSONObject> editRecipe(Recipe recipe, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> upgradeRecipe(Recipe recipe, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> likeRecipe(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> unlikeRecipe(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> useRecipe(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> unUseRecipe(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> deleteRecipe(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> follow(int user_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> unFollow(int user_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> searchUsers(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> searchRecipes(int recipe_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
+    }
+
+    @Override
+    public Request<JSONObject> getUserInformation(int user_id, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        return null;
     }
 }

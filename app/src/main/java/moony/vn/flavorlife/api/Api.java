@@ -5,17 +5,82 @@ import com.android.volley.Response;
 
 import org.json.JSONObject;
 
+import java.util.Date;
+
 import moony.vn.flavorlife.entities.Recipe;
 
 public interface Api {
-    public Request<JSONObject> register(String email, String introduction,
+    public Request<JSONObject> register(String email,
                                         Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
-    public Request<JSONObject> getNewRecipes(int skip, int take,
-                                        Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
-    public Request<JSONObject> getUserRecipes(int user_id, int skip, int take,
-                                        Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
-    public Request<JSONObject> getCookbooks(int user_id,
-                                        Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> login(String email,
+                                     Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> updateProfile(String email,
+                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
     public Request<JSONObject> createRecipe(Recipe recipe,
-            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+                                            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> editRecipe(Recipe recipe,
+                                          Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> upgradeRecipe(Recipe recipe,
+                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> likeRecipe(int recipe_id,
+                                          Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> unlikeRecipe(int recipe_id,
+                                            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> useRecipe(int recipe_id,
+                                         Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> unUseRecipe(int recipe_id,
+                                           Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> deleteRecipe(int recipe_id,
+                                            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> follow(int user_id,
+                                      Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> unFollow(int user_id,
+                                        Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    //TODO search
+    public Request<JSONObject> searchUsers(int recipe_id,
+                                           Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> searchRecipes(int recipe_id,
+                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    //------------------------------------------------------------
+
+    public Request<JSONObject> getUserInformation(int user_id,
+                                                  Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getNewRecipes(int skip, int take, Date requestDate,
+                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getUserRecipes(int user_id, int skip, int take,
+                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getUserCookbooks(int user_id,
+                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getRecipeDetail(int recipe_id,
+                                               Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getFollows(int user_id,
+                                          Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getFollowers(int user_id,
+                                            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getBookDetail(int book_id,
+                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+
 }

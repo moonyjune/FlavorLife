@@ -39,6 +39,8 @@ public class Recipe {
     private int idUser;
     @SerializedName("chapter_id")
     private int idChapter;
+    @SerializedName("introduction")
+    private String introduction;
 
     public Recipe() {
         this.name = "name";
@@ -173,5 +175,13 @@ public class Recipe {
 
     public void setIdChapter(int idChapter) {
         this.idChapter = idChapter;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 }

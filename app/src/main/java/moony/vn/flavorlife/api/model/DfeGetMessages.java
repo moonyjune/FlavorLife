@@ -26,7 +26,7 @@ public class DfeGetMessages extends FlPaginatedList<Message> {
 
     @Override
     protected Request<JSONObject> makeRequest(int skip, int take, Date requestDate) {
-        return mApi.getNewRecipes(skip, take, this, this);
+        return mApi.getNewRecipes(skip, take, requestDate, this, this);
     }
 
     @Override

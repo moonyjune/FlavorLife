@@ -85,6 +85,6 @@ public class LevelView extends LinearLayout {
                 level++;
             }
         }
-        return level;
+        return 2;
     }
 }
