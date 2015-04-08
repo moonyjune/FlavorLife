@@ -24,8 +24,6 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     private ExpandableListView mInstructionListView;
     private InstructionExpandableAdapter mInstructionExpandableAdapter;
     private List<SectionInstruction> mSectionInstructions;
-    private int mCurrentSection;
-    private EditText mSectionName, mInputStep;
 
     public static InstructionFragment newInstance() {
         InstructionFragment instructionFragment = new InstructionFragment();
@@ -38,23 +36,6 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mInstructionListView = (ExpandableListView) view.findViewById(R.id.instruction);
-        mSectionName = (EditText) view.findViewById(R.id.section_name);
-        mInputStep = (EditText) view.findViewById(R.id.instruction_step);
-        mSectionInstructions = new ArrayList<SectionInstruction>();
-//        SectionInstruction sectionInstruction = new SectionInstruction();
-//        sectionInstruction.setName("section");
-//        sectionInstruction.setNumberSection(1);
-//        Step step = new Step();
-//        List<Step> steps = new ArrayList<>();
-//        steps.add(step);
-//        steps.add(step);
-//        steps.add(step);
-//        sectionInstruction.setListSteps(steps);
-//        mSectionInstructions.add(sectionInstruction);
-//        mSectionInstructions.add(sectionInstruction);
-        mInstructionExpandableAdapter = new InstructionExpandableAdapter(getActivity(), mSectionInstructions);
-        view.findViewById(R.id.add_section).setOnClickListener(this);
-        view.findViewById(R.id.add_step).setOnClickListener(this);
     }
 
     @Override
@@ -70,21 +51,20 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mSectionInstructions = new ArrayList<SectionInstruction>();
+        mSectionInstructions.add(new SectionInstruction());
+        mInstructionExpandableAdapter = new InstructionExpandableAdapter(getActivity(), mSectionInstructions) {
+            @Override
+            public void notifyDataSetChanged() {
+                super.notifyDataSetChanged();
+                for (int i = 0; i < getGroupCount() - 1; i++) {
+                    mInstructionListView.expandGroup(i, true);
+                }
+            }
+        };
         mInstructionListView.setAdapter(mInstructionExpandableAdapter);
-        mInstructionListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                mCurrentSection = i;
-                return false;
-            }
-        });
-        mInstructionListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
-                mCurrentSection = i;
-                return false;
-            }
-        });
+        mInstructionListView.setGroupIndicator(null);
+        mInstructionExpandableAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -95,21 +75,6 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.add_section:
-                SectionInstruction sectionInstruction = new SectionInstruction();
-                sectionInstruction.setName(mSectionName.getText().toString());
-                sectionInstruction.setNumberSection(mSectionInstructions.size() + 1);
-                mSectionInstructions.add(sectionInstruction);
-                mInstructionExpandableAdapter.notifyDataSetChanged();
-                break;
-            case R.id.add_step:
-                Step step = new Step();
-                step.setNumberStep(mSectionInstructions.get(mCurrentSection).getListSteps().size() + 1);
-                step.setContent(mInputStep.getText().toString());
-                mSectionInstructions.get(mCurrentSection).getListSteps().add(step);
-                mInstructionExpandableAdapter.notifyDataSetChanged();
-                mInstructionListView.expandGroup(mCurrentSection, true);
-                break;
         }
     }
 

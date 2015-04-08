@@ -1,61 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/orange"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <ExpandableListView
-        android:id="@id/ingredients"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
-
-    <EditText
-        android:id="@id/section_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Input section name" />
-
-    <Button
-        android:id="@id/add_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="add section" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/orange"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@id/ingredient_name"
+        <ListView
+            android:id="@id/ingredients"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:hint="Name" />
+            android:layout_height="match_parent" />
 
-        <EditText
-            android:id="@id/ingredient_value"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@id/add_section"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:hint="Value"
-            android:inputType="number" />
-
-        <EditText
-            android:id="@id/ingredient_unit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:hint="Unit" />
+            android:src="@drawable/ic_launcher" />
     </LinearLayout>
-
-    <Button
-        android:id="@id/add_ingredient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="add ingredient" />
-
-</LinearLayout>
+</ScrollView>

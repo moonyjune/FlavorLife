@@ -14,32 +14,32 @@ import moony.vn.flavorlife.entities.Step;
 /**
  * Created by moony on 3/14/15.
  */
-public class ItemSectionInstructionView extends LinearLayout {
+public class DetailRecipeItemSectionInstructionView extends LinearLayout {
     private TextView mStepName;
     private EditText mStepContent;
-    public ItemSectionInstructionView(Context context) {
+    public DetailRecipeItemSectionInstructionView(Context context) {
         super(context);
         init();
     }
 
-    public ItemSectionInstructionView(Context context, AttributeSet attrs) {
+    public DetailRecipeItemSectionInstructionView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ItemSectionInstructionView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DetailRecipeItemSectionInstructionView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ItemSectionInstructionView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DetailRecipeItemSectionInstructionView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
     private void init() {
-        inflate(getContext(), R.layout.item_section_instruction_detail, this);
+        inflate(getContext(), R.layout.detail_recipe_item_section_instruction_detail, this);
         mStepName = (TextView) findViewById(R.id.step_name);
         mStepContent = (EditText) findViewById(R.id.step_content);
     }

@@ -14,6 +14,10 @@ public class SectionInstruction {
     private int numberSection;
     private List<Step> mListSteps = new ArrayList<Step>();
 
+    public SectionInstruction() {
+        mListSteps.add(new Step());
+    }
+
     public int getNumberSection() {
         return numberSection;
     }

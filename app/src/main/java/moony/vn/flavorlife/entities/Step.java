@@ -24,13 +24,13 @@ public class Step {
     private int idRecipe;
 
     public Step() {
-        this.name = "name";
-        this.image = "image";
-        this.numberStep = 1;
-        this.content = "content";
-        this.tipNote = "tipNote";
-        this.idSection = 1;
-        this.idRecipe = 1;
+//        this.name = "name";
+//        this.image = "image";
+//        this.numberStep = 1;
+//        this.content = "content";
+//        this.tipNote = "tipNote";
+//        this.idSection = 1;
+//        this.idRecipe = 1;
     }
 
     public int getId() {

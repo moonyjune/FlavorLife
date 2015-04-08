@@ -7,9 +7,9 @@ import android.widget.ArrayAdapter;
 
 import java.util.List;
 
-import moony.vn.flavorlife.entities.Ingredient;
 import moony.vn.flavorlife.entities.SectionIngredient;
-import moony.vn.flavorlife.layout.SectionIngredientView;
+import moony.vn.flavorlife.layout.CreateEditRecipeSectionIngredientView;
+import moony.vn.flavorlife.layout.DetailRecipeSectionIngredientView;
 
 /**
  * Created by moony on 3/14/15.
@@ -23,12 +23,19 @@ public class SectionIngredientAdapter extends ArrayAdapter<SectionIngredient> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         SectionIngredient sectionIngredient = mListSectionIngredients.get(position);
         if (convertView == null) {
-            convertView = new SectionIngredientView(getContext());
+            convertView = new CreateEditRecipeSectionIngredientView(getContext());
         }
-        ((SectionIngredientView) convertView).display(sectionIngredient);
+        ((CreateEditRecipeSectionIngredientView) convertView).setOnDeleteSection(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListSectionIngredients.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+        ((CreateEditRecipeSectionIngredientView) convertView).display(sectionIngredient);
         return convertView;
     }
 

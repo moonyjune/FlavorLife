@@ -3,6 +3,7 @@ package moony.vn.flavorlife.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.ntq.fragments.NFragmentSwitcher;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.adapters.IngredientsExpandableAdapter;
 import moony.vn.flavorlife.adapters.SectionIngredientAdapter;
 import moony.vn.flavorlife.entities.SectionIngredient;
 import moony.vn.flavorlife.utils.ListViewUtils;
@@ -18,13 +20,13 @@ import moony.vn.flavorlife.utils.ListViewUtils;
 /**
  * Created by moony on 3/4/15.
  */
-public class IngredientFragment extends NFragmentSwitcher implements View.OnClickListener {
+public class IngredientFragment2 extends NFragmentSwitcher implements View.OnClickListener {
     private List<SectionIngredient> mSectionIngredients;
-    private SectionIngredientAdapter mSectionIngredientAdapter;
-    private ListView mListSectionIngredients;
+    private IngredientsExpandableAdapter mIngredientExpandableAdapter;
+    private ExpandableListView mListSectionIngredients;
 
-    public static IngredientFragment newInstance() {
-        IngredientFragment ingredientFragment = new IngredientFragment();
+    public static IngredientFragment2 newInstance() {
+        IngredientFragment2 ingredientFragment = new IngredientFragment2();
         Bundle bundle = new Bundle();
         ingredientFragment.setArguments(bundle);
         return ingredientFragment;
@@ -33,22 +35,31 @@ public class IngredientFragment extends NFragmentSwitcher implements View.OnClic
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListSectionIngredients = (ListView) view.findViewById(R.id.ingredients);
-        view.findViewById(R.id.add_section).setOnClickListener(this);
+        mListSectionIngredients = (ExpandableListView) view.findViewById(R.id.ingredients);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mSectionIngredients = new ArrayList<SectionIngredient>();
-        mSectionIngredientAdapter = new SectionIngredientAdapter(getActivity(), 0, mSectionIngredients);
-        mListSectionIngredients.setAdapter(mSectionIngredientAdapter);
-        ListViewUtils.setListViewHeightBasedOnChildren(mListSectionIngredients);
+        mSectionIngredients.add(new SectionIngredient());
+        mIngredientExpandableAdapter = new IngredientsExpandableAdapter(getActivity(), mSectionIngredients) {
+            @Override
+            public void notifyDataSetChanged() {
+                super.notifyDataSetChanged();
+                for (int i = 0; i < getGroupCount() - 1; i++) {
+                    mListSectionIngredients.expandGroup(i, true);
+                }
+            }
+        };
+        mListSectionIngredients.setAdapter(mIngredientExpandableAdapter);
+        mListSectionIngredients.setGroupIndicator(null);
+        mIngredientExpandableAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.fragment_ingredient;
+        return R.layout.fragment_ingredient_2;
     }
 
     @Override
@@ -58,12 +69,6 @@ public class IngredientFragment extends NFragmentSwitcher implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add_section:
-                mSectionIngredientAdapter.addItem(new SectionIngredient());
-                ListViewUtils.setListViewHeightBasedOnChildren(mListSectionIngredients);
-                break;
-        }
     }
 
     public List<SectionIngredient> getSectionIngredients() {

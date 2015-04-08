@@ -13,23 +13,23 @@ import moony.vn.flavorlife.entities.Ingredient;
 /**
  * Created by moony on 3/18/15.
  */
-public class ListItemIngredientsView extends LinearLayout {
+public class DetailRecipeListItemIngredientsView extends LinearLayout {
     private List<Ingredient> mIngredientList;
 
-    public ListItemIngredientsView(Context context) {
+    public DetailRecipeListItemIngredientsView(Context context) {
         super(context);
     }
 
-    public ListItemIngredientsView(Context context, AttributeSet attrs) {
+    public DetailRecipeListItemIngredientsView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ListItemIngredientsView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DetailRecipeListItemIngredientsView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ListItemIngredientsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DetailRecipeListItemIngredientsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -38,8 +38,8 @@ public class ListItemIngredientsView extends LinearLayout {
         setOrientation(VERTICAL);
         removeAllViews();
         for (int i = 0; i < mIngredientList.size(); i++) {
-            ItemSectionIngredientView itemSectionIngredientView = new ItemSectionIngredientView(getContext());
-            addView(itemSectionIngredientView);
+            DetailRecipeItemSectionIngredientView detailRecipeItemSectionIngredientView = new DetailRecipeItemSectionIngredientView(getContext());
+            addView(detailRecipeItemSectionIngredientView);
         }
     }
 

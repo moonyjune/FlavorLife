@@ -13,23 +13,23 @@ import moony.vn.flavorlife.entities.SectionIngredient;
 /**
  * Created by moony on 3/18/15.
  */
-public class ListIngredientsView extends LinearLayout {
+public class DetailRecipeListIngredientsView extends LinearLayout {
     private List<SectionIngredient> mListSectionIngredient;
 
-    public ListIngredientsView(Context context) {
+    public DetailRecipeListIngredientsView(Context context) {
         super(context);
     }
 
-    public ListIngredientsView(Context context, AttributeSet attrs) {
+    public DetailRecipeListIngredientsView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ListIngredientsView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DetailRecipeListIngredientsView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ListIngredientsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public DetailRecipeListIngredientsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -38,11 +38,12 @@ public class ListIngredientsView extends LinearLayout {
         removeAllViews();
         setOrientation(VERTICAL);
         for (int i = 0; i < mListSectionIngredient.size(); i++) {
-            SectionIngredientView sectionIngredientView = new SectionIngredientView(getContext());
-            addView(sectionIngredientView);
-            ListItemIngredientsView listItemIngredients = new ListItemIngredientsView(getContext());
-            listItemIngredients.setIngredientList(mListSectionIngredient.get(i).getListIngredients());
-            addView(listItemIngredients);
+            DetailRecipeSectionIngredientView detailRecipeSectionIngredientView = new DetailRecipeSectionIngredientView(getContext());
+            addView(detailRecipeSectionIngredientView);
+
+            DetailRecipeListItemIngredientsView detailRecipeListItemIngredientsView = new DetailRecipeListItemIngredientsView(getContext());
+            detailRecipeListItemIngredientsView.setIngredientList(mListSectionIngredient.get(i).getListIngredients());
+            addView(detailRecipeListItemIngredientsView);
         }
 
     }

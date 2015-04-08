@@ -14,6 +14,10 @@ public class SectionIngredient implements Parcelable {
     private int numberSection;
     private List<Ingredient> mListIngredients = new ArrayList<Ingredient>();
 
+    public SectionIngredient() {
+        mListIngredients.add(new Ingredient());
+    }
+
     public int getNumberSection() {
         return numberSection;
     }

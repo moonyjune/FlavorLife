@@ -37,7 +37,7 @@ import moony.vn.flavorlife.widget.TabWidget;
 public abstract class BaseActivity extends NActivity implements TabWidget.OnTabChangeListener, View.OnClickListener {
     public static final String KEY_CLEAR_ALL_STACK = "clear_all_stack";
 
-    private SlidingMenu mMenu;
+//    private SlidingMenu mMenu;
     protected NavigationManager mNavigationManager;
     protected CustomActionbar mActionbar;
     protected TabWidget mTabWidget;
@@ -51,7 +51,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         }
         setContentView(R.layout.activity_base);
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-        setUpSlidingMenu();
+//        setUpSlidingMenu();
         initView();
         mNavigationManager = new NavigationManager(this);
         if (savedInstanceState != null) {
@@ -72,7 +72,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     protected void onStart() {
         super.onStart();
         GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        mMenu.showContent();
+//        mMenu.showContent();
     }
 
     @Override
@@ -81,9 +81,9 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 
-    public SlidingMenu getMenu() {
-        return mMenu;
-    }
+//    public SlidingMenu getMenu() {
+//        return mMenu;
+//    }
 
     @Override
     public NavigationManager getNavigationManager() {
@@ -122,18 +122,18 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         mNavigationManager.serialize(outState);
     }
 
-    private void setUpSlidingMenu() {
-        mMenu = new SlidingMenu(this);
-        mMenu.setMode(SlidingMenu.RIGHT);
-        mMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        mMenu.setShadowWidthRes(R.dimen.shadow_width);
-        mMenu.setShadowDrawable(R.drawable.shadow);
-        mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        mMenu.setFadeDegree(0.35f);
-        mMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
-        mMenu.setSecondaryMenu(R.layout.fragment_app_menu);
-        mMenu.setSlidingEnabled(false);
-    }
+//    private void setUpSlidingMenu() {
+//        mMenu = new SlidingMenu(this);
+//        mMenu.setMode(SlidingMenu.RIGHT);
+//        mMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+//        mMenu.setShadowWidthRes(R.dimen.shadow_width);
+//        mMenu.setShadowDrawable(R.drawable.shadow);
+//        mMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+//        mMenu.setFadeDegree(0.35f);
+//        mMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+//        mMenu.setSecondaryMenu(R.layout.fragment_app_menu);
+//        mMenu.setSlidingEnabled(false);
+//    }
 
     private void initView() {
         mTabWidget = (TabWidget) findViewById(R.id.tab_indicator);
@@ -169,7 +169,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-        mMenu.showContent();
+//        mMenu.showContent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
             boolean clearAll = extras.getBoolean(KEY_CLEAR_ALL_STACK, false);

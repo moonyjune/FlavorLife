@@ -87,5 +87,12 @@
     <item name="recipe_tip_note" type="id" />
     <item name="author_evaluation" type="id" />
     <item name="author_image" type="id" />
+    <item name="ingredient_information" type="id" />
+    <item name="delete_section" type="id" />
+    <item name="delete_section_instruction" type="id" />
+    <item name="delete_section_ingredient" type="id" />
+    <item name="delete_ingredient" type="id" />
+    <item name="delete_step" type="id" />
+    <item name="step_number" type="id" />
 
 </resources>

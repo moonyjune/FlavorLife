@@ -57,7 +57,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(IngredientFragment.newInstance());
+        fragments.add(IngredientFragment2.newInstance());
         fragments.add(InstructionFragment.newInstance());
         fragments.add(IntroductionFragment.newInstance());
         mRecipePagerAdapter = new RecipePagerAdapter(getChildFragmentManager(), fragments);
@@ -99,7 +99,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
             Fragment fragment = mRecipePagerAdapter.getItem(i);
             if (fragment instanceof IngredientFragment) {
                 System.out.println("Mj : ingredient");
-                mSectionIngredients = ((IngredientFragment) fragment).getSectionIngredients();
+                mSectionIngredients = ((IngredientFragment2) fragment).getSectionIngredients();
             } else if (fragment instanceof InstructionFragment) {
                 System.out.println("Mj : instruction");
                 mSectionInstructions = ((InstructionFragment) fragment).getSectionInstructions();

@@ -15,7 +15,7 @@ public class Ingredient {
     @SerializedName("value")
     private int value;
     @SerializedName("unit")
-    private String unit;
+    private String unit = "";
     @SerializedName("images")
     private String images;
     @SerializedName("section_id")
@@ -24,13 +24,13 @@ public class Ingredient {
     private int idRecipe;
 
     public Ingredient() {
-        this.name = "ingredient";
-        this.type = "type";
-        this.value = 200;
-        this.unit = "unit";
-        this.images = "images";
-        this.idSection = 1;
-        this.idRecipe = 1;
+//        this.name = "ingredient";
+//        this.type = "type";
+//        this.value = 200;
+//        this.unit = "unit";
+//        this.images = "images";
+//        this.idSection = 1;
+//        this.idRecipe = 1;
     }
 
     public int getId() {

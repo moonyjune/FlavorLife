@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@id/step_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="01" />
+
+    <EditText
+        android:id="@id/step_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|left"
+        android:hint="step content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp" />
+
+    <ImageView
+        android:id="@id/delete_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/step_content"
+        android:layout_alignRight="@id/step_content"
+        android:background="@color/blue_light"
+        android:src="@drawable/abc_ic_clear_mtrl_alpha" />
+
+</RelativeLayout>

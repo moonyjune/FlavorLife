@@ -127,7 +127,7 @@
             android:padding="5dp"
             android:text="Ingredients" />
 
-        <moony.vn.flavorlife.layout.ListIngredientsView
+        <moony.vn.flavorlife.layout.DetailRecipeListIngredientsView
             android:id="@id/list_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -140,7 +140,7 @@
             android:padding="5dp"
             android:text="Instruction" />
 
-       <moony.vn.flavorlife.layout.ListInstructionsView
+       <moony.vn.flavorlife.layout.DetailRecipeListInstructionsView
            android:id="@id/list_instruction"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"/>

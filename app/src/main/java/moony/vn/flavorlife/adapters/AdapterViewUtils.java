@@ -11,7 +11,6 @@ import moony.vn.flavorlife.entities.Follower;
 import moony.vn.flavorlife.entities.Message;
 import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.layout.CookbookView;
-import moony.vn.flavorlife.layout.FollowsView;
 import moony.vn.flavorlife.layout.ItemFollowView;
 import moony.vn.flavorlife.layout.ItemFollowerView;
 import moony.vn.flavorlife.layout.ItemMessageView;

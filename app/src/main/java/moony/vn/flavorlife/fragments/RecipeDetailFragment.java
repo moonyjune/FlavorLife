@@ -15,8 +15,8 @@ import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.entities.SectionIngredient;
 import moony.vn.flavorlife.entities.SectionInstruction;
 import moony.vn.flavorlife.entities.Step;
-import moony.vn.flavorlife.layout.ListIngredientsView;
-import moony.vn.flavorlife.layout.ListInstructionsView;
+import moony.vn.flavorlife.layout.DetailRecipeListIngredientsView;
+import moony.vn.flavorlife.layout.DetailRecipeListInstructionsView;
 
 /**
  * Created by moony on 3/9/15.
@@ -24,8 +24,8 @@ import moony.vn.flavorlife.layout.ListInstructionsView;
 public class RecipeDetailFragment extends NFragmentSwitcher {
     private static final String RECIPE = "recipe";
     private Recipe mRecipe;
-    private ListIngredientsView mListIngredientsView;
-    private ListInstructionsView mListInstructionsView;
+    private DetailRecipeListIngredientsView mDetailRecipeListIngredientsView;
+    private DetailRecipeListInstructionsView mDetailRecipeListInstructionsView;
 
     public static RecipeDetailFragment newInstance(Recipe recipe) {
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
@@ -37,8 +37,8 @@ public class RecipeDetailFragment extends NFragmentSwitcher {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListIngredientsView = (ListIngredientsView) view.findViewById(R.id.list_ingredients);
-        mListInstructionsView = (ListInstructionsView) view.findViewById(R.id.list_instruction);
+        mDetailRecipeListIngredientsView = (DetailRecipeListIngredientsView) view.findViewById(R.id.list_ingredients);
+        mDetailRecipeListInstructionsView = (DetailRecipeListInstructionsView) view.findViewById(R.id.list_instruction);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RecipeDetailFragment extends NFragmentSwitcher {
         sectionIngredientList.add(sectionIngredient);
         sectionIngredientList.add(sectionIngredient);
         sectionIngredientList.add(sectionIngredient);
-        mListIngredientsView.setListSectionIngredient(sectionIngredientList);
+        mDetailRecipeListIngredientsView.setListSectionIngredient(sectionIngredientList);
 
         List<SectionInstruction> sectionInstructionList = new ArrayList<SectionInstruction>();
         SectionInstruction sectionInstruction = new SectionInstruction();
@@ -68,7 +68,7 @@ public class RecipeDetailFragment extends NFragmentSwitcher {
         sectionInstructionList.add(sectionInstruction);
         sectionInstructionList.add(sectionInstruction);
         sectionInstructionList.add(sectionInstruction);
-        mListInstructionsView.setListSectionIngredient(sectionInstructionList);
+        mDetailRecipeListInstructionsView.setListSectionIngredient(sectionInstructionList);
     }
 
     @Override
