@@ -1,5 +1,7 @@
 package moony.vn.flavorlife.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.FollowsPagerAdapter;
+import moony.vn.flavorlife.gcm.GcmBroadcastReceiver;
 import moony.vn.flavorlife.layout.TabIndicator;
 
 /**
@@ -53,4 +56,5 @@ public class FollowsFragment extends NFragment {
         tabNames.add("Followers");
         return tabNames;
     }
+
 }

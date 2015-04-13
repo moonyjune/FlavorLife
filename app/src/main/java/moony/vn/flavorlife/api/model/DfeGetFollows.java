@@ -2,14 +2,20 @@ package moony.vn.flavorlife.api.model;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import moony.vn.flavorlife.api.Api;
+import moony.vn.flavorlife.api.ApiKey;
 import moony.vn.flavorlife.entities.Follow;
 import moony.vn.flavorlife.entities.Recipe;
 
@@ -26,22 +32,21 @@ public class DfeGetFollows extends FlPaginatedList<Follow> {
 
     @Override
     protected Request<JSONObject> makeRequest(int skip, int take, Date requestDate) {
-        return mApi.getNewRecipes(skip, take, requestDate, this, this);
+        return mApi.getFollows(skip, take, requestDate, this, this);
     }
 
     @Override
     protected List<Follow> parseResponse(JSONObject response) {
-        List<Follow> follows = new ArrayList<>();
-        Follow follow = new Follow();
-        follows.add(follow);
-        follows.add(follow);
-        follows.add(follow);
-        follows.add(follow);
-        follows.add(follow);
-        follows.add(follow);
-        follows.add(follow);
-        follows.add(follow);
-        return follows;
+        try {
+            JSONArray data = response.getJSONArray(ApiKey.DATA);
+            Gson gson = new Gson();
+            List<Follow> follows = gson.fromJson(data.toString(), new TypeToken<Collection<Follow>>() {
+            }.getType());
+            return follows;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

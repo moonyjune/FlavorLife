@@ -5,7 +5,10 @@ package com.ntq.fragments;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,12 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.android.volley.VolleyError;
 import com.ntq.imageloader.NImageLoader;
 
+import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.actionbar.CustomActionbar;
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.api.Api;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
+import moony.vn.flavorlife.utils.ErrorStrings;
 
 /**
  * This is base fragment. <br>
@@ -36,6 +42,7 @@ public class NFragment extends Fragment {
     protected NavigationManager mNavigationManager;
     protected CustomActionbar mActionbar;
     protected AppAnalytics mAppAnalytics;
+    private ProgressDialog mProgressDialog;
 
     public NFragment() {
         setArguments(new Bundle());
@@ -110,4 +117,42 @@ public class NFragment extends Fragment {
         super.onSaveInstanceState(outState);
         mSaveInstanceStateCalled = true;
     }
+
+    public void showDialogLoading() {
+        if (mProgressDialog == null)
+            mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage(getString(R.string.waiting));
+        mProgressDialog.setCanceledOnTouchOutside(true);
+        mProgressDialog.show();
+    }
+
+    public void hideDialogLoading() {
+        if (mProgressDialog != null)
+            mProgressDialog.dismiss();
+    }
+
+    public void showDialogMessageError(String mess) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage(mess);
+        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        NAlertDialogFragment.show(getFragmentManager(), builder);
+    }
+
+    public void showDialogMessageError(VolleyError error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage(ErrorStrings.get(getActivity(), error));
+        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        NAlertDialogFragment.show(getFragmentManager(), builder);
+    }
+
 }

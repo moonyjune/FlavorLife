@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.ntq.fragments.NFragment;
 
+import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.entities.User;
 
 /**
  * Created by moony on 3/1/15.
@@ -27,7 +29,11 @@ public class SplashFragment extends NFragment {
             @Override
             public void run() {
                 if (getActivity() == null) return;
-                mNavigationManager.showPageWithoutStack(new LoginFragment());
+                if (FlavorLifeApplication.get().getUser().getState() == User.State.LOGGED_OUT) {
+                    mNavigationManager.showPageWithoutStack(new LoginFragment());
+                } else {
+                    mNavigationManager.showNewRecipes();
+                }
             }
         }, 1000);
     }

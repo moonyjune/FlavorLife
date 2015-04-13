@@ -4,11 +4,15 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 
@@ -20,6 +24,7 @@ import com.ntq.activities.NActivity;
 import com.ntq.api.model.OnDataChangedListener;
 import com.ntq.imageloader.NImageLoader;
 import com.ntq.utils.OSUtils;
+import com.ntq.utils.Utils;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
@@ -27,7 +32,14 @@ import moony.vn.flavorlife.actionbar.CustomActionBarFactory;
 import moony.vn.flavorlife.actionbar.CustomActionbar;
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.api.Api;
+import moony.vn.flavorlife.api.model.DfeRegisterGcm;
+import moony.vn.flavorlife.gcm.GcmBroadcastReceiver;
+import moony.vn.flavorlife.gcm.GcmIntentService;
+import moony.vn.flavorlife.gcm.GcmRegisterService;
+import moony.vn.flavorlife.gcm.GcmUtils;
+import moony.vn.flavorlife.gcm.NotificationService;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
+import moony.vn.flavorlife.utils.AppPrefers;
 import moony.vn.flavorlife.utils.ErrorStrings;
 import moony.vn.flavorlife.widget.TabWidget;
 
@@ -36,12 +48,21 @@ import moony.vn.flavorlife.widget.TabWidget;
  */
 public abstract class BaseActivity extends NActivity implements TabWidget.OnTabChangeListener, View.OnClickListener {
     public static final String KEY_CLEAR_ALL_STACK = "clear_all_stack";
-
-//    private SlidingMenu mMenu;
+    //    private SlidingMenu mMenu;
     protected NavigationManager mNavigationManager;
     protected CustomActionbar mActionbar;
     protected TabWidget mTabWidget;
     private ProgressDialog mProgressDialog;
+
+    public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle data = intent.getExtras();
+            if (data != null) {
+                mTabWidget.setNumNotification(AppPrefers.getInstance().getNumberNotifications());
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,4 +241,5 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         mActionbar.dispose();
         mActionbar = null;
     }
+
 }

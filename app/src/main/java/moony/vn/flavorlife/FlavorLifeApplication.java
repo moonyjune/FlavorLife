@@ -45,7 +45,7 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
         mUser = restoreUser();
         if (mUser == null) {
             mUser = new User();
-            mUser.setId(10);
+            mUser.setId(1);
             storeUser();
         }
     }
@@ -88,6 +88,20 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
         }
     }
 
+    public void updateIdUser(int userId) {
+        mUser.setId(userId);
+        storeUser();
+    }
+
+    public void updateStateUser(boolean isLoggedIn) {
+        if (isLoggedIn) {
+            mUser.setState(User.State.LOGGED_IN);
+        } else {
+            mUser.setState(User.State.LOGGED_OUT);
+        }
+        storeUser();
+    }
+
     public User restoreUser() {
         try {
             FileInputStream fis = openFileInput("user");
@@ -96,7 +110,9 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
             is.close();
             return user;
         } catch (IOException e) {
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return null;
     }

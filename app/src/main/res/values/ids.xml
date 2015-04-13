@@ -94,5 +94,13 @@
     <item name="delete_ingredient" type="id" />
     <item name="delete_step" type="id" />
     <item name="step_number" type="id" />
+    <item name="login" type="id" />
+    <item name="email" type="id" />
+    <item name="user_name" type="id" />
+    <item name="user_num_book" type="id" />
+    <item name="user_num_recipe" type="id" />
+    <item name="user_num_follower" type="id" />
+    <item name="follow" type="id" />
+    <item name="num_notification" type="id" />
 
 </resources>

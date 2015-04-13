@@ -50,4 +50,21 @@ public class AppPrefers extends BasePrefers {
         return mPreferences.getString("registration_id", null);
     }
 
+    private boolean containKey(String key) {
+        return mPreferences.contains(key);
+    }
+
+    public boolean containRegistrationKey() {
+        return containKey("registration_id");
+    }
+
+    public void saveNumberNotifications(int num) {
+        mEditor.putInt("number_notification", num).commit();
+    }
+
+    public int getNumberNotifications() {
+        if (!containKey("number_notification")) return 0;
+        return mPreferences.getInt("number_notification", 0);
+    }
+
 }

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout xmlns:fl="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingBottom="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,8 +45,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="30sp"
-                            android:text="11" />
+                            android:text="11"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -52,6 +54,7 @@
                             android:gravity="center"
                             android:text="books" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -62,8 +65,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="30sp"
-                            android:text="29" />
+                            android:text="29"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -71,6 +74,7 @@
                             android:gravity="center"
                             android:text="recipes" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -81,8 +85,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="30sp"
-                            android:text="869" />
+                            android:text="869"
+                            android:textSize="30sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -118,7 +122,7 @@
         <android.support.v4.view.ViewPager
             android:id="@id/hf_view_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="500dp"
             android:background="@color/blue_light" />
     </LinearLayout>
 
@@ -126,4 +130,4 @@
     <!--android:id="@id/tab_home"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
-</RelativeLayout>
+</ScrollView>

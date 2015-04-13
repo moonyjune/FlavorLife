@@ -6,15 +6,18 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.utils.AppPrefers;
 
 /**
  * Created by moony on 3/1/15.
  */
 public class TabWidget extends LinearLayout implements View.OnClickListener {
 
-    private View mNewRecipes, mFollows, mHome, mMessage, mCreateRecipe;
+    private View mNewRecipes, mFollows, mHome, mNotification, mCreateRecipe;
+    private TextView mNumNotification;
 
     public interface OnTabChangeListener {
         public void onNewRecipesTabSelected();
@@ -64,13 +67,14 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
         mNewRecipes = findViewById(R.id.new_recipes);
         mFollows = findViewById(R.id.follows);
         mHome = findViewById(R.id.home);
-        mMessage = findViewById(R.id.messages);
+        mNotification = findViewById(R.id.notification);
         mCreateRecipe = findViewById(R.id.create_recipe);
+        mNumNotification = (TextView) findViewById(R.id.num_notification);
 
         mNewRecipes.setOnClickListener(this);
         mFollows.setOnClickListener(this);
         mHome.setOnClickListener(this);
-        mMessage.setOnClickListener(this);
+        mNotification.setOnClickListener(this);
         mCreateRecipe.setOnClickListener(this);
     }
 
@@ -87,7 +91,7 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
     }
 
     public void focusMessagesTab() {
-        focusTab(R.id.messages);
+        focusTab(R.id.notification);
     }
 
     public void focusCreateRecipeTab() {
@@ -100,45 +104,48 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
                 mNewRecipes.setSelected(true);
                 mFollows.setSelected(false);
                 mHome.setSelected(false);
-                mMessage.setSelected(false);
+                mNotification.setSelected(false);
                 mCreateRecipe.setSelected(false);
                 break;
             case R.id.follows:
                 mNewRecipes.setSelected(false);
                 mFollows.setSelected(true);
                 mHome.setSelected(false);
-                mMessage.setSelected(false);
+                mNotification.setSelected(false);
                 mCreateRecipe.setSelected(false);
                 break;
             case R.id.home:
                 mNewRecipes.setSelected(false);
                 mFollows.setSelected(false);
                 mHome.setSelected(true);
-                mMessage.setSelected(false);
+                mNotification.setSelected(false);
                 mCreateRecipe.setSelected(false);
                 break;
-            case R.id.messages:
+            case R.id.notification:
                 mNewRecipes.setSelected(false);
                 mFollows.setSelected(false);
                 mHome.setSelected(false);
-                mMessage.setSelected(true);
+                mNotification.setSelected(true);
                 mCreateRecipe.setSelected(false);
+                AppPrefers.getInstance().saveNumberNotifications(0);
                 break;
             case R.id.create_recipe:
                 mNewRecipes.setSelected(false);
                 mFollows.setSelected(false);
                 mHome.setSelected(false);
-                mMessage.setSelected(false);
+                mNotification.setSelected(false);
                 mCreateRecipe.setSelected(true);
                 break;
         }
+        setNumNotification(AppPrefers.getInstance().getNumberNotifications());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.new_recipes:
-                if (mTabMainChangeListener != null) mTabMainChangeListener.onNewRecipesTabSelected();
+                if (mTabMainChangeListener != null)
+                    mTabMainChangeListener.onNewRecipesTabSelected();
                 break;
             case R.id.follows:
                 if (mTabMainChangeListener != null)
@@ -147,14 +154,23 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
             case R.id.home:
                 if (mTabMainChangeListener != null) mTabMainChangeListener.onHomeTabSelected();
                 break;
-            case R.id.messages:
+            case R.id.notification:
                 if (mTabMainChangeListener != null) mTabMainChangeListener.onMessageTabSelected();
                 break;
             case R.id.create_recipe:
-                if (mTabMainChangeListener != null) mTabMainChangeListener.onCreateRecipeTabSelected();
+                if (mTabMainChangeListener != null)
+                    mTabMainChangeListener.onCreateRecipeTabSelected();
                 break;
         }
         focusTab(v.getId());
     }
 
+    public void setNumNotification(int num) {
+        if (num > 0) {
+            mNumNotification.setText(num+"");
+            mNumNotification.setVisibility(VISIBLE);
+        } else {
+            mNumNotification.setVisibility(GONE);
+        }
+    }
 }

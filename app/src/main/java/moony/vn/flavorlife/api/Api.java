@@ -43,7 +43,7 @@ public interface Api {
     public Request<JSONObject> deleteRecipe(int recipe_id,
                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> follow(int user_id,
+    public Request<JSONObject> follow(int followUserId,
                                       Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> unFollow(int user_id,
@@ -70,17 +70,20 @@ public interface Api {
     public Request<JSONObject> getUserCookbooks(int user_id,
                                                 Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getRecipeDetail(int recipe_id,
+    public Request<JSONObject> getRecipeDetail(int recipeId,
                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getFollows(int user_id,
+    public Request<JSONObject> getFollows(int skip, int take, Date requestDate,
                                           Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> getFollowers(int user_id,
                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getBookDetail(int book_id,
+    public Request<JSONObject> getBookDetail(int bookId,
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> registerGcm(int user_id, String registerId,
+                                           Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
 
 }

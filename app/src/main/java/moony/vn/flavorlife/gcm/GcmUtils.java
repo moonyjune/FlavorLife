@@ -19,7 +19,9 @@ public class GcmUtils {
      * registration ID.
      */
     public static String getRegistrationId(Context context) {
-
+        if(!AppPrefers.getInstance().containRegistrationKey()){
+            return "";
+        }
         String registrationId = AppPrefers.getInstance().getRegistrationId();
         if (registrationId.isEmpty()) {
             return "";
