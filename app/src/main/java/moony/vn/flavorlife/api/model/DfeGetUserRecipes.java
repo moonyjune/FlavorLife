@@ -32,7 +32,7 @@ public class DfeGetUserRecipes extends FlPaginatedList<Recipe> {
 
     @Override
     protected List<Recipe> parseResponse(JSONObject response) {
-        List<Recipe> recipes = new ArrayList<>();
+        List<Recipe> recipes = new ArrayList<Recipe>();
         Recipe recipe = new Recipe();
         recipes.add(recipe);
         recipes.add(recipe);

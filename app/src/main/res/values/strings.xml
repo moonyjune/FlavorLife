@@ -16,5 +16,11 @@
     <string name="acion_bar_title_home">Home</string>
     <string name="action_bar_title_messages">Messages</string>
     <string name="action_bar_title_create_recipe">Create Recipe</string>
+    <string name="forget_account">Forget your account ?</string>
+    <string name="pass_hint">********</string>
+    <string name="email_hint">Email</string>
+    <string name="log_in">Log In</string>
+    <string name="following">Following</string>
+    <string name="plus_follow">+ Follow</string>
 
 </resources>

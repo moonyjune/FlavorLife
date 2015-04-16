@@ -19,6 +19,21 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
     private View mNewRecipes, mFollows, mHome, mNotification, mCreateRecipe;
     private TextView mNumNotification;
 
+    public TabWidget(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public TabWidget(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public TabWidget(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
+
     public interface OnTabChangeListener {
         public void onNewRecipesTabSelected();
 
@@ -32,27 +47,6 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
     }
 
     private OnTabChangeListener mTabMainChangeListener;
-
-    public TabWidget(Context context) {
-        super(context);
-        init(context);
-    }
-
-    public TabWidget(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
-
-    public TabWidget(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TabWidget(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
 
     public void setTabMainChangeListener(OnTabChangeListener tabMainChangeListener) {
         this.mTabMainChangeListener = tabMainChangeListener;

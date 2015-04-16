@@ -27,12 +27,6 @@ public class AddSectionContentView extends LinearLayout {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public AddSectionContentView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         inflate(getContext(), R.layout.add_section_content_layout, this);
     }

@@ -31,12 +31,6 @@ public class CookbookView extends LinearLayout {
         init(context);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CookbookView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
     public CookbookView(Context context, NImageLoader imageLoader, NavigationManager navigationManager) {
         super(context);
         init(context);

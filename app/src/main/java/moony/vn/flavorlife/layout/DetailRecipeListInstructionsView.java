@@ -28,11 +28,6 @@ public class DetailRecipeListInstructionsView extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DetailRecipeListInstructionsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     private void init(List<SectionInstruction> mListSectionInstruction) {
         if (mListSectionInstruction == null) return;
         removeAllViews();

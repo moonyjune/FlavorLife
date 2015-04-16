@@ -9,16 +9,20 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.ntq.fragments.NFragmentSwitcher;
+import com.ntq.mediapicker.NMediaItem;
+import com.ntq.mediapicker.NMediaOptions;
+import com.ntq.mediapicker.NMediaPickerActivity;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.RequestCode;
@@ -30,6 +34,8 @@ import moony.vn.flavorlife.layout.TypeView;
  * Created by moony on 3/4/15.
  */
 public class IntroductionFragment extends NFragmentSwitcher implements View.OnClickListener {
+    private static final int REQUEST_IMAGE = 10000;
+    private static final String TAG = "IntroductionFragment";
     protected static final String IMAGE_PATH = "image_path";
     private Uri mImageURI;
     private TypeView mChooseType;
@@ -87,7 +93,14 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.choose_picture:
-                startActivityCamera();
+//                startActivityCamera();
+                NMediaOptions.Builder builder = new NMediaOptions.Builder();
+                NMediaOptions options = NMediaOptions.createDefault();
+                options = builder.setIsCropped(true).setFixAspectRatio(false)
+                        .build();
+                NMediaPickerActivity.open(IntroductionFragment.this,
+                        REQUEST_IMAGE, options);
+                System.out.println("Mj : active page - "+mNavigationManager.getActivePage());
                 break;
         }
     }
@@ -134,21 +147,61 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("Mj : onActivityResult : " + requestCode);
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            switch (requestCode) {
-                case RequestCode.CODE_CHOOSE_TYPE:
-                    List<Integer> listTypes = data.getIntegerArrayListExtra("list_types");
-                    mChooseType.setTypes(listTypes);
-                    break;
-                case RequestCode.CODE_CHOOSE_PICTURE:
+//        System.out.println("Mj : onActivityResult : " + requestCode);
+//        if (resultCode == Activity.RESULT_OK && data != null) {
+//            switch (requestCode) {
+//                case RequestCode.CODE_CHOOSE_TYPE:
+//                    List<Integer> listTypes = data.getIntegerArrayListExtra("list_types");
+//                    mChooseType.setTypes(listTypes);
+//                    break;
+//                case RequestCode.CODE_CHOOSE_PICTURE:
+//
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+        System.out.println("Mj : onActivityResult");
+        ArrayList<NMediaItem> mMediaSelectedList;
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                mMediaSelectedList = NMediaPickerActivity
+                        .getNMediaItemSelected(data);
+                if (mMediaSelectedList != null) {
 
-                    break;
-                default:
-                    break;
+                    StringBuilder builder = new StringBuilder();
+                    for (NMediaItem mediaItem : mMediaSelectedList) {
+                        Log.i(TAG, mediaItem.toString());
+                        builder.append(mediaItem.toString());
+                        builder.append(", PathOrigin=");
+                        builder.append(mediaItem.getPathOrigin(getActivity()));
+                        builder.append(", PathCropped=");
+                        builder.append(mediaItem.getPathCropped(getActivity()));
+                        builder.append("\n\n");
+
+                        addImages(mediaItem);
+                    }
+                } else {
+                    Log.e(TAG, "Error to get media, NULL");
+                }
+            } else {
+                Log.e(TAG, "Get media cancled.");
             }
         }
     }
+
+    private void addImages(NMediaItem mediaItem) {
+        if (mediaItem.getUriCropped() == null) {
+            mImageLoader.display(mediaItem.getUriOrigin(), mImageRecipe);
+        } else {
+            mImageLoader.display(mediaItem.getUriCropped(), mImageRecipe);
+        }
+    }
+
+    private void clearImages() {
+        mImageRecipe.setImageResource(R.drawable.ic_launcher);
+    }
+
 
     public Recipe getRecipe() {
         if (validInformation()) {

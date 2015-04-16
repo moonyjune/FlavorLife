@@ -51,11 +51,21 @@
                 android:padding="5dp"
                 android:text="Level" />
 
+            <RatingBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1"
+                android:rating="3"
+                style="@style/MyRatingBar"
+                android:layout_weight="1" />
+
             <moony.vn.flavorlife.layout.LevelView
                 android:id="@id/recipe_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout

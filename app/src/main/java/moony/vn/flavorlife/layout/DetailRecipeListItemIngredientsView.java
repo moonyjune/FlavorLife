@@ -28,11 +28,6 @@ public class DetailRecipeListItemIngredientsView extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DetailRecipeListItemIngredientsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     private  void init(List<Ingredient> mIngredientList){
         if( mIngredientList == null) return;
         setOrientation(VERTICAL);

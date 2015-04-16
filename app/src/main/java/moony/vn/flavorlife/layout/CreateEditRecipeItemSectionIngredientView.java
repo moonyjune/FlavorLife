@@ -30,11 +30,6 @@ public class CreateEditRecipeItemSectionIngredientView extends LinearLayout {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CreateEditRecipeItemSectionIngredientView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
 
     private void init() {
         inflate(getContext(), R.layout.create_edit_recipe_item_section_ingredient_detail, this);

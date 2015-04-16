@@ -31,7 +31,7 @@ public class DfeGetMessages extends FlPaginatedList<Message> {
 
     @Override
     protected List<Message> parseResponse(JSONObject response) {
-        List<Message> messages = new ArrayList<>();
+        List<Message> messages = new ArrayList<Message>();
         Message message = new Message();
         messages.add(message);
         messages.add(message);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,8 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
     private NavigationManager mNavigationManager;
     private Recipe mRecipe;
     private TextView mRecipeName;
+    private ImageView mRecipeImage;
+    private NImageLoader mImageLoader;
 
     public NewRecipesView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,12 +33,6 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
 
     public NewRecipesView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public NewRecipesView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         init(context);
     }
 
@@ -48,11 +45,13 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
         super(context);
         init(context);
         mNavigationManager = navigationManager;
+        mImageLoader = imageLoader;
     }
 
     private void init(Context context) {
         inflate(context, R.layout.item_recipe, this);
         mRecipeName = (TextView) findViewById(R.id.recipe_name);
+        mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
         setOnClickListener(this);
     }
 
@@ -60,6 +59,7 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
         if (recipe == null) return;
         mRecipe = recipe;
         mRecipeName.setText(recipe.getName());
+//        mImageLoader.display(recipe.getImages(), mRecipeImage);
     }
 
     @Override

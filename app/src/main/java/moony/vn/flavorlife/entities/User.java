@@ -20,7 +20,11 @@ public class User {
 
     public enum State {
         LOGGED_IN,
-        State, LOGGED_OUT
+        LOGGED_OUT
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public void setState(State state) {

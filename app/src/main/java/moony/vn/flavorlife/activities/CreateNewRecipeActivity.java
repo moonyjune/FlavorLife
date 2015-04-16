@@ -1,5 +1,6 @@
 package moony.vn.flavorlife.activities;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 
@@ -26,4 +27,5 @@ public class CreateNewRecipeActivity extends BaseActivity {
         super.onPause();
         unregisterReceiver(broadcastReceiver);
     }
+
 }

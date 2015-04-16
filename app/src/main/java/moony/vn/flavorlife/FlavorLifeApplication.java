@@ -24,6 +24,7 @@ import moony.vn.flavorlife.api.Api;
 import moony.vn.flavorlife.api.ApiImpl;
 import moony.vn.flavorlife.api.ApiProvider;
 import moony.vn.flavorlife.entities.User;
+import moony.vn.flavorlife.utils.AppPrefers;
 
 public class FlavorLifeApplication extends Application implements ApiProvider {
     private static FlavorLifeApplication mFlavorLifeApplication;
@@ -46,6 +47,7 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
         if (mUser == null) {
             mUser = new User();
             mUser.setId(1);
+            mUser.setState(User.State.LOGGED_OUT);
             storeUser();
         }
     }
@@ -96,7 +98,9 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
     public void updateStateUser(boolean isLoggedIn) {
         if (isLoggedIn) {
             mUser.setState(User.State.LOGGED_IN);
+            AppPrefers.getInstance().saveUserState(1);
         } else {
+            AppPrefers.getInstance().saveUserState(2);
             mUser.setState(User.State.LOGGED_OUT);
         }
         storeUser();
@@ -107,6 +111,8 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
             FileInputStream fis = openFileInput("user");
             ObjectInputStream is = new ObjectInputStream(fis);
             User user = (User) is.readObject();
+            int state = AppPrefers.getInstance().getUserState();
+            user.setState(state);
             is.close();
             return user;
         } catch (IOException e) {

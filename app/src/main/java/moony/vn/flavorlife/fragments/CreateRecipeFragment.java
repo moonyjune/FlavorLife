@@ -56,7 +56,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
-        List<Fragment> fragments = new ArrayList<>();
+        List<Fragment> fragments = new ArrayList<Fragment>();
         fragments.add(IngredientFragment2.newInstance());
         fragments.add(InstructionFragment.newInstance());
         fragments.add(IntroductionFragment.newInstance());
@@ -66,7 +66,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     }
 
     private List<String> getListTabName() {
-        List<String> listTabName = new ArrayList<>();
+        List<String> listTabName = new ArrayList<String>();
         listTabName.add("Ingredients");
         listTabName.add("Instruction");
         listTabName.add("Introduction");
@@ -76,6 +76,8 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (mRecipePagerAdapter != null)
+            mRecipePagerAdapter.getItem(2).onActivityResult(requestCode, resultCode, data);
     }
 
     public void request() {
@@ -85,12 +87,12 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
         }
     }
 
-    private void requestCreateRecipe(){
-       if(mDfeCreateRecipe == null){
-           mDfeCreateRecipe = new DfeCreateRecipe(mApi);
-           mDfeCreateRecipe.addDataChangedListener(this);
-           mDfeCreateRecipe.addErrorListener(this);
-       }
+    private void requestCreateRecipe() {
+        if (mDfeCreateRecipe == null) {
+            mDfeCreateRecipe = new DfeCreateRecipe(mApi);
+            mDfeCreateRecipe.addDataChangedListener(this);
+            mDfeCreateRecipe.addErrorListener(this);
+        }
         mDfeCreateRecipe.makeRequest(mRecipe);
     }
 
@@ -111,7 +113,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
             }
         }
 
-        if(mSectionIngredients != null & mSectionInstructions!= null){
+        if (mSectionIngredients != null & mSectionInstructions != null) {
             List<Section> sections = new ArrayList<Section>();
             for (int j = 0; j < mSectionIngredients.size(); j++) {
                 Section section = new Section();
@@ -135,4 +137,5 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     public void onDataChanged() {
 
     }
+
 }

@@ -43,12 +43,6 @@ public class ItemFollowView extends LinearLayout implements View.OnClickListener
         init(context);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ItemFollowView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
     public ItemFollowView(Context context, NImageLoader imageLoader, NavigationManager navigationManager) {
         super(context);
         init(context);

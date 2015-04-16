@@ -46,7 +46,7 @@ public class HomeFragment extends NFragment {
     }
 
     public List<String> getTabNames() {
-        List<String> tabNames = new ArrayList<>();
+        List<String> tabNames = new ArrayList<String>();
         tabNames.add("My Recipes");
         tabNames.add("My Cookbooks");
         return tabNames;

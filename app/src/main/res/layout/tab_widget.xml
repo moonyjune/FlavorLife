@@ -4,50 +4,43 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/new_recipes"
+    <ImageView
+        android:id="@id/new_recipes"
         style="@style/TabWidget"
-        android:drawableTop="@drawable/ic_launcher"
-        android:text="Recipes"
-        android:textColor="@drawable/text_color_selected" />
+        android:src="@drawable/tab_news_recipes" />
 
-    <TextView
-        android:id="@+id/follows"
-        style="@style/TabWidget_MarginLeft"
-        android:drawableTop="@drawable/ic_launcher"
-        android:text="Follows"
-        android:textColor="@drawable/text_color_selected" />
+    <ImageView
+        android:id="@id/follows"
+        style="@style/TabWidget"
+        android:src="@drawable/tab_follows" />
 
-    <TextView
-        android:id="@+id/create_recipe"
-        style="@style/TabWidget_MarginLeft"
-        android:drawableTop="@drawable/ic_launcher"
-        android:text="Create"
-        android:textColor="@drawable/text_color_selected" />
+    <ImageView
+        android:id="@id/create_recipe"
+        style="@style/TabWidget"
+        android:src="@drawable/tab_create_recipe" />
 
     <RelativeLayout
-        android:id="@+id/notification"
+        android:id="@id/notification"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@android:color/white">
+        android:background="@drawable/bg_selector">
 
-        <TextView
-            style="@style/TabWidget_MarginLeft"
+        <ImageView
+            android:id="@id/notification"
             android:layout_width="match_parent"
-            android:drawableTop="@drawable/ic_launcher"
-            android:gravity="center"
-            android:text="Notification"
-            android:textColor="@drawable/text_color_selected" />
+            android:layout_height="@dimen/item_tab_widget_height"
+            android:scaleType="centerInside"
+            android:src="@drawable/tab_notification" />
 
         <TextView
-            android:visibility="gone"
             android:id="@id/num_notification"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/number_notification_size"
+            android:layout_height="@dimen/number_notification_size"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@color/red"
+            android:background="@color/blue_light"
             android:gravity="center"
             android:text="0"
             android:textColor="@android:color/white"
@@ -55,10 +48,8 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/home"
-        style="@style/TabWidget_MarginLeft"
-        android:drawableTop="@drawable/ic_launcher"
-        android:text="Home"
-        android:textColor="@drawable/text_color_selected" />
+    <ImageView
+        android:id="@id/home"
+        style="@style/TabWidget"
+        android:src="@drawable/tab_profile" />
 </LinearLayout>

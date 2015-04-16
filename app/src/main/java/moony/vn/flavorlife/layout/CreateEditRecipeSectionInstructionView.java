@@ -32,12 +32,6 @@ public class CreateEditRecipeSectionInstructionView extends LinearLayout impleme
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CreateEditRecipeSectionInstructionView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         inflate(getContext(), R.layout.create_edit_recipe_item_section_instruction, this);
     }

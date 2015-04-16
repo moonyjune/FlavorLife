@@ -33,12 +33,6 @@ public class DetailRecipeItemSectionIngredientView extends LinearLayout {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DetailRecipeItemSectionIngredientView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         inflate(getContext(), R.layout.detail_recipe_item_section_ingredient_detail, this);
         mIngredientInformation = (TextView) findViewById(R.id.ingredient_information);

@@ -28,11 +28,6 @@ public class DetailRecipeListItemStepView extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public DetailRecipeListItemStepView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     private  void init(List<Step> mStepList){
         if( mStepList == null) return;
         setOrientation(VERTICAL);

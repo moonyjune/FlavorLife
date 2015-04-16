@@ -2,19 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
     android:orientation="horizontal">
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/default_cookbook_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp">
 
         <TextView
+            style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
@@ -22,11 +28,13 @@
             android:text="Vegetarian" />
 
         <TextView
+            style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:maxLines="3"
-            android:text="Lorem ipsum dolor sit amet, sonsectetur adipiscing edit, sed do eiusmod tempor incididunt ut labore et dolore mangua aligua" />
+            android:text="Lorem ipsum dolor sit amet, sonsectetur adipiscing edit, sed do eiusmod tempor incididunt ut labore et dolore mangua aligua"
+            android:textStyle="italic" />
     </LinearLayout>
 
 </LinearLayout>

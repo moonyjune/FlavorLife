@@ -19,7 +19,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="MediaPickerTheme" parent="Theme.AppCompat">
+    <style name="MediaPickerTheme" parent="Theme.AppCompat.Light">
 
         <!-- Support library compatibility -->
         <item name="windowActionBarOverlay">true</item>
@@ -31,16 +31,37 @@
     <style name="TabWidget">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">80dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:layout_height">@dimen/item_tab_widget_height</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/bg_selector</item>
+    </style>
+
+    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar</item>
     </style>
 
     <style name="TabWidget_MarginLeft" parent="TabWidget">
         <item name="android:layout_marginLeft">1px</item>
     </style>
 
+    <style name="EditTextWhite">
+        <item name="android:background">@drawable/et_no_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="TextBoldWhite">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextBoldRed">
+        <item name="android:textColor">@color/fl_color</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

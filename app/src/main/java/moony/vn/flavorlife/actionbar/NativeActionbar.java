@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
@@ -24,8 +25,8 @@ public class NativeActionbar implements CustomActionbar {
     private ActionBar mActionBar;
     private int mCurrentResId = R.layout.actionbar_title;
     private TextView mTitle;
-    private TextView mBack;
-    private TextView mMenu;
+    private ImageView mBtnLeft;
+    private ImageView mMessage;
 
     @Override
     public void initialize(NavigationManager navigationManager,
@@ -34,11 +35,11 @@ public class NativeActionbar implements CustomActionbar {
         mBaseActivity = (BaseActivity) activity;
         mActionBar = activity.getSupportActionBar();
         mNavigationManager.addOnBackStackChangedListener(backStackChangedListener);
-        mActionBar.setBackgroundDrawable(null);
         mActionBar.setDisplayShowCustomEnabled(true);
         mActionBar.setDisplayHomeAsUpEnabled(false);
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayUseLogoEnabled(false);
         mActionBar.setCustomView(mCurrentResId);
         findChildViews();
         setupChildViews();
@@ -99,12 +100,11 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     protected void findChildViews() {
-        // TODO find child view in Actionbar.
         View actionbarView = mActionBar.getCustomView();
 
         mTitle = (TextView) actionbarView.findViewById(R.id.title);
-        mBack = (TextView) actionbarView.findViewById(R.id.back);
-        mMenu = (TextView) actionbarView.findViewById(R.id.menu);
+        mBtnLeft = (ImageView) actionbarView.findViewById(R.id.search);
+        mMessage = (ImageView) actionbarView.findViewById(R.id.message);
     }
 
     protected void removeAllChildViews() {
@@ -117,13 +117,13 @@ public class NativeActionbar implements CustomActionbar {
     protected void setupChildViews() {
         // TODO setup for child view (ex:click listener)
         setupTitle();
-        setupBack();
-        setupMenu();
+        setupBtnLeft();
+        setupBtnRight();
     }
 
-    private void setupMenu() {
-        if (mMenu == null) return;
-        mMenu.setOnClickListener(new View.OnClickListener() {
+    private void setupBtnRight() {
+        if (mMessage == null) return;
+        mMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = mNavigationManager.getActivePage();
@@ -138,9 +138,9 @@ public class NativeActionbar implements CustomActionbar {
         });
     }
 
-    private void setupBack() {
-        if (mBack == null) return;
-        mBack.setOnClickListener(new View.OnClickListener() {
+    private void setupBtnLeft() {
+        if (mBtnLeft == null) return;
+        mBtnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mNavigationManager.getActivePage() instanceof OnBackButtonListener) {
@@ -165,25 +165,25 @@ public class NativeActionbar implements CustomActionbar {
 
     protected void syncChildViews(Fragment activePage) {
         syncTitle(activePage);
-        syncBack(activePage);
-        syncMenu(activePage);
+        syncBtnLeft(activePage);
+        syncBtnRight(activePage);
     }
 
-    private void syncMenu(Fragment activePage) {
-        if (mMenu == null) return;
+    private void syncBtnRight(Fragment activePage) {
+        if (mMessage == null) return;
         if (activePage instanceof LoginFragment) {
-            mMenu.setVisibility(View.GONE);
+            mMessage.setVisibility(View.GONE);
         } else {
-            mMenu.setVisibility(View.VISIBLE);
+            mMessage.setVisibility(View.VISIBLE);
         }
     }
 
-    private void syncBack(Fragment activePage) {
-        if (mBack == null) return;
-        if (activePage instanceof LoginFragment || activePage instanceof NewRecipesFragment) {
-            mBack.setVisibility(View.GONE);
+    private void syncBtnLeft(Fragment activePage) {
+        if (mBtnLeft == null) return;
+        if (activePage instanceof LoginFragment) {
+            mBtnLeft.setVisibility(View.GONE);
         } else {
-            mBack.setVisibility(View.VISIBLE);
+            mBtnLeft.setVisibility(View.VISIBLE);
         }
     }
 

@@ -14,7 +14,6 @@ import com.ntq.fragments.NFragment;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.activities.MainActivity;
 import moony.vn.flavorlife.api.model.DfeLogin;
 
 public class LoginFragment extends NFragment implements View.OnClickListener, OnDataChangedListener, Response.ErrorListener {

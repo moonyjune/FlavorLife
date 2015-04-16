@@ -31,7 +31,7 @@ public class DfeGetFollowers extends FlPaginatedList<Follower> {
 
     @Override
     protected List<Follower> parseResponse(JSONObject response) {
-        List<Follower> followers = new ArrayList<>();
+        List<Follower> followers = new ArrayList<Follower>();
         Follower follower = new Follower();
         followers.add(follower);
         followers.add(follower);

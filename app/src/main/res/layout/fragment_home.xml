@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@android:color/white"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -18,10 +19,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_launcher" />
+                android:layout_margin="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/default_monkey_image"
+                app:riv_border_color="@android:color/transparent"
+                app:riv_border_width="1dp"
+                app:riv_mutate_background="true"
+                app:riv_oval="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,12 +50,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextBoldRed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="11"
                             android:textSize="30sp" />
 
                         <TextView
+                            style="@style/TextBoldRed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -63,12 +72,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextBoldRed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="29"
                             android:textSize="30sp" />
 
                         <TextView
+                            style="@style/TextBoldRed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -83,12 +94,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/TextBoldRed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="869"
                             android:textSize="30sp" />
 
                         <TextView
+                            style="@style/TextBoldRed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -99,12 +112,17 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Edit profile" />
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_follow_default"
+                    android:text="Edit your profile"
+                    android:textColor="@color/fl_color"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
+            style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -114,16 +132,14 @@
             android:id="@id/hf_vp_tab_indicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             fl:gapBetweenItems="2dp" />
 
         <android.support.v4.view.ViewPager
+            android:layout_marginTop="15dp"
             android:id="@id/hf_view_content"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:background="@color/blue_light" />
+            android:layout_height="500dp" />
     </LinearLayout>
 
     <!--<FrameLayout-->

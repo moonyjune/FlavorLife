@@ -40,12 +40,6 @@ public class ItemIngredientView extends LinearLayout {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ItemIngredientView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         inflate(getContext(), R.layout.item_ingredient, this);
         mListSection = (ListView) findViewById(R.id.list_section);

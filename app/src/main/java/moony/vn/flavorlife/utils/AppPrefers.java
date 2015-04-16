@@ -67,4 +67,17 @@ public class AppPrefers extends BasePrefers {
         return mPreferences.getInt("number_notification", 0);
     }
 
+    /**
+     * @param state: 1 - log in; 2 - log out
+     */
+    public void saveUserState(int state) {
+        mEditor.putInt("user_state", state).commit();
+    }
+
+    public int getUserState() {
+        if (!containKey("user_state"))
+            return 2;
+        return mPreferences.getInt("user_state", 2);
+    }
+
 }

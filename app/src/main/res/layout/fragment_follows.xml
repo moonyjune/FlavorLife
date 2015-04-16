@@ -3,6 +3,7 @@
     xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <moony.vn.flavorlife.layout.TabIndicator
@@ -10,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
         fl:gapBetweenItems="2dp" />
 
@@ -19,7 +20,10 @@
         android:id="@id/view_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/vp_tab_indicator" />
+        android:layout_below="@id/vp_tab_indicator"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp" />
 
     <FrameLayout
         android:id="@id/tab_follows"

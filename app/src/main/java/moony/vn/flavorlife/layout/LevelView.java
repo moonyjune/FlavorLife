@@ -35,12 +35,6 @@ public class LevelView extends LinearLayout {
         init(context);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public LevelView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
     private void init(Context context) {
         inflate(context, R.layout.level_layout, this);
         mLevel_1 = (ImageView) findViewById(R.id.level_1);
@@ -79,12 +73,12 @@ public class LevelView extends LinearLayout {
     }
 
     public int getLevel() {
-        int level = 0;
-        for (int i = 0; i < mListLevels.size(); i++) {
-            if (mListLevels.get(i).getTag() == R.drawable.ic_launcher) {
-                level++;
-            }
-        }
+//        int level = 0;ge
+//        for (int i = 0; i < mListLevels.size(); i++) {
+//            if (mListLevels.get(i).getTag() == R.drawable.ic_launcher) {
+//                level++;
+//            }
+//        }
         return 2;
     }
 }

@@ -27,10 +27,10 @@ public class TabIndicator extends LinearLayout {
     private List<TextViewSwitcher> mListItemIndicator;
     private int mNumTab;
     private int mGapBetweenItems = 0;
-    private int[] mListDefaultDrawable = new int[]{R.drawable.first_item_default, R.drawable.middle_item_default, R.drawable.last_item_default};
-    private int[] mListSelectedDrawable = new int[]{R.drawable.first_item_selected, R.drawable.middle_item_selected, R.drawable.last_item_selected};
-    private int[] mListOneItemDrawble = new int[]{R.drawable.one_item_default, R.drawable.one_item_selected};
-    private int[] mListTextColors = new int[]{Color.WHITE, getResources().getColor(R.color.pink)};
+    private int[] mListDefaultDrawable = new int[]{R.drawable.pager_tab_default, R.drawable.pager_tab_default, R.drawable.pager_tab_default};
+    private int[] mListSelectedDrawable = new int[]{R.drawable.pager_tab_selected, R.drawable.pager_tab_selected, R.drawable.pager_tab_selected};
+    private int[] mListOneItemDrawble = new int[]{R.drawable.pager_tab_default, R.drawable.pager_tab_selected};
+    private int[] mListTextColors = new int[]{Color.WHITE, Color.WHITE};
     private int mTextColorDefault, mTextColorSelected;
     private List<String> mListTabName;
 

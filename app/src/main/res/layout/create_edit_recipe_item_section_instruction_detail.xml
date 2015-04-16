@@ -28,6 +28,6 @@
         android:layout_alignBottom="@id/step_content"
         android:layout_alignRight="@id/step_content"
         android:background="@color/blue_light"
-        android:src="@drawable/abc_ic_clear_mtrl_alpha" />
+        android:src="@drawable/abc_ic_clear" />
 
 </RelativeLayout>

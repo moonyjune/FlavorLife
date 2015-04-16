@@ -25,7 +25,6 @@ public abstract class NActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		mSaveInstanceStateCalled = false;
 	}
-
 	@Override
 	protected void onStart() {
 		super.onStart();

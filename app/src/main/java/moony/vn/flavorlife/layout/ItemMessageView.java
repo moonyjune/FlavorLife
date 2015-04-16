@@ -32,12 +32,6 @@ public class ItemMessageView extends LinearLayout {
         init(context);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ItemMessageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
     public ItemMessageView(Context context, NImageLoader imageLoader, NavigationManager navigationManager) {
         super(context);
         init(context);

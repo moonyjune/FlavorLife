@@ -34,12 +34,6 @@ public class TypeView extends LinearLayout {
         init(context);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public TypeView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
     private void init(Context context) {
         inflate(context, R.layout.type_layout, this);
         mType1 = (ImageView) findViewById(R.id.type_1);
