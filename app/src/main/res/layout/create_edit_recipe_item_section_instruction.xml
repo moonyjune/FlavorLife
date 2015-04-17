@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@id/section_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="5dp"
-        android:text="Section instruction" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <ImageView
-        android:id="@id/delete_section_instruction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/blue_light"
-        android:src="@drawable/abc_ic_clear" />
+        <EditText
+            android:id="@id/section_name"
+            style="@style/EditTextItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:hint="Section instruction" />
 
+        <ImageView
+            android:id="@id/delete_section_instruction"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_delete_section" />
+
+    </LinearLayout>
+
+    <include layout="@layout/light_red_line" />
 </LinearLayout>

@@ -55,11 +55,20 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
+
+    <style name="EditTextItem">
+        <item name="android:textColor">@color/fl_color</item>
+        <item name="android:textColorHint">@color/fl_color_hint</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:background">@drawable/et_no_background</item>
+    </style>
+
     <style name="TextBoldWhite">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="TextBoldRed">
         <item name="android:textColor">@color/fl_color</item>
         <item name="android:textStyle">bold</item>

@@ -44,7 +44,11 @@ public class InstructionExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mListSectionInstruction.get(groupPosition).getListSteps().size() + 1;
+        if (groupPosition < mListSectionInstruction.size()) {
+            return mListSectionInstruction.get(groupPosition).getListSteps().size() + 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override

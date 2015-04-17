@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 
 import com.ntq.fragments.NFragmentSwitcher;
@@ -15,7 +14,6 @@ import java.util.List;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.InstructionExpandableAdapter;
 import moony.vn.flavorlife.entities.SectionInstruction;
-import moony.vn.flavorlife.entities.Step;
 
 /**
  * Created by moony on 3/4/15.
@@ -58,7 +56,7 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
             public void notifyDataSetChanged() {
                 super.notifyDataSetChanged();
                 for (int i = 0; i < getGroupCount() - 1; i++) {
-                    mInstructionListView.expandGroup(i, true);
+                    mInstructionListView.expandGroup(i);
                 }
             }
         };

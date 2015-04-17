@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@id/step_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="5dp"
-        android:text="01" />
-
-    <EditText
-        android:id="@id/step_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top|left"
-        android:hint="step content"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="10dp" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@id/delete_step"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/step_content"
-        android:layout_alignRight="@id/step_content"
-        android:background="@color/blue_light"
-        android:src="@drawable/abc_ic_clear" />
+        <TextView
+            android:id="@id/step_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="01"
+            android:textColor="@color/fl_color_hint"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <EditText
+            android:id="@id/step_content"
+            style="@style/EditTextItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/step_number"
+            android:gravity="top|left"
+            android:hint="step content"
+            android:minHeight="50dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@id/delete_step"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@id/step_content"
+            android:layout_alignRight="@id/step_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_delete_item" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/light_red_line" />
+</LinearLayout>

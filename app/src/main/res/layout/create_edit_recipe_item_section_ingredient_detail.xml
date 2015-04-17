@@ -4,31 +4,75 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <EditText
-        android:id="@id/ingredient_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="2dp"
         android:layout_weight="2"
-        android:hint="name" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@id/ingredient_value"
+        <EditText
+            android:id="@id/ingredient_name"
+            style="@style/EditTextItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="name"
+            android:minHeight="30dp" />
+
+        <include layout="@layout/light_red_line" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:layout_weight="3"
-        android:hint="value" />
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@id/ingredient_unit"
+        <EditText
+            android:id="@id/ingredient_value"
+            style="@style/EditTextItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="value"
+            android:minHeight="30dp" />
+
+        <include layout="@layout/light_red_line" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
         android:layout_weight="3"
-        android:hint="unit" />
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@id/delete_ingredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/blue_light"
-        android:src="@drawable/abc_ic_clear" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@id/ingredient_unit"
+                style="@style/EditTextItem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="unit"
+                android:minHeight="30dp" />
+
+            <ImageView
+                android:id="@id/delete_ingredient"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_delete_item" />
+        </LinearLayout>
+
+        <include layout="@layout/light_red_line" />
+    </LinearLayout>
 </LinearLayout>

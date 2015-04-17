@@ -12,4 +12,5 @@
     <color name="holo_red_light">#ffff4444</color>
     <color name="fl_color">#801b1b</color>
     <color name="fl_color_selected">#610c0c</color>
+    <color name="fl_color_hint">#a65f5f</color>
 </resources>

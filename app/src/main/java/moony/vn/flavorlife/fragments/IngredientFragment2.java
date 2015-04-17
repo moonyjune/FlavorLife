@@ -48,7 +48,7 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
             public void notifyDataSetChanged() {
                 super.notifyDataSetChanged();
                 for (int i = 0; i < getGroupCount() - 1; i++) {
-                    mListSectionIngredients.expandGroup(i, true);
+                    mListSectionIngredients.expandGroup(i);
                 }
             }
         };
