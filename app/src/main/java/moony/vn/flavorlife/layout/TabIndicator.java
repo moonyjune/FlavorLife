@@ -33,6 +33,26 @@ public class TabIndicator extends LinearLayout {
     private int[] mListTextColors = new int[]{Color.WHITE, Color.WHITE};
     private int mTextColorDefault, mTextColorSelected;
     private List<String> mListTabName;
+    private ViewPager.OnPageChangeListener mPageChangeListener;
+
+    private ViewPager.OnPageChangeListener internalPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            if (mPageChangeListener != null)
+                mPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            setCurrentSelectedItem(position);
+            if (mPageChangeListener != null) mPageChangeListener.onPageSelected(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (mPageChangeListener != null) mPageChangeListener.onPageScrollStateChanged(state);
+        }
+    };
 
     public TabIndicator(Context context, ViewPager viewPager) {
         super(context);
@@ -118,22 +138,6 @@ public class TabIndicator extends LinearLayout {
 
     }
 
-    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            setCurrentSelectedItem(position);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
-
     private void setCurrentSelectedItem(int mCurrentItem) {
         for (int j = 0; j < mListItemIndicator.size(); j++) {
             if (j == mCurrentItem) {
@@ -162,10 +166,14 @@ public class TabIndicator extends LinearLayout {
     public void setViewPager(ViewPager viewPager, List<String> listTabName) {
         mViewPager = viewPager;
         mPagerAdapter = viewPager.getAdapter();
-        mViewPager.setOnPageChangeListener(onPageChangeListener);
+        mViewPager.setOnPageChangeListener(internalPageChangeListener);
         mNumTab = mPagerAdapter.getCount();
         mListTabName = listTabName;
         initView(mListDefaultDrawable, mListSelectedDrawable, mListOneItemDrawble, null);
+    }
+
+    public void setOnPageChangeListener(ViewPager.OnPageChangeListener pageChangeListener) {
+        this.mPageChangeListener = pageChangeListener;
     }
 
 }

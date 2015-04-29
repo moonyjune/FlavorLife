@@ -2,8 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:paddingTop="?actionBarSize">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -61,7 +62,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="books" />
+                            android:singleLine="true"
+                            android:text="books"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -83,7 +86,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="recipes" />
+                            android:singleLine="true"
+                            android:text="recipes"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -105,7 +110,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="followers" />
+                            android:singleLine="true"
+                            android:text="followers"
+                            android:textSize="16sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -136,10 +143,10 @@
             fl:gapBetweenItems="2dp" />
 
         <android.support.v4.view.ViewPager
-            android:layout_marginTop="15dp"
             android:id="@id/hf_view_content"
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
+            android:layout_height="500dp"
+            android:layout_marginTop="7dp" />
     </LinearLayout>
 
     <!--<FrameLayout-->

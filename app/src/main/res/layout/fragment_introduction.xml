@@ -6,62 +6,134 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green_dark"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@id/image_recipe"
+            android:id="@id/add_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="200dp"
-            android:src="@drawable/ic_launcher" />
+            android:clickable="true"
+            android:src="@drawable/add_photo" />
 
-        <ImageView
-            android:id="@id/choose_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_launcher" />
-
-        <EditText
-            android:id="@id/recipe_name"
+        <RelativeLayout
+            android:id="@id/layout_change_picture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="NAME"
-            android:padding="5dp" />
+            android:visibility="gone">
 
-        <EditText
-            android:id="@id/introduction_dish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top|left"
-            android:hint="Introduction of the dish"
-            android:minHeight="200dp" />
+            <moony.vn.flavorlife.widget.SquareImageView
+                android:id="@id/image_recipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_image_create_recipe" />
+
+            <ImageView
+                android:id="@id/choose_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/image_recipe"
+                android:layout_alignRight="@id/image_recipe"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/change_photo" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextBoldRed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="Name" />
+
+            <moony.vn.flavorlife.widget.MyEditText
+                style="@style/EditTextItemItalic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/et_border_red"
+                android:hint="Enter recipe's name"
+                android:paddingBottom="4dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:paddingTop="4dp" />
+
+            <requestFocus />
+        </LinearLayout>
+
+        <moony.vn.flavorlife.widget.MyEditText
+            android:id="@id/introduction_dish"
+            style="@style/EditTextItemItalic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/et_border_red"
+            android:gravity="top|left"
+            android:hint="Write something about the dish"
+            android:minHeight="100dp"
+            android:padding="5dp" />
+
+        <requestFocus />
+
+        <moony.vn.flavorlife.widget.MyEditText
+            android:id="@id/recipe_tip_note"
+            style="@style/EditTextItemItalic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/et_border_red"
+            android:gravity="top|left"
+            android:hint="Tips"
+            android:minHeight="100dp"
+            android:padding="5dp" />
+
+        <requestFocus />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="Level" />
 
-            <RatingBar
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="1"
-                android:rating="3"
-                style="@style/MyRatingBar"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@id/recipe_level"
+                    style="@style/MyRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/rating_bar_min_height"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:stepSize="1" />
+
+            </LinearLayout>
 
             <moony.vn.flavorlife.layout.LevelView
-                android:id="@id/recipe_level"
+                android:id="@id/create_recipe_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -71,21 +143,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextBoldRed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
+                android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="Time" />
 
-            <EditText
-                android:id="@id/recipe_cooking_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="number" />
+                android:orientation="horizontal">
+
+                <moony.vn.flavorlife.widget.MyEditText
+                    android:id="@id/recipe_cooking_time"
+                    style="@style/EditTextItemItalic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_border_red"
+                    android:gravity="center"
+                    android:hint="00"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:minWidth="48dp"
+                    android:padding="7dp" />
+
+
+                <TextView
+                    style="@style/TextBoldRed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="MINS" />
+            </LinearLayout>
         </LinearLayout>
 
         <!--<LinearLayout-->
@@ -109,14 +205,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextBoldRed"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
+                android:gravity="center_vertical"
                 android:padding="5dp"
-                android:text="Type" />
+                android:text="Kind" />
 
             <moony.vn.flavorlife.layout.TypeView
                 android:id="@id/choose_type"
@@ -129,47 +228,45 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
+                android:gravity="center_vertical"
                 android:padding="5dp"
-                android:text="In Book" />
+                android:text="Book" />
 
-            <EditText
+            <moony.vn.flavorlife.widget.MyEditText
+                style="@style/EditTextItemItalic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@drawable/et_border_red"
+                android:drawableRight="@drawable/ic_expand"
+                android:editable="false"
+                android:hint="Choose book"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Tip / Note" />
-
-        <EditText
-            android:id="@id/recipe_tip_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top|left"
-            android:hint="Enter recipe tip"
-            android:minHeight="100dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Author evaluation" />
-
-        <EditText
+        <moony.vn.flavorlife.widget.MyEditText
             android:id="@id/author_evaluation"
+            style="@style/EditTextItemItalic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/et_border_red"
             android:gravity="top|left"
-            android:hint="Enter evaluation"
-            android:minHeight="100dp" />
+            android:hint="Comments"
+            android:minHeight="100dp"
+            android:padding="5dp" />
+
     </LinearLayout>
 </ScrollView>

@@ -21,8 +21,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import moony.vn.flavorlife.Config;
+import moony.vn.flavorlife.FlavorLifeApplication;
+import moony.vn.flavorlife.utils.DateFormatUtils;
 
 public class UploadImage extends AsyncTask<String, Void, String> {
     private static final String SERVER_IMAGE = Config.SERVER_IMAGES_URL;
@@ -30,11 +34,13 @@ public class UploadImage extends AsyncTask<String, Void, String> {
     private String data;
     private int SIZE = 64 * 1024;
     private Bitmap bm;
+    private String APP_NAME = "flavorlife";
 
     @Override
     protected String doInBackground(String... params) {
         String api = params[0];
-        String s = uploadMultipart(SERVER_IMAGE + api, params[1]);
+        String recipeId = params[2];
+        String s = uploadMultipart(recipeId, SERVER_IMAGE + api, params[1]);
         return s;
     }
 
@@ -44,7 +50,7 @@ public class UploadImage extends AsyncTask<String, Void, String> {
         Log.e("Mj", "Result : " + result);
     }
 
-    private String uploadMultipart(String url, String imagePath) {
+    private String uploadMultipart(String recipeId, String url, String imagePath) {
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
         try {
@@ -52,7 +58,10 @@ public class UploadImage extends AsyncTask<String, Void, String> {
             MultipartEntity reqEntity = new MultipartEntity();
             reqEntity.addPart("image", bin);
             reqEntity.addPart("ext", new StringBody("png"));
-            reqEntity.addPart("file_name", new StringBody("image_test"));
+            String imageName = getImageFileName(String.valueOf(FlavorLifeApplication.get().getUser().getId()), recipeId);
+            reqEntity.addPart("file_name", new StringBody(imageName));
+            reqEntity.addPart("recipe_id", new StringBody(recipeId));
+
             httpPost.setEntity(reqEntity);
             System.out.println("Requesting : " + httpPost.getRequestLine());
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -82,16 +91,10 @@ public class UploadImage extends AsyncTask<String, Void, String> {
         return baos.toByteArray();
     }
 
-    public Bitmap getBitmapFromPath(String path) {
-        Log.i("Mj", "Path : " + path);
-        File file = new File(path);
-        if (file.exists()) {
-            bm = BitmapFactory.decodeFile(file.getAbsolutePath());
-            Log.e("Mj", file.getAbsolutePath() + " : " + bm);
-        } else {
-            Log.e("Mj", "File is null");
-        }
-        return bm;
+    private String getImageFileName(String userId, String recipeId) {
+        String timeStamp = new SimpleDateFormat(DateFormatUtils.DATE_FORMAT).format(new Date());
+        String fileName = APP_NAME + "_" + userId + "_" + recipeId + "_" + timeStamp;
+        return fileName;
     }
 
 }

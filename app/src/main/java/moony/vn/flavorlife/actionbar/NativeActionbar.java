@@ -27,6 +27,7 @@ public class NativeActionbar implements CustomActionbar {
     private TextView mTitle;
     private ImageView mBtnLeft;
     private ImageView mMessage;
+    private ImageView mFinish;
 
     @Override
     public void initialize(NavigationManager navigationManager,
@@ -48,24 +49,7 @@ public class NativeActionbar implements CustomActionbar {
     private OnBackStackChangedListener backStackChangedListener = new OnBackStackChangedListener() {
         @Override
         public void onBackStackChanged() {
-            int count = mNavigationManager.getBackStackEntryCountCurrentPlace();
-            if (count <= 0) {
-                int placeHolder = mNavigationManager.getCurrentPlaceholder();
-                switch (placeHolder) {
-                    case R.id.tab_new_recipes:
-                    case R.id.tab_follows:
-                    case R.id.tab_home:
-                    case R.id.tab_messages:
-                    case R.id.tab_create_recipe:
-                        syncActionBar(mNavigationManager.getTab(placeHolder));
-                        break;
-                    default:
-                        syncActionBar(mNavigationManager.getActivePage());
-                        break;
-                }
-            } else {
-                syncActionBar(mNavigationManager.getActivePage());
-            }
+            syncActionBar(mNavigationManager.getActivePage());
         }
     };
 
@@ -95,7 +79,13 @@ public class NativeActionbar implements CustomActionbar {
 
     protected int findResourceIdForActionbar(Fragment activePage) {
         // TODO check fragment and return layout actionbar for that fragment. (1 layout for group fragment)
-        return R.layout.actionbar;
+        if (activePage instanceof NewRecipesFragment) {
+            return R.layout.actionbar;
+        } else if (activePage instanceof CreateRecipeFragment) {
+            return R.layout.actionbar_2;
+        } else {
+            return R.layout.actionbar_3;
+        }
 
     }
 
@@ -105,6 +95,7 @@ public class NativeActionbar implements CustomActionbar {
         mTitle = (TextView) actionbarView.findViewById(R.id.title);
         mBtnLeft = (ImageView) actionbarView.findViewById(R.id.search);
         mMessage = (ImageView) actionbarView.findViewById(R.id.message);
+        mFinish = (ImageView) actionbarView.findViewById(R.id.finish);
     }
 
     protected void removeAllChildViews() {
@@ -126,16 +117,24 @@ public class NativeActionbar implements CustomActionbar {
         mMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = mNavigationManager.getActivePage();
-                if (fragment instanceof CreateRecipeFragment) {
-                    ((CreateRecipeFragment) fragment).request();
-                }
+                //TODO move to screen messages
 //                mBaseActivity.getMenu().showMenu(true);
 //                // unlock slide menu
 //                if (!mBaseActivity.getMenu().isSlidingEnabled())
 //                    mBaseActivity.getMenu().setSlidingEnabled(true);
             }
         });
+        if (mFinish == null) return;
+        mFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = mNavigationManager.getActivePage();
+                if (fragment instanceof CreateRecipeFragment) {
+                    ((CreateRecipeFragment) fragment).request();
+                }
+            }
+        });
+
     }
 
     private void setupBtnLeft() {
@@ -145,9 +144,11 @@ public class NativeActionbar implements CustomActionbar {
             public void onClick(View v) {
                 if (mNavigationManager.getActivePage() instanceof OnBackButtonListener) {
                     boolean handled = ((OnBackButtonListener) mNavigationManager.getActivePage()).onBackButtonClicked();
-                    if (!handled) mNavigationManager.goBack();
+                    //TODO ab button left override from fragment
+//                    if (!handled) mNavigationManager.goBack();
                 } else {
-                    mNavigationManager.goBack();
+                    //TODO ab button left
+//                    mNavigationManager.goBack();
                 }
             }
         });
@@ -170,6 +171,11 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     private void syncBtnRight(Fragment activePage) {
+        syncBtnMessage(activePage);
+        syncBtnFinish(activePage);
+    }
+
+    private void syncBtnMessage(Fragment activePage) {
         if (mMessage == null) return;
         if (activePage instanceof LoginFragment) {
             mMessage.setVisibility(View.GONE);
@@ -177,6 +183,16 @@ public class NativeActionbar implements CustomActionbar {
             mMessage.setVisibility(View.VISIBLE);
         }
     }
+
+    private void syncBtnFinish(Fragment activePage) {
+        if (mFinish == null) return;
+        if (activePage instanceof CreateRecipeFragment) {
+            mFinish.setVisibility(View.VISIBLE);
+        } else {
+            mFinish.setVisibility(View.GONE);
+        }
+    }
+
 
     private void syncBtnLeft(Fragment activePage) {
         if (mBtnLeft == null) return;
@@ -217,7 +233,11 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     private void syncActionBarVisibility(Fragment activePage) {
-        mActionBar.show();
+        if (activePage instanceof LoginFragment) {
+            hide();
+        } else {
+            show();
+        }
     }
 
 }

@@ -10,12 +10,20 @@ public class User {
     private int id;
     @SerializedName("email")
     private String email;
+    @SerializedName("image")
+    private String image;
     @SerializedName("inspiration")
     private String inspiration;
     @SerializedName("num_follows")
     private int numFollows;
     @SerializedName("num_followers")
     private int numFollowers;
+    @SerializedName("num_books")
+    private int numBooks;
+    @SerializedName("num_recipes")
+    private int numRecipes;
+    private boolean isFollowed;
+
     private int state;
 
     public enum State {
@@ -86,5 +94,37 @@ public class User {
 
     public void setNumFollowers(int numFollowers) {
         this.numFollowers = numFollowers;
+    }
+
+    public int getNumBooks() {
+        return numBooks;
+    }
+
+    public void setNumBooks(int numBooks) {
+        this.numBooks = numBooks;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getNumRecipes() {
+        return numRecipes;
+    }
+
+    public void setNumRecipes(int numRecipes) {
+        this.numRecipes = numRecipes;
+    }
+
+    public boolean isFollowed() {
+        return isFollowed;
+    }
+
+    public void setFollowed(boolean isFollowed) {
+        this.isFollowed = isFollowed;
     }
 }

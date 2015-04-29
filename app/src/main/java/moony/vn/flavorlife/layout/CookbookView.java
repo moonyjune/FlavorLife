@@ -4,7 +4,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ntq.imageloader.NImageLoader;
 
@@ -15,7 +18,12 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
 /**
  * Created by moony on 3/11/15.
  */
-public class CookbookView extends LinearLayout {
+public class CookbookView extends LinearLayout implements View.OnClickListener {
+    private NImageLoader mImageLoader;
+    private NavigationManager mNavigationManager;
+    private ImageView mImage;
+    private TextView mName, mIntro;
+
     public CookbookView(Context context) {
         super(context);
         init(context);
@@ -34,13 +42,31 @@ public class CookbookView extends LinearLayout {
     public CookbookView(Context context, NImageLoader imageLoader, NavigationManager navigationManager) {
         super(context);
         init(context);
+        mImageLoader = imageLoader;
+        mNavigationManager = navigationManager;
     }
 
     private void init(Context context) {
         inflate(context, R.layout.item_cookbook, this);
+        mImage = (ImageView) findViewById(R.id.book_image);
+        mName = (TextView) findViewById(R.id.book_name);
+        mIntro = (TextView) findViewById(R.id.book_intro);
     }
 
     public void display(Cookbook cookbook) {
+        if (cookbook == null) return;
+        if (cookbook.getImage() != null && !cookbook.getImage().isEmpty()) {
+            mImageLoader.display(cookbook.getImage(), mImage);
+        } else {
+            mImage.setImageResource(R.drawable.default_cookbook_image);
+        }
+//        mName.setText(cookbook.getName());
+//        mIntro.setText(cookbook.getIntro());
+//        setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View view) {
+        //TODO chuyen sang book detail
     }
 }

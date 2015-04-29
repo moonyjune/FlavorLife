@@ -6,9 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-import moony.vn.flavorlife.entities.Ingredient;
-import moony.vn.flavorlife.entities.SectionIngredient;
-import moony.vn.flavorlife.fragments.IngredientFragment;
+import moony.vn.flavorlife.fragments.IngredientFragment2;
 import moony.vn.flavorlife.fragments.InstructionFragment;
 import moony.vn.flavorlife.fragments.IntroductionFragment;
 
@@ -24,6 +22,7 @@ public class RecipePagerAdapter extends FragmentPagerAdapter {
         super(fm);
         mFragments = fragments;
     }
+
 
     public enum TypeTabIndicator {
         INGREDIENT,
@@ -52,7 +51,7 @@ public class RecipePagerAdapter extends FragmentPagerAdapter {
 //        mPosition = position;
 //        switch (getTypeTabIndicator()) {
 //            case INGREDIENT:
-//                return IngredientFragment.newInstance();
+//                return IngredientFragment2.newInstance();
 //            case INSTRUCTION:
 //                return InstructionFragment.newInstance();
 //            case INTRODUCTION:

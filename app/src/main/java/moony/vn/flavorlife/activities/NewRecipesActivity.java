@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.fragments.NewRecipesFragment;
 import moony.vn.flavorlife.gcm.GcmBroadcastReceiver;
 import moony.vn.flavorlife.gcm.GcmIntentService;
@@ -17,13 +18,14 @@ import moony.vn.flavorlife.gcm.GcmIntentService;
 public class NewRecipesActivity extends BaseActivity {
 
     @Override
-    public Fragment getRootFragment() {
-        return new NewRecipesFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fragment fragment = getRootFragment();
+        if (fragment == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, new NewRecipesFragment()).commit();
+        } else {
+            mActionbar.syncActionBar(fragment);
+        }
     }
 
     @Override

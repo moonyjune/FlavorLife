@@ -4,9 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import moony.vn.flavorlife.fragments.IngredientFragment;
-import moony.vn.flavorlife.fragments.InstructionFragment;
-import moony.vn.flavorlife.fragments.IntroductionFragment;
 import moony.vn.flavorlife.fragments.TabFollowersFragment;
 import moony.vn.flavorlife.fragments.TabFollowsFragment;
 

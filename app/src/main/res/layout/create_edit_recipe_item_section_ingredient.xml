@@ -10,22 +10,23 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@id/section_name"
+        <moony.vn.flavorlife.widget.MyEditText
+            android:id="@id/create_ingredient_section_name"
+            style="@style/EditTextItemItalic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Section"
-            android:padding="5dp"
-            style="@style/EditTextItem"
-            />
+            android:padding="5dp" />
+
+        <requestFocus />
 
         <ImageView
             android:id="@id/delete_section_ingredient"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:scaleType="centerInside"
             android:clickable="true"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_delete_section" />
     </LinearLayout>
 

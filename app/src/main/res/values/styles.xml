@@ -23,9 +23,21 @@
 
         <!-- Support library compatibility -->
         <item name="windowActionBarOverlay">true</item>
-        <item name="actionMenuTextColor">@color/picker_color</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
         <item name="android:divider">@android:color/white</item>
+    </style>
+
+    <style name="FLTheme" parent="Theme.AppCompat.Light">
+        <!-- Support library compatibility -->
+        <item name="windowActionBarOverlay">true</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:divider">@android:color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>
+        <item name="android:windowBackground">@color/main_background</item>
     </style>
 
     <style name="TabWidget">
@@ -63,6 +75,13 @@
         <item name="android:background">@drawable/et_no_background</item>
     </style>
 
+    <style name="EditTextItemItalic">
+        <item name="android:textColor">@color/fl_color</item>
+        <item name="android:textColorHint">@color/fl_color_hint</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:background">@drawable/et_no_background</item>
+    </style>
+
     <style name="TextBoldWhite">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
@@ -71,6 +90,7 @@
 
     <style name="TextBoldRed">
         <item name="android:textColor">@color/fl_color</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 </resources>

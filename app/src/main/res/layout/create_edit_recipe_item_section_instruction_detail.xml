@@ -19,9 +19,9 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <EditText
+        <moony.vn.flavorlife.widget.MyEditText
             android:id="@id/step_content"
-            style="@style/EditTextItem"
+            style="@style/EditTextItemItalic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/step_number"
@@ -32,6 +32,7 @@
             android:paddingLeft="15dp"
             android:paddingTop="10dp"
             android:textStyle="normal" />
+        <requestFocus/>
 
         <ImageView
             android:id="@id/delete_step"

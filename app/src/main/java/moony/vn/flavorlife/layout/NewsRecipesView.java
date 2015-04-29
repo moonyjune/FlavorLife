@@ -19,29 +19,29 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
 /**
  * Created by moony on 3/1/15.
  */
-public class NewRecipesView extends LinearLayout implements View.OnClickListener {
+public class NewsRecipesView extends LinearLayout implements View.OnClickListener {
     private NavigationManager mNavigationManager;
     private Recipe mRecipe;
-    private TextView mRecipeName;
-    private ImageView mRecipeImage;
+    private TextView mRecipeName, mLevel, mLikes, mUses, mTime, mAuthorName;
+    private ImageView mRecipeImage, mType, mUserImage;
     private NImageLoader mImageLoader;
 
-    public NewRecipesView(Context context, AttributeSet attrs) {
+    public NewsRecipesView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public NewRecipesView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NewsRecipesView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
-    public NewRecipesView(Context context) {
+    public NewsRecipesView(Context context) {
         super(context);
         init(context);
     }
 
-    public NewRecipesView(Context context, NImageLoader imageLoader, NavigationManager navigationManager) {
+    public NewsRecipesView(Context context, NImageLoader imageLoader, NavigationManager navigationManager) {
         super(context);
         init(context);
         mNavigationManager = navigationManager;
@@ -50,8 +50,15 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
 
     private void init(Context context) {
         inflate(context, R.layout.item_recipe, this);
+        mUserImage = (ImageView) findViewById(R.id.user_image);
         mRecipeName = (TextView) findViewById(R.id.recipe_name);
         mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
+        mAuthorName = (TextView) findViewById(R.id.recipe_author);
+        mType = (ImageView) findViewById(R.id.recipe_type);
+        mLevel = (TextView) findViewById(R.id.recipe_level);
+        mUses = (TextView) findViewById(R.id.recipe_used);
+        mLikes = (TextView) findViewById(R.id.recipe_likes);
+        mTime = (TextView) findViewById(R.id.recipe_cooking_time);
         setOnClickListener(this);
     }
 
@@ -59,7 +66,17 @@ public class NewRecipesView extends LinearLayout implements View.OnClickListener
         if (recipe == null) return;
         mRecipe = recipe;
         mRecipeName.setText(recipe.getName());
-//        mImageLoader.display(recipe.getImages(), mRecipeImage);
+        if (recipe.getImages() != null && !recipe.getImages().isEmpty()) {
+            mImageLoader.display(recipe.getImages(), mRecipeImage);
+        } else {
+            mRecipeImage.setImageResource(R.drawable.default_recipe_image);
+        }
+        mTime.setText(String.valueOf(recipe.getCookingTime()));
+        mLevel.setText(String.valueOf(recipe.getLevel()));
+        mLikes.setText(String.valueOf(recipe.getLikes()));
+        mUses.setText(String.valueOf(recipe.getUsed()));
+        mAuthorName.setText(recipe.getAuthorName());
+        //TODO xu ly type
     }
 
     @Override

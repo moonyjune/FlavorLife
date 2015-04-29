@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:paddingBottom="5dp"
-    android:paddingTop="5dp"
-    android:orientation="horizontal">
+    android:paddingTop="5dp">
 
     <ImageView
+        android:id="@id/book_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/default_cookbook_image" />
@@ -20,6 +21,7 @@
         android:paddingTop="10dp">
 
         <TextView
+            android:id="@id/book_name"
             style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,10 +30,12 @@
             android:text="Vegetarian" />
 
         <TextView
+            android:id="@id/book_intro"
             style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:ellipsize="end"
             android:maxLines="3"
             android:text="Lorem ipsum dolor sit amet, sonsectetur adipiscing edit, sed do eiusmod tempor incididunt ut labore et dolore mangua aligua"
             android:textStyle="italic" />

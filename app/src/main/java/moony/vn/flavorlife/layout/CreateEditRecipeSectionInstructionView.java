@@ -1,14 +1,12 @@
 package moony.vn.flavorlife.layout;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.entities.SectionIngredient;
 import moony.vn.flavorlife.entities.SectionInstruction;
 
 /**
@@ -16,6 +14,7 @@ import moony.vn.flavorlife.entities.SectionInstruction;
  */
 public class CreateEditRecipeSectionInstructionView extends LinearLayout implements View.OnClickListener {
     private OnClickListener onDeleteSection;
+    private EditText mName;
 
     public CreateEditRecipeSectionInstructionView(Context context) {
         super(context);
@@ -34,10 +33,12 @@ public class CreateEditRecipeSectionInstructionView extends LinearLayout impleme
 
     private void init() {
         inflate(getContext(), R.layout.create_edit_recipe_item_section_instruction, this);
+        mName = (EditText) findViewById(R.id.instruction_section_name);
     }
 
     public void display(SectionInstruction sectionInstruction) {
         if (sectionInstruction == null) return;
+        mName.setText(sectionInstruction.getName());
     }
 
     @Override

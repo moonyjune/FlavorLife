@@ -19,6 +19,8 @@ import java.util.List;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.RecipePagerAdapter;
+import moony.vn.flavorlife.api.ApiKey;
+import moony.vn.flavorlife.api.UploadImage;
 import moony.vn.flavorlife.api.model.DfeCreateRecipe;
 import moony.vn.flavorlife.entities.Ingredient;
 import moony.vn.flavorlife.entities.Recipe;
@@ -49,7 +51,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecipeViewPager = (ViewPager) view.findViewById(R.id.cnrf_view_content);
-        mTabIndicator = (TabIndicator) view.findViewById(R.id.cnr_vp_tab_indicator);
+        mTabIndicator = (TabIndicator) view.findViewById(R.id.vp_tab_indicator);
     }
 
     @Override
@@ -61,8 +63,25 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
         fragments.add(InstructionFragment.newInstance());
         fragments.add(IntroductionFragment.newInstance());
         mRecipePagerAdapter = new RecipePagerAdapter(getChildFragmentManager(), fragments);
+//        mRecipePagerAdapter = new RecipePagerAdapter(getChildFragmentManager());
         mRecipeViewPager.setAdapter(mRecipePagerAdapter);
         mTabIndicator.setViewPager(mRecipeViewPager, getListTabName());
+        mTabIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private List<String> getListTabName() {
@@ -76,8 +95,9 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mRecipePagerAdapter != null)
+        if (mRecipePagerAdapter != null) {
             mRecipePagerAdapter.getItem(2).onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public void request() {
@@ -99,7 +119,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     private void collectData() {
         for (int i = 0; i < mRecipePagerAdapter.getCount(); i++) {
             Fragment fragment = mRecipePagerAdapter.getItem(i);
-            if (fragment instanceof IngredientFragment) {
+            if (fragment instanceof IngredientFragment2) {
                 System.out.println("Mj : ingredient");
                 mSectionIngredients = ((IngredientFragment2) fragment).getSectionIngredients();
             } else if (fragment instanceof InstructionFragment) {
@@ -135,7 +155,19 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
 
     @Override
     public void onDataChanged() {
-
+        if(mDfeCreateRecipe != null && mDfeCreateRecipe.isReady()){
+            String[] params = new String[3];
+            params[0] = ApiKey.API_UPLOAD_IMAGE;
+            params[1] = mRecipe.getImages();
+            params[2] = String.valueOf(mDfeCreateRecipe.getRecipeId());
+            new UploadImage(){
+                @Override
+                protected void onPostExecute(String result) {
+                    super.onPostExecute(result);
+                    System.out.println(result);
+                }
+            }.execute(params);
+        }
     }
 
 }

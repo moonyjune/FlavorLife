@@ -41,20 +41,22 @@ public class Recipe {
     private int idChapter;
     @SerializedName("introduction")
     private String introduction;
+    @SerializedName("author_name")
+    private String authorName;
 
     public Recipe() {
-        this.name = "name";
-        this.images = "images";
-        this.type = 1;
-        this.kind = 1;
-        this.level = 1;
-        this.likes = 1;
-        this.used = 1;
-        this.cookingTime = 10;
-        this.createTime = new Date();
-        this.tipNote = "tipNote";
-        this.authorComments = "authorComments";
-        this.idChapter = 1;
+//        this.name = "name";
+//        this.images = "images";
+//        this.type = 1;
+//        this.kind = 1;
+//        this.level = 1;
+//        this.likes = 1;
+//        this.used = 1;
+//        this.cookingTime = 10;
+//        this.createTime = new Date();
+//        this.tipNote = "tipNote";
+//        this.authorComments = "authorComments";
+//        this.idChapter = 1;
     }
 
     public int getId() {
@@ -183,5 +185,13 @@ public class Recipe {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 }

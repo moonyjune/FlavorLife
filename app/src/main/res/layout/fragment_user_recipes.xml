@@ -15,15 +15,25 @@
         android:layout_marginStart="@dimen/padding_root_for_list"
         android:orientation="vertical">
 
-        <ListView
+        <GridView
             android:id="@id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="1dp"
-            android:fadeScrollbars="true"
-            android:divider="@null"
+            android:cacheColorHint="@android:color/transparent"
+            android:columnWidth="@dimen/picker_photo_size"
+            android:drawSelectorOnTop="true"
+            android:fadingEdge="none"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/picker_photo_spacing"
             android:listSelector="@android:color/transparent"
-            android:scrollbarFadeDuration="@integer/scrollbar_fade_duration" />
+            android:numColumns="auto_fit"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/picker_photo_spacing" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

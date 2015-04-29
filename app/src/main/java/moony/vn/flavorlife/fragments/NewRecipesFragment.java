@@ -35,7 +35,10 @@ public class NewRecipesFragment extends FlListFragment {
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
         if (FlavorLifeApplication.get().getUser().getState() == User.State.LOGGED_OUT) {
-            requestGcm(GcmUtils.getRegistrationId(getActivity()));
+            String registerId = GcmUtils.getRegistrationId(getActivity());
+            if (!registerId.isEmpty()) {
+                requestGcm(registerId);
+            }
             FlavorLifeApplication.get().updateStateUser(true);
         }
     }

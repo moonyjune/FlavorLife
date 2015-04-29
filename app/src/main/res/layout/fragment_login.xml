@@ -65,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:clickable="true"
                 android:src="@drawable/fb_login" />
 
             <ImageView
@@ -73,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:clickable="true"
                 android:src="@drawable/g_login" />
 
             <ImageView
@@ -81,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
+                android:clickable="true"
                 android:src="@drawable/twitter_login" />
         </LinearLayout>
 

@@ -9,7 +9,7 @@ import moony.vn.flavorlife.api.model.FlPaginatedList;
 /**
  * Created by moony on 3/11/15.
  */
-public class UserRecipesFragment extends FlListFragment {
+public class UserRecipesFragment extends FlListFragmentForGridView {
     private static final String USER_ID = "user_id";
     private int mUserId;
 
@@ -39,7 +39,7 @@ public class UserRecipesFragment extends FlListFragment {
 
     @Override
     protected FlPaginatedList getFlPaginatedList() {
-        return new DfeGetUserRecipes(mApi, mUserId);
+        return new DfeGetUserRecipes(mApi);
     }
 
     @Override

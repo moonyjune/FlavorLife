@@ -1,8 +1,6 @@
 package moony.vn.flavorlife.layout;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +31,7 @@ public class DetailRecipeSectionIngredientView extends LinearLayout {
 
     private void init() {
         inflate(getContext(), R.layout.detail_recipe_item_section_ingredient, this);
-        mSectionName = (TextView) findViewById(R.id.section_name);
+        mSectionName = (TextView) findViewById(R.id.ingredient_section_name);
     }
 
     public void display(SectionIngredient sectionIngredient) {

@@ -1,7 +1,9 @@
 package moony.vn.flavorlife.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.fragments.FollowsFragment;
 
 /**
@@ -9,7 +11,13 @@ import moony.vn.flavorlife.fragments.FollowsFragment;
  */
 public class FollowsActivity extends BaseActivity {
     @Override
-    public Fragment getRootFragment() {
-        return new FollowsFragment();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Fragment fragment = getRootFragment();
+        if (fragment == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, new FollowsFragment()).commit();
+        } else {
+            mActionbar.syncActionBar(fragment);
+        }
     }
 }

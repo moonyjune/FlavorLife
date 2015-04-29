@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="main_background" type="color">#ffe5e5e5</item>
     <color name="red">#FF0000</color>
     <color name="gray">#E8E8E8</color>
     <color name="pink">#ff80c2</color>
@@ -13,4 +14,5 @@
     <color name="fl_color">#801b1b</color>
     <color name="fl_color_selected">#610c0c</color>
     <color name="fl_color_hint">#a65f5f</color>
+    <color name="noti">#dc7200</color>
 </resources>

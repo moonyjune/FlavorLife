@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@id/user_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitCenter"
@@ -95,10 +96,12 @@
 
                 <Button
                     android:id="@id/follow"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_follow"
-                    android:padding="5dp"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:text="@string/plus_follow"
                     android:textColor="@color/fl_color"
                     android:textStyle="bold" />

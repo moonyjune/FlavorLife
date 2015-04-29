@@ -19,23 +19,11 @@
 
     <ImageView
         android:id="@id/logo"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:scaleType="centerInside"
         android:src="@drawable/logo_white" />
-
-    <TextView
-        android:id="@id/actionbar_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="ACTION BAR"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
 
     <ImageView
         android:id="@id/message"

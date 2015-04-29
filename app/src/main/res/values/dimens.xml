@@ -6,6 +6,8 @@
     <dimen name="shadow_width">1dp</dimen>
     <dimen name="padding_root_for_list">4dp</dimen>
     <dimen name="fragment_root_padding_item">40dp</dimen>
-    <dimen name="number_notification_size">40dp</dimen>
+    <dimen name="number_notification_size">25dp</dimen>
     <dimen name="item_tab_widget_height">60dp</dimen>
+    <dimen name="rating_bar_min_height">40dp</dimen>
+    <dimen name="text_size_20sp">20sp</dimen>
 </resources>

@@ -21,21 +21,36 @@ import moony.vn.flavorlife.utils.ListViewUtils;
  * Created by moony on 3/4/15.
  */
 public class IngredientFragment2 extends NFragmentSwitcher implements View.OnClickListener {
+    private final String KEY_SECTION_INGREDIENTS = "section_ingredients";
     private List<SectionIngredient> mSectionIngredients;
     private IngredientsExpandableAdapter mIngredientExpandableAdapter;
     private ExpandableListView mListSectionIngredients;
 
     public static IngredientFragment2 newInstance() {
-        IngredientFragment2 ingredientFragment = new IngredientFragment2();
+        IngredientFragment2 ingredientFragment2 = new IngredientFragment2();
         Bundle bundle = new Bundle();
-        ingredientFragment.setArguments(bundle);
-        return ingredientFragment;
+        ingredientFragment2.setArguments(bundle);
+        return ingredientFragment2;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        if(savedInstanceState != null)
+//            mSectionIngredients = savedInstanceState.getParcelableArrayList(KEY_SECTION_INGREDIENTS);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mListSectionIngredients = (ExpandableListView) view.findViewById(R.id.ingredients);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        if (mSectionIngredients != null)
+//            outState.putParcelableArrayList(KEY_SECTION_INGREDIENTS, new ArrayList<SectionIngredient>(mSectionIngredients));
     }
 
     @Override

@@ -103,7 +103,7 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
         mCropImageView = (CropImageView) view.findViewById(R.id.crop);
         mRotateLeft = view.findViewById(R.id.rotate_left);
         mRotateRight = view.findViewById(R.id.rotate_right);
-        mCancle = view.findViewById(R.id.cancle);
+        mCancle = view.findViewById(R.id.cancel);
         mSave = view.findViewById(R.id.save);
 
         mRotateLeft.setOnClickListener(this);
@@ -160,7 +160,7 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
                     e.printStackTrace();
                 }
                 break;
-            case R.id.cancle:
+            case R.id.cancel:
                 getFragmentManager().popBackStack();
                 break;
             case R.id.save:

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 import com.ntq.fragments.NFragmentSwitcher;
 import com.ntq.mediapicker.NMediaItem;
@@ -40,9 +41,11 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     private Uri mImageURI;
     private TypeView mChooseType;
     private Recipe mRecipe;
-    private ImageView mImageRecipe;
+    private ImageView mImageRecipe, mAddPhoto;
     private EditText mName, mIntroductionOfDish, mCookingTime, mTipNote, mAuthorEvaluation;
     private LevelView mLevels;
+    private View mLayoutChangeImage;
+    private RatingBar mLevel;
 
     public static IntroductionFragment newInstance() {
         IntroductionFragment introductionFragment = new IntroductionFragment();
@@ -55,20 +58,23 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.choose_picture).setOnClickListener(this);
+        mAddPhoto = (ImageView) view.findViewById(R.id.add_photo);
         mImageRecipe = (ImageView) view.findViewById(R.id.image_recipe);
         mName = (EditText) view.findViewById(R.id.recipe_name);
         mIntroductionOfDish = (EditText) view.findViewById(R.id.introduction_dish);
-        mLevels = (LevelView) view.findViewById(R.id.recipe_level);
+//        mLevels = (LevelView) view.findViewById(R.id.recipe_level);
+        mLevel = (RatingBar) view.findViewById(R.id.recipe_level);
         mChooseType = (TypeView) view.findViewById(R.id.choose_type);
         mCookingTime = (EditText) view.findViewById(R.id.recipe_cooking_time);
         mTipNote = (EditText) view.findViewById(R.id.recipe_tip_note);
         mAuthorEvaluation = (EditText) view.findViewById(R.id.author_evaluation);
-
+        mLayoutChangeImage = view.findViewById(R.id.layout_change_picture);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mAddPhoto.setOnClickListener(this);
         mChooseType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,15 +98,16 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.add_photo:
             case R.id.choose_picture:
 //                startActivityCamera();
                 NMediaOptions.Builder builder = new NMediaOptions.Builder();
                 NMediaOptions options = NMediaOptions.createDefault();
-                options = builder.setIsCropped(true).setFixAspectRatio(false)
+                options = builder.setIsCropped(true).setFixAspectRatio(true)
                         .build();
-                NMediaPickerActivity.open(IntroductionFragment.this,
+                NMediaPickerActivity.open(mNavigationManager.getActivePage(),
                         REQUEST_IMAGE, options);
-                System.out.println("Mj : active page - "+mNavigationManager.getActivePage());
+                System.out.println("Mj : active page - " + mNavigationManager.getActivePage());
                 break;
         }
     }
@@ -161,10 +168,13 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
 //                    break;
 //            }
 //        }
+
         System.out.println("Mj : onActivityResult");
         ArrayList<NMediaItem> mMediaSelectedList;
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == Activity.RESULT_OK) {
+                mLayoutChangeImage.setVisibility(View.VISIBLE);
+                mAddPhoto.setVisibility(View.GONE);
                 mMediaSelectedList = NMediaPickerActivity
                         .getNMediaItemSelected(data);
                 if (mMediaSelectedList != null) {
@@ -180,6 +190,9 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
                         builder.append("\n\n");
 
                         addImages(mediaItem);
+                        if (mRecipe == null)
+                            mRecipe = new Recipe();
+                        mRecipe.setImages(mediaItem.getPathCropped(getActivity()));
                     }
                 } else {
                     Log.e(TAG, "Error to get media, NULL");
@@ -204,25 +217,24 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
 
 
     public Recipe getRecipe() {
-        if (validInformation()) {
-            if (mRecipe == null) {
-                mRecipe = new Recipe();
-            }
-            mRecipe.setName(mName.getText().toString());
-            mRecipe.setIntroduction(mIntroductionOfDish.getText().toString());
-            mRecipe.setAuthorComments(mAuthorEvaluation.getText().toString());
-            mRecipe.setLevel(mLevels.getLevel());
-            mRecipe.setType(mChooseType.getType());
-            mRecipe.setCookingTime(Integer.valueOf(mCookingTime.getText().toString()));
-            mRecipe.setKind(1);
-            mRecipe.setCreateTime(new Date());
-            mRecipe.setIdChapter(1);
-            mRecipe.setIdUser(1);
-            mRecipe.setImages("images");
-            return mRecipe;
-        } else {
-            return null;
+//        if (validInformation()) {
+        if (mRecipe == null) {
+            mRecipe = new Recipe();
         }
+        mRecipe.setName("name");
+        mRecipe.setIntroduction("intro");
+        mRecipe.setAuthorComments("comment");
+        mRecipe.setLevel(1);
+        mRecipe.setType(1);
+        mRecipe.setCookingTime(90);
+        mRecipe.setKind(1);
+        mRecipe.setCreateTime(new Date());
+        mRecipe.setIdChapter(1);
+        mRecipe.setIdUser(1);
+        return mRecipe;
+//        } else {
+//            return null;
+//        }
     }
 
     private boolean validInformation() {

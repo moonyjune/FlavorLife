@@ -13,7 +13,7 @@ public class Ingredient {
     @SerializedName("type")
     private String type;
     @SerializedName("value")
-    private int value;
+    private float value;
     @SerializedName("unit")
     private String unit = "";
     @SerializedName("images")
@@ -57,7 +57,7 @@ public class Ingredient {
         this.type = type;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
 

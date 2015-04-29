@@ -12,6 +12,7 @@
         android:columnWidth="@dimen/picker_photo_size"
         android:drawSelectorOnTop="true"
         android:fadingEdge="none"
+        android:background="@android:color/white"
         android:gravity="center"
         android:horizontalSpacing="@dimen/picker_photo_spacing"
         android:listSelector="@android:color/transparent"

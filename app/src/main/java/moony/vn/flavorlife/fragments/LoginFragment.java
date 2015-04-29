@@ -26,6 +26,12 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActionbar.syncActionBar(this);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mEmail = (EditText) view.findViewById(R.id.email);
@@ -57,6 +63,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
     }
 
     private void requestLogin() {
+        showDialogLoading();
         if (mDfeLogin == null) {
             mDfeLogin = new DfeLogin(mApi);
             mDfeLogin.addErrorListener(this);
@@ -67,6 +74,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
 
     @Override
     public void onDataChanged() {
+        hideDialogLoading();
         if (mDfeLogin != null && mDfeLogin.isReady()) {
             FlavorLifeApplication.get().updateIdUser(mDfeLogin.getUserId());
             mNavigationManager.showNewRecipes();
@@ -76,6 +84,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
 
     @Override
     public void onErrorResponse(VolleyError error) {
+        hideDialogLoading();
         showDialogMessageError(error);
     }
 }

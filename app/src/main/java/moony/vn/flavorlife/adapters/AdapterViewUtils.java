@@ -14,7 +14,8 @@ import moony.vn.flavorlife.layout.CookbookView;
 import moony.vn.flavorlife.layout.ItemFollowView;
 import moony.vn.flavorlife.layout.ItemFollowerView;
 import moony.vn.flavorlife.layout.ItemMessageView;
-import moony.vn.flavorlife.layout.NewRecipesView;
+import moony.vn.flavorlife.layout.NewsRecipesView;
+import moony.vn.flavorlife.layout.UserNewsRecipesView;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
 /**
@@ -23,9 +24,17 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
 public class AdapterViewUtils {
     public static View getRecipes(Context context, Recipe recipe, View convertView, NImageLoader imageLoader, NavigationManager navigationManager) {
         if (convertView == null) {
-            convertView = new NewRecipesView(context, imageLoader, navigationManager);
+            convertView = new NewsRecipesView(context, imageLoader, navigationManager);
         }
-        ((NewRecipesView) convertView).display(recipe);
+        ((NewsRecipesView) convertView).display(recipe);
+        return convertView;
+    }
+
+    public static View getRecipesForGridView(Context context, Recipe recipe, View convertView, NImageLoader imageLoader, NavigationManager navigationManager) {
+        if (convertView == null) {
+            convertView = new UserNewsRecipesView(context, imageLoader, navigationManager);
+        }
+        ((UserNewsRecipesView) convertView).display(recipe);
         return convertView;
     }
 

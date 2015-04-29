@@ -159,12 +159,25 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
         focusTab(v.getId());
     }
 
+    public void unFocusAll() {
+        mNewRecipes.setSelected(false);
+        mFollows.setSelected(false);
+        mCreateRecipe.setSelected(false);
+        mNotification.setSelected(false);
+        mHome.setSelected(false);
+    }
+
     public void setNumNotification(int num) {
         if (num > 0) {
-            mNumNotification.setText(num+"");
+            if (num > 99) {
+                mNumNotification.setText("99");
+            } else {
+                mNumNotification.setText(String.valueOf(num));
+            }
             mNumNotification.setVisibility(VISIBLE);
         } else {
             mNumNotification.setVisibility(GONE);
         }
     }
+
 }

@@ -10,14 +10,16 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@id/section_name"
-            style="@style/EditTextItem"
+        <moony.vn.flavorlife.widget.MyEditText
+            android:id="@id/instruction_section_name"
+            style="@style/EditTextItemItalic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dp"
-            android:hint="Section instruction" />
+            android:hint="Section instruction"
+            android:padding="5dp" />
+
+        <requestFocus />
 
         <ImageView
             android:id="@id/delete_section_instruction"

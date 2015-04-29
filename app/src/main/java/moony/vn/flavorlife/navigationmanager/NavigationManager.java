@@ -15,8 +15,8 @@ import moony.vn.flavorlife.activities.BaseActivity;
 import moony.vn.flavorlife.activities.CreateNewRecipeActivity;
 import moony.vn.flavorlife.activities.FollowsActivity;
 import moony.vn.flavorlife.activities.HomeActivity;
+import moony.vn.flavorlife.activities.NotificationActivity;
 import moony.vn.flavorlife.activities.SplashActivity;
-import moony.vn.flavorlife.activities.MessagesActivity;
 import moony.vn.flavorlife.activities.NewRecipesActivity;
 import moony.vn.flavorlife.utils.MainThreadStack;
 
@@ -280,7 +280,7 @@ public class NavigationManager {
     }
 
     public void showMessages() {
-        showTab(MessagesActivity.class);
+        showTab(NotificationActivity.class);
     }
 
     public void showCreateNewRecipe() {

@@ -2,47 +2,52 @@ package moony.vn.flavorlife.api.model;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import moony.vn.flavorlife.api.Api;
+import moony.vn.flavorlife.api.ApiImpl;
 import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.utils.DateFormatUtils;
 
 /**
  * Created by moony on 3/4/15.
  */
 public class DfeGetUserRecipes extends FlPaginatedList<Recipe> {
     private Api mApi;
-    private int mUserId;
 
-    public DfeGetUserRecipes(Api api, int user_id) {
+    public DfeGetUserRecipes(Api api) {
         super();
         mApi = api;
-        mUserId = user_id;
     }
 
     @Override
     protected Request<JSONObject> makeRequest(int skip, int take, Date requestDate) {
-        return mApi.getUserRecipes(mUserId, skip, take, this, this);
+        return mApi.getUserRecipes(skip, take, requestDate, this, this);
     }
 
     @Override
     protected List<Recipe> parseResponse(JSONObject response) {
-        List<Recipe> recipes = new ArrayList<Recipe>();
-        Recipe recipe = new Recipe();
-        recipes.add(recipe);
-        recipes.add(recipe);
-        recipes.add(recipe);
-        recipes.add(recipe);
-        recipes.add(recipe);
-        recipes.add(recipe);
-        recipes.add(recipe);
-        recipes.add(recipe);
-        return recipes;
+        try {
+            JSONArray data = response.getJSONArray(ApiImpl.DATA);
+            Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
+            List<Recipe> recipes = gson.fromJson(data.toString(), new TypeToken<Collection<Recipe>>() {
+            }.getType());
+            return recipes;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

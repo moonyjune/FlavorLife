@@ -28,6 +28,8 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
     private List<SectionIngredient> mListSectionIngredients;
+    private int mCurrentSection;
+    private int mCurrentIngredient;
 
     public IngredientsExpandableAdapter(Context context, List<SectionIngredient> mListSectionIngredients) {
         mContext = context;
@@ -83,6 +85,7 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup viewGroup) {
+        mCurrentSection = groupPosition;
         switch (getGroupType(groupPosition)) {
             case GROUP_TYPE_SECTION:
 //        if (groupPosition < mListSectionIngredients.size()) {
@@ -90,10 +93,12 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                 if (convertView == null || !(convertView instanceof CreateEditRecipeSectionIngredientView)) {
                     convertView = new CreateEditRecipeSectionIngredientView(mContext);
                 }
+                System.out.println("Mj : create section " + groupPosition);
                 convertView.setOnClickListener(null);
                 ((CreateEditRecipeSectionIngredientView) convertView).setOnDeleteSection(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        System.out.println("Mj : delete " + groupPosition);
                         mListSectionIngredients.remove(groupPosition);
                         notifyDataSetChanged();
                     }
@@ -102,6 +107,7 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                 break;
 //        } else {
             case GROUP_TYPE_ADD_SECTION:
+                System.out.println("Mj : create button add " + groupPosition);
                 if (convertView == null || !(convertView instanceof AddSectionView)) {
                     convertView = new AddSectionView(mContext);
                 }
@@ -190,4 +196,5 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
     public int getChildTypeCount() {
         return NUMBER_CHILD_TYPE;
     }
+
 }

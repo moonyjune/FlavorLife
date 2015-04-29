@@ -9,7 +9,7 @@
     <item name="rotate_left" type="id"></item>
     <item name="rotate_right" type="id"></item>
     <item name="save" type="id"></item>
-    <item name="cancle" type="id"></item>
+    <item name="cancel" type="id"></item>
     <item name="crop" type="id"></item>
     <item name="grid" type="id"></item>
     <item name="no_data" type="id"></item>
@@ -66,7 +66,7 @@
     <item name="ingredient_name" type="id" />
     <item name="ingredient_value" type="id" />
     <item name="ingredient_unit" type="id" />
-    <item name="section_name" type="id" />
+    <item name="ingredient_section_name" type="id" />
     <item name="view_ingredient_unit" type="id" />
     <item name="view_ingredient_value" type="id" />
     <item name="view_ingredient_name" type="id" />
@@ -109,5 +109,15 @@
     <item name="notification" type="id" />
     <item name="logo" type="id" />
     <item name="actionbar_title" type="id" />
+    <item name="recipe_type" type="id" />
+    <item name="book_image" type="id" />
+    <item name="book_name" type="id" />
+    <item name="book_intro" type="id" />
+    <item name="add_photo" type="id" />
+    <item name="layout_change_picture" type="id" />
+    <item name="coming_soon" type="id" />
+    <item name="instruction_section_name" type="id" />
+    <item name="create_ingredient_section_name" type="id" />
+    <item name="create_recipe_level" type="id" />
 
 </resources>
