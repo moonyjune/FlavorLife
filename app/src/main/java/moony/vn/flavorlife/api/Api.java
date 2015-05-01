@@ -87,8 +87,7 @@ public interface Api {
     public Request<JSONObject> getUserRecipes(int skip, int take, Date requestedDate,
                                               Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getUserCookbooks(int userId,
-                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+    public Request<JSONObject> getUserCookbooks(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> getRecipeDetail(int recipeId,
                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
@@ -100,6 +99,9 @@ public interface Api {
                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> getBookDetail(int bookId,
+                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getChapterDetail(int chapterId,
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> registerGcm(int userId, String registerId,

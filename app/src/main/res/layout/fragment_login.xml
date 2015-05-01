@@ -66,6 +66,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:clickable="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/fb_login" />
 
             <ImageView
@@ -75,6 +76,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:clickable="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/g_login" />
 
             <ImageView
@@ -84,6 +86,7 @@
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:clickable="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/twitter_login" />
         </LinearLayout>
 

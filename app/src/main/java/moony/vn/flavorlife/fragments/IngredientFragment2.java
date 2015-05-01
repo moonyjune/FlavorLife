@@ -36,8 +36,8 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if(savedInstanceState != null)
-//            mSectionIngredients = savedInstanceState.getParcelableArrayList(KEY_SECTION_INGREDIENTS);
+        if(savedInstanceState != null)
+            mSectionIngredients = savedInstanceState.getParcelableArrayList(KEY_SECTION_INGREDIENTS);
     }
 
     @Override
@@ -49,24 +49,28 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-//        if (mSectionIngredients != null)
-//            outState.putParcelableArrayList(KEY_SECTION_INGREDIENTS, new ArrayList<SectionIngredient>(mSectionIngredients));
+        if (mSectionIngredients != null)
+            outState.putParcelableArrayList(KEY_SECTION_INGREDIENTS, new ArrayList<SectionIngredient>(mSectionIngredients));
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mSectionIngredients = new ArrayList<SectionIngredient>();
-        mSectionIngredients.add(new SectionIngredient());
-        mIngredientExpandableAdapter = new IngredientsExpandableAdapter(getActivity(), mSectionIngredients) {
-            @Override
-            public void notifyDataSetChanged() {
-                super.notifyDataSetChanged();
-                for (int i = 0; i < getGroupCount() - 1; i++) {
-                    mListSectionIngredients.expandGroup(i);
+        if (mSectionIngredients == null) {
+            mSectionIngredients = new ArrayList<SectionIngredient>();
+            mSectionIngredients.add(new SectionIngredient());
+        }
+        if (mIngredientExpandableAdapter == null) {
+            mIngredientExpandableAdapter = new IngredientsExpandableAdapter(getActivity(), mSectionIngredients) {
+                @Override
+                public void notifyDataSetChanged() {
+                    super.notifyDataSetChanged();
+                    for (int i = 0; i < getGroupCount() - 1; i++) {
+                        mListSectionIngredients.expandGroup(i);
+                    }
                 }
-            }
-        };
+            };
+        }
         mListSectionIngredients.setAdapter(mIngredientExpandableAdapter);
         mListSectionIngredients.setGroupIndicator(null);
         mIngredientExpandableAdapter.notifyDataSetChanged();

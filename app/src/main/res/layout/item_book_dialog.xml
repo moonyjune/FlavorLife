@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="5dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="5dp">
+
+    <ImageView
+        android:id="@id/book_image"
+        android:layout_width="@dimen/image_book_size"
+        android:layout_height="@dimen/image_book_size"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_cookbook_image" />
+
+    <TextView
+        android:id="@id/book_name"
+        style="@style/TextBoldRed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:text="Vegaterian"
+        android:textSize="20sp" />
+
+</LinearLayout>

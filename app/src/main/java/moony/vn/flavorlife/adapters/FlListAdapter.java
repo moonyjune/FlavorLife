@@ -9,6 +9,8 @@ import com.ntq.api.model.PaginatedList;
 import com.ntq.imageloader.NImageLoader;
 
 import moony.vn.flavorlife.analytics.AppAnalytics;
+import moony.vn.flavorlife.entities.Chapter;
+import moony.vn.flavorlife.entities.RecipeChapter;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Follow;
 import moony.vn.flavorlife.entities.Follower;
@@ -20,12 +22,14 @@ import moony.vn.flavorlife.navigationmanager.NavigationManager;
  * Created by moony on 3/4/15.
  */
 public class FlListAdapter extends NListAdapter {
-    private static final int TOTAL_VIEW_COUNT = 5;
+    private static final int TOTAL_VIEW_COUNT = 7;
     private static final int NEW_RECIPE = 2;
     private static final int COOKBOOK = 3;
     private static final int FOLLOW = 4;
     private static final int FOLLOWER = 5;
     private static final int MESSAGE = 6;
+    private static final int CHAPTER = 7;
+    private static final int RECIPE_CHAPTER = 8;
 
     protected PaginatedList mPaginatedList;
     private NImageLoader mNImageLoader;
@@ -59,6 +63,10 @@ public class FlListAdapter extends NListAdapter {
                 return AdapterViewUtils.getFollowers(mContext, (Follower) item, convertView, mNImageLoader, mNavigationManager);
             case MESSAGE:
                 return AdapterViewUtils.getMessages(mContext, (Message) item, convertView, mNImageLoader, mNavigationManager);
+            case CHAPTER:
+                return AdapterViewUtils.getBookDetail(mContext, (Chapter) item, convertView, mNImageLoader, mNavigationManager);
+            case RECIPE_CHAPTER:
+                return AdapterViewUtils.getChapterDetail(mContext, (RecipeChapter) item, convertView, mNImageLoader, mNavigationManager);
         }
         return convertView;
     }
@@ -66,7 +74,9 @@ public class FlListAdapter extends NListAdapter {
     @Override
     public int getNewItemViewType(int position) {
         Object item = mPaginatedList.getItem(position);
-        if (item instanceof Recipe) {
+        if (item instanceof RecipeChapter) {
+            return RECIPE_CHAPTER;
+        } else if (item instanceof Recipe) {
             return NEW_RECIPE;
         } else if (item instanceof Cookbook) {
             return COOKBOOK;
@@ -76,6 +86,8 @@ public class FlListAdapter extends NListAdapter {
             return FOLLOWER;
         } else if (item instanceof Message) {
             return MESSAGE;
+        } else if (item instanceof Chapter) {
+            return CHAPTER;
         }
         throw new IllegalArgumentException("Invalid object type");
     }

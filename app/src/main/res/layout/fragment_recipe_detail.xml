@@ -1,131 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@android:color/white"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/green_dark"
+        android:layout_marginTop="?actionBarSize"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingBottom="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@id/recipe_kind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Main Course"
+            android:textColor="@color/fl_color_text"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@id/recipe_name"
+            style="@style/TextBoldRed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="CHICKEN MUSHROOM  NOODLES" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_star_red"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:text="3"
+                android:textSize="16sp" />
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:drawableLeft="@drawable/ic_heart_red"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:text="124"
+                android:textSize="16sp" />
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:drawableLeft="@drawable/ic_use_red"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:text="37"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <Button
+                    style="@style/TextBoldWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_selector"
+                    android:drawableLeft="@drawable/ic_upgrade"
+                    android:drawablePadding="5dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="3dp"
+                    android:text="Upgrade" />
+            </LinearLayout>
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
             android:minHeight="200dp"
-            android:src="@drawable/ic_launcher" />
+            android:scaleType="fitXY"
+            android:src="@drawable/default_image_create_recipe" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/pink"
-            android:hint="Introduction of the dish"
-            android:padding="5dp" />
-
-        <LinearLayout
+            style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="5dp"
-                android:text="Level" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/blue_light" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="5dp"
-                android:text="Time" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/blue_light" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="5dp"
-                android:text="Kind" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/blue_light" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="5dp"
-                android:text="Type" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/blue_light" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:padding="5dp"
-                android:text="In Book" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/blue_light" />
-        </LinearLayout>
+            android:layout_marginTop="20dp"
+            android:text="Introduction"
+            android:textAllCaps="true" />
 
         <TextView
+            style="@style/TextItalic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Ingredients" />
+            android:layout_marginTop="5dp"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
+            android:textSize="14sp" />
+
+        <TextView
+            style="@style/TextBoldRed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Ingredients"
+            android:textAllCaps="true" />
 
         <moony.vn.flavorlife.layout.DetailRecipeListIngredientsView
             android:id="@id/list_ingredients"
@@ -133,42 +132,49 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Instruction" />
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="Instruction"
+            android:textAllCaps="true" />
 
-       <moony.vn.flavorlife.layout.DetailRecipeListInstructionsView
-           android:id="@id/list_instruction"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"/>
+        <moony.vn.flavorlife.layout.DetailRecipeListInstructionsView
+            android:id="@id/list_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/TextBoldRed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Tip / Note" />
+            android:layout_marginTop="10dp"
+            android:text="Tips"
+            android:textAllCaps="true" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/red"
-            android:padding="5dp"
-            android:text="Recipe tip" />
-
-        <TextView
+            style="@style/TextItalic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Author evaluation" />
+            android:layout_marginTop="5dp"
+            android:text="Recipe tip"
+            android:textSize="14sp" />
 
         <TextView
+            style="@style/TextBoldRed"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/red"
-            android:padding="5dp"
-            android:text="Evaluation" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Author comments"
+            android:textAllCaps="true" />
+
+        <TextView
+            style="@style/TextItalic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Evaluation"
+            android:textSize="14sp" />
     </LinearLayout>
 </ScrollView>

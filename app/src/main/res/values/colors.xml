@@ -12,7 +12,10 @@
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="holo_red_light">#ffff4444</color>
     <color name="fl_color">#801b1b</color>
+    <color name="fl_color_text">#565656</color>
     <color name="fl_color_selected">#610c0c</color>
     <color name="fl_color_hint">#a65f5f</color>
-    <color name="noti">#dc7200</color>
+    <color name="fl_color_orange">#dc7200</color>
+    <color name="fl_color_gray">#949494</color>
+    <color name="fl_color_gray_red_light">#e8e6e6</color>
 </resources>

@@ -9,13 +9,19 @@ import java.util.List;
 /**
  * Created by moony on 3/14/15.
  */
-public class SectionInstruction {
+public class SectionInstruction implements Parcelable {
     private String name;
     private int numberSection;
     private List<Step> mListSteps = new ArrayList<Step>();
 
     public SectionInstruction() {
         mListSteps.add(new Step());
+    }
+
+    public SectionInstruction(Parcel source) {
+        name = source.readString();
+        numberSection = source.readInt();
+        source.readList(mListSteps, Step.class.getClassLoader());
     }
 
     public int getNumberSection() {
@@ -42,4 +48,27 @@ public class SectionInstruction {
         this.mListSteps = mListIngredients;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(numberSection);
+        dest.writeList(mListSteps);
+    }
+
+    public static Creator<SectionInstruction> CREATOR = new Creator<SectionInstruction>() {
+        @Override
+        public SectionInstruction createFromParcel(Parcel source) {
+            return new SectionInstruction(source);
+        }
+
+        @Override
+        public SectionInstruction[] newArray(int size) {
+            return new SectionInstruction[size];
+        }
+    };
 }

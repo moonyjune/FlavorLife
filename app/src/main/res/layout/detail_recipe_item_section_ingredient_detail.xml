@@ -5,12 +5,38 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@id/ingredient_information"
+        android:id="@id/ingredient_value"
+        style="@style/TextItalic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minWidth="50dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:text="400"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@id/ingredient_unit"
+        style="@style/TextItalic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minWidth="50dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:text="g"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@id/ingredient_name"
+        style="@style/TextItalic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
         android:gravity="center_vertical"
-        android:padding="5dp"
-        android:text="ingredient information" />
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:text="prawns"
+        android:textSize="14sp" />
 
 </LinearLayout>

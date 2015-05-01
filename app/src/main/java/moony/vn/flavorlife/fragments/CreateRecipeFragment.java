@@ -41,6 +41,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     private List<SectionInstruction> mSectionInstructions;
     private Recipe mRecipe;
     private DfeCreateRecipe mDfeCreateRecipe;
+    private List<Fragment> fragments;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,10 +59,12 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
-        List<Fragment> fragments = new ArrayList<Fragment>();
-        fragments.add(IngredientFragment2.newInstance());
-        fragments.add(InstructionFragment.newInstance());
-        fragments.add(IntroductionFragment.newInstance());
+        if (fragments == null) {
+            fragments = new ArrayList<Fragment>();
+            fragments.add(IngredientFragment2.newInstance());
+            fragments.add(InstructionFragment.newInstance());
+            fragments.add(IntroductionFragment.newInstance());
+        }
         mRecipePagerAdapter = new RecipePagerAdapter(getChildFragmentManager(), fragments);
 //        mRecipePagerAdapter = new RecipePagerAdapter(getChildFragmentManager());
         mRecipeViewPager.setAdapter(mRecipePagerAdapter);
@@ -155,12 +158,12 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
 
     @Override
     public void onDataChanged() {
-        if(mDfeCreateRecipe != null && mDfeCreateRecipe.isReady()){
+        if (mDfeCreateRecipe != null && mDfeCreateRecipe.isReady()) {
             String[] params = new String[3];
             params[0] = ApiKey.API_UPLOAD_IMAGE;
             params[1] = mRecipe.getImages();
             params[2] = String.valueOf(mDfeCreateRecipe.getRecipeId());
-            new UploadImage(){
+            new UploadImage() {
                 @Override
                 protected void onPostExecute(String result) {
                     super.onPostExecute(result);

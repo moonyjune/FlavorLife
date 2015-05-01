@@ -57,6 +57,7 @@
                 android:text="Name" />
 
             <moony.vn.flavorlife.widget.MyEditText
+                android:id="@id/recipe_name"
                 style="@style/EditTextItemItalic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -202,33 +203,44 @@
         <!--android:layout_weight="1" />-->
         <!--</LinearLayout>-->
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:clickable="false"
             android:orientation="horizontal">
 
             <TextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="Kind" />
 
-            <moony.vn.flavorlife.layout.TypeView
-                android:id="@id/choose_type"
+            <moony.vn.flavorlife.widget.MyEditText
+                android:id="@id/choose_kind"
+                style="@style/EditTextItemItalic"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="true" />
+                android:background="@drawable/et_border_red"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_expand"
+                android:editable="false"
+                android:hint="Choose kind"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:clickable="false"
             android:orientation="horizontal">
 
             <TextView
@@ -241,14 +253,49 @@
                 android:text="Book" />
 
             <moony.vn.flavorlife.widget.MyEditText
+                android:id="@id/choose_book"
                 style="@style/EditTextItemItalic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/et_border_red"
+                android:clickable="true"
                 android:drawableRight="@drawable/ic_expand"
                 android:editable="false"
                 android:hint="Choose book"
+                android:paddingBottom="3dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="false"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="Chapter" />
+
+            <moony.vn.flavorlife.widget.MyEditText
+                android:id="@id/choose_chapter"
+                style="@style/EditTextItemItalic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/et_border_red"
+                android:clickable="true"
+                android:drawableRight="@drawable/ic_expand"
+                android:editable="false"
+                android:hint="Choose chapter"
                 android:paddingBottom="3dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"

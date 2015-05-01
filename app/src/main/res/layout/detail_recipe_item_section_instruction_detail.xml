@@ -6,10 +6,14 @@
 
     <TextView
         android:id="@id/step_content"
+        style="@style/TextItalic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:padding="5dp"
-        android:text="Step content" />
+        android:lineSpacingExtra="3dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:text="01 Step content"
+        android:textSize="14sp" />
 
 </LinearLayout>

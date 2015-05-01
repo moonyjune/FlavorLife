@@ -4,5 +4,5 @@
     <size
         android:width="@dimen/number_notification_size"
         android:height="@dimen/number_notification_size" />
-    <solid android:color="@color/noti" />
+    <solid android:color="@color/fl_color_orange" />
 </shape>

@@ -93,4 +93,42 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="TextBoldGray">
+        <item name="android:textColor">@color/fl_color_gray</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextItalic">
+        <item name="android:textColor">@color/fl_color_text</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="TextBoldItalicRed">
+        <item name="android:textColor">@color/fl_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+
+    <style name="TextItalicRed">
+        <item name="android:textColor">@color/fl_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="StepNumber">
+        <item name="android:textColor">@color/fl_color_hint</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="StepContent">
+        <item name="android:textColor">@color/fl_color_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+
 </resources>

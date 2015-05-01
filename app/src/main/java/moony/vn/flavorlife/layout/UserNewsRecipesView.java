@@ -21,7 +21,7 @@ import moony.vn.flavorlife.widget.SquareImageView;
 public class UserNewsRecipesView extends LinearLayout implements View.OnClickListener {
     private NImageLoader mImageLoader;
     private NavigationManager mNavigationManager;
-    private SquareImageView mRecipeImage;
+    private ImageView mRecipeImage;
     private Recipe mRecipe;
 
     public UserNewsRecipesView(Context context) {
@@ -48,7 +48,7 @@ public class UserNewsRecipesView extends LinearLayout implements View.OnClickLis
 
     private void init() {
         inflate(getContext(), R.layout.item_recipe_for_grid_view, this);
-        mRecipeImage = (SquareImageView) findViewById(R.id.recipe_image);
+        mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
     }
 
     public void display(Recipe recipe) {

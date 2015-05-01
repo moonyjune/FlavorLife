@@ -39,6 +39,8 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
         @Override
         public void onDataChanged() {
             if (mDfeFollow != null && mDfeFollow.isReady()) {
+                mFollower.setFollowed(true);
+                mFollower.setNumFollowers(mDfeFollow.getNumFollowers());
                 setButtonSelected(true);
                 mNumberFollower.setText(String.valueOf(mDfeFollow.getNumFollowers()));
             }
@@ -56,6 +58,8 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
         @Override
         public void onDataChanged() {
             if (mDfeUnFollow != null && mDfeUnFollow.isReady()) {
+                mFollower.setFollowed(false);
+                mFollower.setNumFollowers(mDfeUnFollow.getNumberFollowers());
                 setButtonSelected(false);
                 mNumberFollower.setText(String.valueOf(mDfeUnFollow.getNumberFollowers()));
             }
@@ -157,10 +161,12 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
             mButtonFollow.setSelected(true);
             mButtonFollow.setTextColor(Color.WHITE);
             mButtonFollow.setText("Following");
+            mButtonFollow.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_followed, 0, 0, 0);
         } else {
             mButtonFollow.setSelected(false);
             mButtonFollow.setTextColor(getResources().getColor(R.color.fl_color));
             mButtonFollow.setText("+ Follow");
+            mButtonFollow.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
     }
 }

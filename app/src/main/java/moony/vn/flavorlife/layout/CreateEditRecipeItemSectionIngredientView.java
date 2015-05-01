@@ -1,16 +1,14 @@
 package moony.vn.flavorlife.layout;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.entities.Ingredient;
-import moony.vn.flavorlife.entities.SectionIngredient;
 
 /**
  * Created by moony on 4/8/15.
@@ -18,6 +16,8 @@ import moony.vn.flavorlife.entities.SectionIngredient;
 public class CreateEditRecipeItemSectionIngredientView extends LinearLayout {
     private OnClickListener onDeleteIngredient;
     private EditText mName, mValue, mUnit;
+    private Ingredient mIngredient;
+
     public CreateEditRecipeItemSectionIngredientView(Context context) {
         super(context);
         init();
@@ -39,12 +39,20 @@ public class CreateEditRecipeItemSectionIngredientView extends LinearLayout {
         mName = (EditText) findViewById(R.id.ingredient_name);
         mValue = (EditText) findViewById(R.id.ingredient_value);
         mUnit = (EditText) findViewById(R.id.ingredient_unit);
+        mName.addTextChangedListener(onNameChanged);
+        mValue.addTextChangedListener(onValueChanged);
+        mUnit.addTextChangedListener(onUnitChanged);
     }
 
     public void display(Ingredient ingredient) {
-        if(ingredient == null) return;
+        if (ingredient == null) return;
+        mIngredient = ingredient;
         mName.setText(ingredient.getName());
-        mValue.setText(ingredient.getValue()+"");
+        if (ingredient.getValue() <= 0) {
+            mValue.setText(null);
+        } else {
+            mValue.setText(String.valueOf(ingredient.getValue()));
+        }
         mUnit.setText(ingredient.getUnit());
     }
 
@@ -52,4 +60,54 @@ public class CreateEditRecipeItemSectionIngredientView extends LinearLayout {
         this.onDeleteIngredient = onDeleteIngredient;
         findViewById(R.id.delete_ingredient).setOnClickListener(this.onDeleteIngredient);
     }
+
+    private TextWatcher onNameChanged = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            mIngredient.setName(mName.getText().toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+    private TextWatcher onValueChanged = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            if (mValue.getText() != null && !mValue.getText().toString().isEmpty())
+                mIngredient.setValue(Float.valueOf(mValue.getText().toString()));
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+    private TextWatcher onUnitChanged = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            mIngredient.setUnit(mUnit.getText().toString());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 }

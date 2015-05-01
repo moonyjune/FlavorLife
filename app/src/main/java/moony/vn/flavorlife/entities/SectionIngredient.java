@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by moony on 3/14/15.
  */
-public class SectionIngredient {
+public class SectionIngredient implements Parcelable{
     private String name;
     private int numberSection;
     private List<Ingredient> mListIngredients = new ArrayList<Ingredient>();
@@ -42,4 +42,33 @@ public class SectionIngredient {
         this.mListIngredients = mListIngredients;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(numberSection);
+        dest.writeList(mListIngredients);
+    }
+
+    public SectionIngredient(Parcel source) {
+        name = source.readString();
+        numberSection = source.readInt();
+        source.readList(mListIngredients, Ingredient.class.getClassLoader());
+    }
+
+    public static final Creator<SectionIngredient> CREATOR = new Creator<SectionIngredient>() {
+        @Override
+        public SectionIngredient createFromParcel(Parcel source) {
+            return new SectionIngredient(source);
+        }
+
+        @Override
+        public SectionIngredient[] newArray(int size) {
+            return new SectionIngredient[size];
+        }
+    };
 }

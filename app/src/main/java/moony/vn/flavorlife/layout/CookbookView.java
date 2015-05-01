@@ -1,8 +1,6 @@
 package moony.vn.flavorlife.layout;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +11,7 @@ import com.ntq.imageloader.NImageLoader;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.entities.Cookbook;
+import moony.vn.flavorlife.fragments.CookBookDetailFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
 /**
@@ -23,6 +22,7 @@ public class CookbookView extends LinearLayout implements View.OnClickListener {
     private NavigationManager mNavigationManager;
     private ImageView mImage;
     private TextView mName, mIntro;
+    private Cookbook mCookbook;
 
     public CookbookView(Context context) {
         super(context);
@@ -55,6 +55,7 @@ public class CookbookView extends LinearLayout implements View.OnClickListener {
 
     public void display(Cookbook cookbook) {
         if (cookbook == null) return;
+        mCookbook = cookbook;
         if (cookbook.getImage() != null && !cookbook.getImage().isEmpty()) {
             mImageLoader.display(cookbook.getImage(), mImage);
         } else {
@@ -62,11 +63,13 @@ public class CookbookView extends LinearLayout implements View.OnClickListener {
         }
 //        mName.setText(cookbook.getName());
 //        mIntro.setText(cookbook.getIntro());
-//        setOnClickListener(this);
+        setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         //TODO chuyen sang book detail
+//        mNavigationManager.showPage(CookBookDetailFragment.newInstance(mCookbook.getId()));
+        mNavigationManager.showPage(CookBookDetailFragment.newInstance(1));
     }
 }

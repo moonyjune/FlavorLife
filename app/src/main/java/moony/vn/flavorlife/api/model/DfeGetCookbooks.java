@@ -16,16 +16,14 @@ import moony.vn.flavorlife.entities.Cookbook;
  */
 public class DfeGetCookbooks extends FlPaginatedList<Cookbook> {
     private Api mApi;
-    private int mUserId;
 
-    public DfeGetCookbooks(Api api, int user_id) {
+    public DfeGetCookbooks(Api api) {
         mApi = api;
-        mUserId = user_id;
     }
 
     @Override
     protected Request<JSONObject> makeRequest(int skip, int take, Date requestDate) {
-        return mApi.getUserCookbooks(mUserId, this, this);
+        return mApi.getUserCookbooks(this, this);
     }
 
     @Override

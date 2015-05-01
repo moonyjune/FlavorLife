@@ -2,10 +2,12 @@ package moony.vn.flavorlife.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by moony on 3/15/15.
  */
-public class Step {
+public class Step implements Serializable {
     @SerializedName("id")
     private int id;
     @SerializedName("name")

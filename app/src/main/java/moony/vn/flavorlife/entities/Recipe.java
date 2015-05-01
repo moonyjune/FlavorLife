@@ -2,13 +2,14 @@ package moony.vn.flavorlife.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by moony on 3/4/15.
  */
-public class Recipe {
+public class Recipe implements Serializable{
     @SerializedName("id")
     private int id;
     @SerializedName("name")

@@ -2,10 +2,12 @@ package moony.vn.flavorlife.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by moony on 3/14/15.
  */
-public class Ingredient {
+public class Ingredient implements Serializable{
     @SerializedName("id")
     private int id;
     @SerializedName("name")
@@ -61,7 +63,7 @@ public class Ingredient {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(float value) {
         this.value = value;
     }
 

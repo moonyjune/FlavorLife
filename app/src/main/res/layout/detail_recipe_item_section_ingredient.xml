@@ -6,9 +6,11 @@
 
     <TextView
         android:id="@id/ingredient_section_name"
+        style="@style/TextItalicRed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
         android:text="Section" />
 
 </LinearLayout>

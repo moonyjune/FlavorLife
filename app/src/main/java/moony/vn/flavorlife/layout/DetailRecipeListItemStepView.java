@@ -28,8 +28,8 @@ public class DetailRecipeListItemStepView extends LinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    private  void init(List<Step> mStepList){
-        if( mStepList == null) return;
+    private void init(List<Step> mStepList) {
+        if (mStepList == null) return;
         setOrientation(VERTICAL);
         removeAllViews();
         for (int i = 0; i < mStepList.size(); i++) {

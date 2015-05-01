@@ -119,5 +119,15 @@
     <item name="instruction_section_name" type="id" />
     <item name="create_ingredient_section_name" type="id" />
     <item name="create_recipe_level" type="id" />
+    <item name="back" type="id" />
+    <item name="chapter_name" type="id" />
+    <item name="dialog_content" type="id" />
+    <item name="layout_loading" type="id" />
+    <item name="layout_retry" type="id" />
+    <item name="error_message" type="id" />
+    <item name="choose_book" type="id" />
+    <item name="choose_chapter" type="id" />
+    <item name="choose_kind" type="id" />
+    <item name="kind_name" type="id" />
 
 </resources>
