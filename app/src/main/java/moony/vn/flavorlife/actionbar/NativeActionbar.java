@@ -109,7 +109,6 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     protected void setupChildViews() {
-        // TODO setup for child view (ex:click listener)
         setupTitle();
         setupBtnLeft();
         setupBtnRight();
@@ -197,6 +196,12 @@ public class NativeActionbar implements CustomActionbar {
         if (mBack == null) return;
         if (activePage instanceof RecipeDetailFragment || activePage instanceof CookBookDetailFragment || activePage instanceof ChapterDetailFragment) {
             mBack.setVisibility(View.VISIBLE);
+        } else if (activePage instanceof HomeFragment) {
+            if ((((HomeFragment) activePage).isOwner())) {
+                mBack.setVisibility(View.GONE);
+            } else {
+                mBack.setVisibility(View.VISIBLE);
+            }
         } else {
             mBack.setVisibility(View.GONE);
         }

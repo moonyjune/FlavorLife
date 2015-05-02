@@ -129,5 +129,6 @@
     <item name="choose_chapter" type="id" />
     <item name="choose_kind" type="id" />
     <item name="kind_name" type="id" />
+    <item name="footer_no_data" type="id" />
 
 </resources>

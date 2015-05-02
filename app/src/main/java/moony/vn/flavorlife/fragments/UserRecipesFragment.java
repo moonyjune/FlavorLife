@@ -1,6 +1,12 @@
 package moony.vn.flavorlife.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.GridView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.api.model.DfeGetUserRecipes;
@@ -12,6 +18,8 @@ import moony.vn.flavorlife.api.model.FlPaginatedList;
 public class UserRecipesFragment extends FlListFragmentForGridView {
     private static final String USER_ID = "user_id";
     private int mUserId;
+    private TextView mNoData;
+    private DfeGetUserRecipes mDfeGetUserRecipes;
 
     public static UserRecipesFragment newInstance(int userId) {
         UserRecipesFragment userRecipesFragment = new UserRecipesFragment();
@@ -32,6 +40,25 @@ public class UserRecipesFragment extends FlListFragmentForGridView {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mNoData = (TextView) view.findViewById(R.id.footer_no_data);
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        if (mDfeGetUserRecipes != null && mDfeGetUserRecipes.isReady() && mDfeGetUserRecipes.getCount() == 0) {
+            mNoData.setVisibility(View.VISIBLE);
+//            getListView().setVisibility(View.INVISIBLE);
+        } else {
+            mNoData.setVisibility(View.GONE);
+//            getListView().setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(USER_ID, mUserId);
@@ -39,7 +66,7 @@ public class UserRecipesFragment extends FlListFragmentForGridView {
 
     @Override
     protected FlPaginatedList getFlPaginatedList() {
-        return new DfeGetUserRecipes(mApi);
+        return mDfeGetUserRecipes = new DfeGetUserRecipes(mApi);
     }
 
     @Override

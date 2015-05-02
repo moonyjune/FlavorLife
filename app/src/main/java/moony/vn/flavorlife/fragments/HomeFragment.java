@@ -12,6 +12,7 @@ import com.ntq.fragments.NFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.HomePagerAdapter;
 import moony.vn.flavorlife.entities.User;
@@ -78,5 +79,13 @@ public class HomeFragment extends NFragment {
         tabNames.add("My Recipes");
         tabNames.add("My Cookbooks");
         return tabNames;
+    }
+
+    public boolean isOwner() {
+        if (mUser.getId() == FlavorLifeApplication.get().getUser().getId()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
