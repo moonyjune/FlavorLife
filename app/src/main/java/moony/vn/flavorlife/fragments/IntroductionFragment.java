@@ -55,6 +55,7 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     private Kind mChosenKind;
     private Cookbook mChosenBook;
     private Chapter mChosenChapter;
+    private String mUriString;
 
     public static IntroductionFragment newInstance() {
         IntroductionFragment introductionFragment = new IntroductionFragment();
@@ -67,7 +68,7 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            mImageURI = Uri.parse((String) savedInstanceState.get(KEY_IMAGE_URI));
+            mUriString = (String) savedInstanceState.get(KEY_IMAGE_URI);
             mRecipe = (Recipe) savedInstanceState.getSerializable(KEY_RECIPE);
             mChosenBook = (Cookbook) savedInstanceState.getSerializable(KEY_CHOSEN_BOOK);
             mChosenChapter = (Chapter) savedInstanceState.getSerializable(KEY_CHOSEN_CHAPTER);
@@ -101,12 +102,8 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
         mChooseBook.setOnClickListener(this);
         mChooseChapter.setOnClickListener(this);
         mChooseKind.setOnClickListener(this);
-//        if (mChosenChapter == null)
-//            mChosenChapter = new Chapter();
-//        if (mChosenBook == null)
-//            mChosenBook = new Cookbook();
-//        if (mChosenKind == null)
-//            mChosenKind = new Kind();
+        if (mUriString != null && !mUriString.isEmpty())
+            mImageURI = Uri.parse(mUriString);
         if (mImageURI != null) {
             mLayoutChangeImage.setVisibility(View.VISIBLE);
             mAddPhoto.setVisibility(View.GONE);
@@ -123,6 +120,9 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
                 mCookingTime.setText(String.valueOf(mRecipe.getCookingTime()));
             mTipNote.setText(mRecipe.getTipNote());
             mAuthorEvaluation.setText(mRecipe.getAuthorComments());
+            mChooseBook.setText(mRecipe.getBookName());
+            mChooseChapter.setText(mRecipe.getChapterName());
+            mChooseKind.setText(mRecipe.getKindName());
         }
         mAddPhoto.setOnClickListener(this);
 //        mChooseType.setOnClickListener(new View.OnClickListener() {
@@ -233,6 +233,9 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
                     Bundle bundle = data.getBundleExtra(ChooseKindDialogFragment.KEY_DATA);
                     mChosenKind = (Kind) bundle.getSerializable(ChooseKindDialogFragment.KEY_KIND);
                     mChooseKind.setText(mChosenKind.getName());
+                    if (mRecipe == null)
+                        mRecipe = new Recipe();
+                    mRecipe.setKind(mChosenKind.getKind());
                 }
                 break;
             case REQUEST_BOOK:
@@ -240,6 +243,10 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
                     Bundle bundle = data.getBundleExtra(ChooseBookDialogFragment.KEY_DATA);
                     mChosenBook = (Cookbook) bundle.getSerializable(ChooseBookDialogFragment.KEY_BOOK);
                     mChooseBook.setText(mChosenBook.getName());
+                    if (mRecipe == null)
+                        mRecipe = new Recipe();
+                    mRecipe.setIdBook(mChosenBook.getId());
+                    mRecipe.setBookName(mChosenBook.getName());
                 }
                 break;
             case REQUEST_CHAPTER:
@@ -247,6 +254,10 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
                     Bundle bundle = data.getBundleExtra(ChooseChapterDialogFragment.KEY_DATA);
                     mChosenChapter = (Chapter) bundle.getSerializable(ChooseChapterDialogFragment.KEY_CHAPTER);
                     mChooseChapter.setText(mChosenChapter.getName());
+                    if (mRecipe == null)
+                        mRecipe = new Recipe();
+                    mRecipe.setIdChapter(mChosenChapter.getId());
+                    mRecipe.setChapterName(mChosenChapter.getName());
                 }
                 break;
         }

@@ -9,7 +9,12 @@ import java.util.Date;
 /**
  * Created by moony on 3/4/15.
  */
-public class Recipe implements Serializable{
+public class Recipe implements Serializable {
+    private static final String[] kindNames = new String[]{"Starter", "Main course", "Desserts"};
+    private static final int STARTER = 0;
+    private static final int MAIN_COURSE = 1;
+    private static final int DESSERT = 2;
+
     @SerializedName("id")
     private int id;
     @SerializedName("name")
@@ -44,6 +49,9 @@ public class Recipe implements Serializable{
     private String introduction;
     @SerializedName("author_name")
     private String authorName;
+    private int idBook;
+    private String bookName;
+    private String chapterName;
 
     public Recipe() {
 //        this.name = "name";
@@ -194,5 +202,41 @@ public class Recipe implements Serializable{
 
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
+    }
+
+    public int getIdBook() {
+        return idBook;
+    }
+
+    public void setIdBook(int idBook) {
+        this.idBook = idBook;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public String getChapterName() {
+        return chapterName;
+    }
+
+    public void setChapterName(String chapterName) {
+        this.chapterName = chapterName;
+    }
+
+    public String getKindName() {
+        switch (kind) {
+            case STARTER:
+                return kindNames[0];
+            case MAIN_COURSE:
+                return kindNames[1];
+            case DESSERT:
+                return kindNames[2];
+        }
+        return null;
     }
 }
