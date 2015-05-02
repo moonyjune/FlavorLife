@@ -1,6 +1,7 @@
 package moony.vn.flavorlife.layout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,6 +57,11 @@ public class ItemChooseBookView extends LinearLayout {
 //        } else {
 //            mBookImage.setImageResource(R.drawable.default_cookbook_image);
 //        }
+        if (cookbook.isChosen()) {
+            setBackgroundColor(getResources().getColor(R.color.fl_color_gray_red_light));
+        } else {
+            setBackgroundColor(Color.WHITE);
+        }
     }
 
     public void setImageLoader(NImageLoader mImageLoader) {

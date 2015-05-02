@@ -1,11 +1,14 @@
 package moony.vn.flavorlife.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,14 +24,16 @@ import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.ChapterAdapter;
 import moony.vn.flavorlife.api.model.DfeGetUserChapter;
-import moony.vn.flavorlife.api.model.DfeGetUserCookbooks;
 import moony.vn.flavorlife.entities.Chapter;
+import moony.vn.flavorlife.entities.Cookbook;
 
 /**
  * Created by moony on 4/30/15.
  */
 public class ChooseChapterDialogFragment extends DialogFragment implements OnDataChangedListener, Response.ErrorListener, View.OnClickListener {
-    private static final String KEY_BOOK_ID = "book_id";
+    public static final String KEY_BOOK = "book";
+    public static final String KEY_CHAPTER = "chapter";
+    public static final String KEY_DATA = "data";
     private ListView mListViewChapters;
     private ChapterAdapter mBookAdapter;
     private View mLayoutContent, mLayoutRetry;
@@ -38,12 +43,14 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
     private DfeGetUserChapter mDfeGetUserChapters;
     private List<Chapter> mListChapters;
     private View mFooter;
-    private int mBookId;
+    private Cookbook mBook;
+    private Chapter mChapter;
 
-    public static ChooseChapterDialogFragment newInstance(int bookId) {
+    public static ChooseChapterDialogFragment newInstance(Cookbook book, Chapter chapter) {
         ChooseChapterDialogFragment chooseChapterDialogFragment = new ChooseChapterDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_BOOK_ID, bookId);
+        bundle.putSerializable(KEY_BOOK, book);
+        bundle.putSerializable(KEY_CHAPTER, chapter);
         chooseChapterDialogFragment.setArguments(bundle);
         return chooseChapterDialogFragment;
     }
@@ -53,16 +60,21 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NO_TITLE, STYLE_NORMAL);
         if (savedInstanceState != null) {
-            mBookId = savedInstanceState.getInt(KEY_BOOK_ID);
+            mBook = (Cookbook) savedInstanceState.getSerializable(KEY_BOOK);
+            mChapter = (Chapter) savedInstanceState.getSerializable(KEY_CHAPTER);
         } else {
-            mBookId = getArguments().getInt(KEY_BOOK_ID);
+            mBook = (Cookbook) getArguments().getSerializable(KEY_BOOK);
+            mChapter = (Chapter) getArguments().getSerializable(KEY_CHAPTER);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_BOOK_ID, mBookId);
+        if (mBook != null)
+            outState.putSerializable(KEY_BOOK, mBook);
+        if (mChapter != null)
+            outState.putSerializable(KEY_CHAPTER, mChapter);
     }
 
     @Override
@@ -106,6 +118,27 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
             requestData();
         }
 
+        mListViewChapters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent data = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(KEY_CHAPTER, mListChapters.get(i));
+                data.putExtra(KEY_DATA, bundle);
+                getTargetFragment().onActivityResult(IntroductionFragment.REQUEST_CHAPTER, Activity.RESULT_OK, data);
+                dismiss();
+            }
+        });
+
+        if (mChapter != null) {
+            for (int i = 0; i < mListChapters.size(); i++) {
+                if (mListChapters.get(i).getId() == mChapter.getId()) {
+                    mListChapters.get(i).setChosen(true);
+                } else {
+                    mListChapters.get(i).setChosen(false);
+                }
+            }
+        }
     }
 
     @Override
@@ -140,7 +173,7 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
             mDfeGetUserChapters.addDataChangedListener(this);
             mDfeGetUserChapters.addErrorListener(this);
         }
-        mDfeGetUserChapters.makeRequest(mBookId);
+        mDfeGetUserChapters.makeRequest(mBook.getId());
     }
 
     @Override

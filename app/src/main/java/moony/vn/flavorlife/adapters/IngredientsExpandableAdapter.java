@@ -88,38 +88,39 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
         mCurrentSection = groupPosition;
         switch (getGroupType(groupPosition)) {
             case GROUP_TYPE_SECTION:
-//        if (groupPosition < mListSectionIngredients.size()) {
                 SectionIngredient sectionIngredient = mListSectionIngredients.get(groupPosition);
                 if (convertView == null || !(convertView instanceof CreateEditRecipeSectionIngredientView)) {
                     convertView = new CreateEditRecipeSectionIngredientView(mContext);
                 }
-                System.out.println("Mj : create section " + groupPosition);
                 convertView.setOnClickListener(null);
                 ((CreateEditRecipeSectionIngredientView) convertView).setOnDeleteSection(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        System.out.println("Mj : delete " + groupPosition);
+                        if (mListSectionIngredients.size() > 1) {
+                            for (int i = groupPosition + 1; i < mListSectionIngredients.size(); i++) {
+                                mListSectionIngredients.get(i).setNumberSection(mListSectionIngredients.get(i).getNumberSection() - 1);
+                            }
+                        }
                         mListSectionIngredients.remove(groupPosition);
                         notifyDataSetChanged();
                     }
                 });
                 ((CreateEditRecipeSectionIngredientView) convertView).display(sectionIngredient);
                 break;
-//        } else {
             case GROUP_TYPE_ADD_SECTION:
-                System.out.println("Mj : create button add " + groupPosition);
                 if (convertView == null || !(convertView instanceof AddSectionView)) {
                     convertView = new AddSectionView(mContext);
                 }
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListSectionIngredients.add(new SectionIngredient());
+                        SectionIngredient newSectionIngredient = new SectionIngredient();
+                        newSectionIngredient.setNumberSection(mListSectionIngredients.size() + 1);
+                        mListSectionIngredients.add(newSectionIngredient);
                         notifyDataSetChanged();
                     }
                 });
                 break;
-//        }
         }
         return convertView;
     }
@@ -128,7 +129,6 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup viewGroup) {
         switch (getChildType(groupPosition, childPosition)) {
             case CHILD_TYPE_INGREDIENT:
-//        if (childPosition < mListSectionIngredients.get(groupPosition).getListIngredients().size()) {
                 Ingredient ingredient = mListSectionIngredients.get(groupPosition).getListIngredients().get(childPosition);
                 if (convertView == null || !(convertView instanceof CreateEditRecipeItemSectionIngredientView)) {
                     convertView = new CreateEditRecipeItemSectionIngredientView(mContext);
@@ -143,7 +143,6 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                 });
                 ((CreateEditRecipeItemSectionIngredientView) convertView).display(ingredient);
                 break;
-//        } else {
             case CHILD_TYPE_ADD_INGREDIENT:
                 if (convertView == null || !(convertView instanceof AddSectionContentView)) {
                     convertView = new AddSectionContentView(mContext);
@@ -156,7 +155,6 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                     }
                 });
                 break;
-//        }
         }
         return convertView;
     }

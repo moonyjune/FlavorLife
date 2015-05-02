@@ -27,7 +27,7 @@ public class KindAdapter extends ArrayAdapter<Kind> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         Kind kind = mListKinds.get(position);
         if (convertView == null) {
-            convertView = new ItemChooseKindView(   getContext());
+            convertView = new ItemChooseKindView(getContext());
         }
         ((ItemChooseKindView) convertView).display(kind);
         return convertView;

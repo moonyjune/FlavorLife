@@ -2,16 +2,21 @@ package moony.vn.flavorlife.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by moony on 4/22/15.
  */
-public class Chapter {
+public class Chapter implements Serializable {
     @SerializedName("num_chapter")
     private int numChapter;
     @SerializedName("id")
     private int id;
     @SerializedName("title")
     private String name;
+    @SerializedName("book_id")
+    private int bookId;
+    private boolean isChosen;
 
     public int getNumChapter() {
         return numChapter;
@@ -35,5 +40,21 @@ public class Chapter {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isChosen() {
+        return isChosen;
+    }
+
+    public void setChosen(boolean isChosen) {
+        this.isChosen = isChosen;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 }

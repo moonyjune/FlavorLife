@@ -23,5 +23,6 @@
     <string name="following">Following</string>
     <string name="plus_follow">+ Follow</string>
     <string name="coming_soon">Coming soon</string>
+    <string name="action_bar_title_recipe_detail">Recipe detail</string>
 
 </resources>

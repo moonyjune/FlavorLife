@@ -1,6 +1,7 @@
 package moony.vn.flavorlife.layout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,6 +39,12 @@ public class ItemChooseChapterView extends LinearLayout {
     public void display(Chapter chapter) {
         if (chapter == null) return;
         mChapter = chapter;
+
+        if (chapter.isChosen()) {
+            setBackgroundColor(getResources().getColor(R.color.fl_color_gray_red_light));
+        } else {
+            setBackgroundColor(Color.WHITE);
+        }
 //        mChapterName.setText(chapter.getName());
     }
 

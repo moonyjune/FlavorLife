@@ -11,12 +11,15 @@ import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.activities.BaseActivity;
+import moony.vn.flavorlife.fragments.ChapterDetailFragment;
+import moony.vn.flavorlife.fragments.CookBookDetailFragment;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
 import moony.vn.flavorlife.fragments.FollowsFragment;
 import moony.vn.flavorlife.fragments.HomeFragment;
 import moony.vn.flavorlife.fragments.LoginFragment;
 import moony.vn.flavorlife.fragments.MessagesFragment;
 import moony.vn.flavorlife.fragments.NewRecipesFragment;
+import moony.vn.flavorlife.fragments.RecipeDetailFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
 public class NativeActionbar implements CustomActionbar {
@@ -25,9 +28,10 @@ public class NativeActionbar implements CustomActionbar {
     private ActionBar mActionBar;
     private int mCurrentResId = R.layout.actionbar_title;
     private TextView mTitle;
-    private ImageView mBtnLeft;
+    private ImageView mSearch;
     private ImageView mMessage;
     private ImageView mFinish;
+    private ImageView mBack;
 
     @Override
     public void initialize(NavigationManager navigationManager,
@@ -81,10 +85,8 @@ public class NativeActionbar implements CustomActionbar {
         // TODO check fragment and return layout actionbar for that fragment. (1 layout for group fragment)
         if (activePage instanceof NewRecipesFragment) {
             return R.layout.actionbar;
-        } else if (activePage instanceof CreateRecipeFragment) {
-            return R.layout.actionbar_2;
         } else {
-            return R.layout.actionbar_3;
+            return R.layout.actionbar_2;
         }
 
     }
@@ -93,9 +95,10 @@ public class NativeActionbar implements CustomActionbar {
         View actionbarView = mActionBar.getCustomView();
 
         mTitle = (TextView) actionbarView.findViewById(R.id.title);
-        mBtnLeft = (ImageView) actionbarView.findViewById(R.id.search);
+        mSearch = (ImageView) actionbarView.findViewById(R.id.search);
         mMessage = (ImageView) actionbarView.findViewById(R.id.message);
         mFinish = (ImageView) actionbarView.findViewById(R.id.finish);
+        mBack = (ImageView) actionbarView.findViewById(R.id.back);
     }
 
     protected void removeAllChildViews() {
@@ -118,10 +121,6 @@ public class NativeActionbar implements CustomActionbar {
             @Override
             public void onClick(View v) {
                 //TODO move to screen messages
-//                mBaseActivity.getMenu().showMenu(true);
-//                // unlock slide menu
-//                if (!mBaseActivity.getMenu().isSlidingEnabled())
-//                    mBaseActivity.getMenu().setSlidingEnabled(true);
             }
         });
         if (mFinish == null) return;
@@ -138,17 +137,35 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     private void setupBtnLeft() {
-        if (mBtnLeft == null) return;
-        mBtnLeft.setOnClickListener(new View.OnClickListener() {
+        setUpSearch();
+        setUpBack();
+    }
+
+    private void setUpSearch() {
+        if (mSearch == null) return;
+        mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mNavigationManager.getActivePage() instanceof OnBackButtonListener) {
                     boolean handled = ((OnBackButtonListener) mNavigationManager.getActivePage()).onBackButtonClicked();
                     //TODO ab button left override from fragment
-//                    if (!handled) mNavigationManager.goBack();
                 } else {
                     //TODO ab button left
-//                    mNavigationManager.goBack();
+                }
+            }
+        });
+    }
+
+    private void setUpBack() {
+        if (mBack == null) return;
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mNavigationManager.getActivePage() instanceof OnBackButtonListener) {
+                    boolean handled = ((OnBackButtonListener) mNavigationManager.getActivePage()).onBackButtonClicked();
+                    if (!handled) mNavigationManager.goBack();
+                } else {
+                    mNavigationManager.goBack();
                 }
             }
         });
@@ -173,6 +190,16 @@ public class NativeActionbar implements CustomActionbar {
     private void syncBtnRight(Fragment activePage) {
         syncBtnMessage(activePage);
         syncBtnFinish(activePage);
+        syncBtnBack(activePage);
+    }
+
+    private void syncBtnBack(Fragment activePage) {
+        if (mBack == null) return;
+        if (activePage instanceof RecipeDetailFragment || activePage instanceof CookBookDetailFragment || activePage instanceof ChapterDetailFragment) {
+            mBack.setVisibility(View.VISIBLE);
+        } else {
+            mBack.setVisibility(View.GONE);
+        }
     }
 
     private void syncBtnMessage(Fragment activePage) {
@@ -195,31 +222,41 @@ public class NativeActionbar implements CustomActionbar {
 
 
     private void syncBtnLeft(Fragment activePage) {
-        if (mBtnLeft == null) return;
-        if (activePage instanceof LoginFragment) {
-            mBtnLeft.setVisibility(View.GONE);
+        syncBtnBack(activePage);
+        syncBtnSearch(activePage);
+    }
+
+    private void syncBtnSearch(Fragment activePage) {
+        if (mSearch == null) return;
+        if (activePage instanceof LoginFragment || activePage instanceof RecipeDetailFragment ||
+                activePage instanceof CookBookDetailFragment ||
+                activePage instanceof ChapterDetailFragment ||
+                activePage instanceof HomeFragment) {
+            mSearch.setVisibility(View.GONE);
         } else {
-            mBtnLeft.setVisibility(View.VISIBLE);
+            mSearch.setVisibility(View.VISIBLE);
         }
     }
 
     private void syncTitle(Fragment activePage) {
         if (mTitle == null) return;
         mTitle.setVisibility(View.VISIBLE);
-        int resId = R.string.app_name;
+        String text = mBaseActivity.getString(R.string.app_name);
         if (activePage instanceof NewRecipesFragment) {
-            resId = R.string.action_bar_title_recipes;
+            text = mBaseActivity.getString(R.string.action_bar_title_recipes);
         } else if (activePage instanceof FollowsFragment) {
-            resId = R.string.action_bar_title_follows;
+            text = mBaseActivity.getString(R.string.action_bar_title_follows);
         } else if (activePage instanceof HomeFragment) {
-            resId = R.string.acion_bar_title_home;
+            text = mBaseActivity.getString(R.string.acion_bar_title_home);
         } else if (activePage instanceof MessagesFragment) {
-            resId = R.string.action_bar_title_messages;
+            text = mBaseActivity.getString(R.string.action_bar_title_messages);
         } else if (activePage instanceof CreateRecipeFragment) {
-            resId = R.string.action_bar_title_create_recipe;
+            text = mBaseActivity.getString(R.string.action_bar_title_create_recipe);
+        } else if (activePage instanceof RecipeDetailFragment) {
+            mBaseActivity.getString(R.string.action_bar_title_recipe_detail);
         }
 
-        mTitle.setText(resId);
+        mTitle.setText(text);
     }
 
     @Override

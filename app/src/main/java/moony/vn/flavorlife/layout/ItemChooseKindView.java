@@ -1,6 +1,7 @@
 package moony.vn.flavorlife.layout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,6 +41,11 @@ public class ItemChooseKindView extends LinearLayout {
         if (kind == null) return;
         mKind = kind;
         mKindName.setText(kind.getName());
+        if (kind.isChose()) {
+            setBackgroundColor(getResources().getColor(R.color.fl_color_gray_red_light));
+        } else {
+            setBackgroundColor(Color.WHITE);
+        }
     }
 
 }

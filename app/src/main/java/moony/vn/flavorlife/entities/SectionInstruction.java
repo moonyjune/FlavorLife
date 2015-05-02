@@ -15,7 +15,9 @@ public class SectionInstruction implements Parcelable {
     private List<Step> mListSteps = new ArrayList<Step>();
 
     public SectionInstruction() {
-        mListSteps.add(new Step());
+        Step step = new Step();
+        step.setNumberStep(1);
+        mListSteps.add(step);
     }
 
     public SectionInstruction(Parcel source) {

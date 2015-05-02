@@ -14,15 +14,43 @@ import java.util.List;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.HomePagerAdapter;
+import moony.vn.flavorlife.entities.User;
 import moony.vn.flavorlife.layout.TabIndicator;
 
 /**
  * Created by moony on 3/1/15.
  */
 public class HomeFragment extends NFragment {
+    private static final String KEY_USER = "user";
     private TabIndicator mTabIndicator;
     private ViewPager mHomePager;
     private HomePagerAdapter mHomePagerAdapter;
+    private User mUser;
+
+    public static HomeFragment newInstance(User user) {
+        HomeFragment homeFragment = new HomeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_USER, user);
+        homeFragment.setArguments(bundle);
+        return homeFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            mUser = (User) getArguments().getSerializable(KEY_USER);
+        } else {
+            mUser = (User) savedInstanceState.getSerializable(KEY_USER);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mUser != null)
+            outState.putSerializable(KEY_USER, mUser);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

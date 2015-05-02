@@ -7,6 +7,7 @@ import android.widget.BaseExpandableListAdapter;
 
 import java.util.List;
 
+import moony.vn.flavorlife.entities.Section;
 import moony.vn.flavorlife.entities.SectionInstruction;
 import moony.vn.flavorlife.entities.Step;
 import moony.vn.flavorlife.layout.AddSectionContentView;
@@ -96,6 +97,11 @@ public class InstructionExpandableAdapter extends BaseExpandableListAdapter {
                 ((CreateEditRecipeSectionInstructionView) convertView).setOnDeleteSection(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (mListSectionInstruction.size() > 1) {
+                            for (int i = groupPosition + 1; i < mListSectionInstruction.size(); i++) {
+                                mListSectionInstruction.get(i).setNumberSection(mListSectionInstruction.get(i).getNumberSection() - 1);
+                            }
+                        }
                         mListSectionInstruction.remove(groupPosition);
                         notifyDataSetChanged();
                     }
@@ -109,7 +115,9 @@ public class InstructionExpandableAdapter extends BaseExpandableListAdapter {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListSectionInstruction.add(new SectionInstruction());
+                        SectionInstruction newSectionInstruction = new SectionInstruction();
+                        newSectionInstruction.setNumberSection(mListSectionInstruction.size() + 1);
+                        mListSectionInstruction.add(newSectionInstruction);
                         notifyDataSetChanged();
                     }
                 });
@@ -130,6 +138,11 @@ public class InstructionExpandableAdapter extends BaseExpandableListAdapter {
                 ((CreateEditRecipeItemSectionInstructionView) convertView).setOnDeleteStep(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (mListSectionInstruction.get(groupPosition).getListSteps().size() > 1) {
+                            for (int i = childPosition + 1; i < mListSectionInstruction.get(groupPosition).getListSteps().size(); i++) {
+                                mListSectionInstruction.get(groupPosition).getListSteps().get(i).setNumberStep(mListSectionInstruction.get(groupPosition).getListSteps().get(i).getNumberStep() - 1);
+                            }
+                        }
                         mListSectionInstruction.get(groupPosition).getListSteps().remove(childPosition);
                         notifyDataSetChanged();
                     }
@@ -143,7 +156,9 @@ public class InstructionExpandableAdapter extends BaseExpandableListAdapter {
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListSectionInstruction.get(groupPosition).getListSteps().add(new Step());
+                        Step step = new Step();
+                        step.setNumberStep(mListSectionInstruction.get(groupPosition).getListSteps().size() + 1);
+                        mListSectionInstruction.get(groupPosition).getListSteps().add(step);
                         notifyDataSetChanged();
                     }
                 });

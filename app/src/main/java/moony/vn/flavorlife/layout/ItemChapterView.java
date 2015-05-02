@@ -1,6 +1,7 @@
 package moony.vn.flavorlife.layout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -51,6 +52,11 @@ public class ItemChapterView extends LinearLayout implements View.OnClickListene
         if (chapter == null) return;
         mChapter = chapter;
 //        mChapterName.setText(chapter.getName());
+        if (chapter.isChosen()) {
+            setBackgroundColor(getResources().getColor(R.color.fl_color_gray_red_light));
+        } else {
+            setBackgroundColor(Color.WHITE);
+        }
         setOnClickListener(this);
     }
 

@@ -1,58 +1,60 @@
 package moony.vn.flavorlife.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
-import com.ntq.fragments.NFragment;
 import com.ntq.fragments.NFragmentSwitcher;
 import com.ntq.mediapicker.NMediaItem;
 import com.ntq.mediapicker.NMediaOptions;
 import com.ntq.mediapicker.NMediaPickerActivity;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
-import moony.vn.flavorlife.RequestCode;
+import moony.vn.flavorlife.entities.Chapter;
+import moony.vn.flavorlife.entities.Cookbook;
+import moony.vn.flavorlife.entities.Kind;
 import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.layout.LevelView;
-import moony.vn.flavorlife.layout.TypeView;
 
 /**
  * Created by moony on 3/4/15.
  */
 public class IntroductionFragment extends NFragmentSwitcher implements View.OnClickListener {
+    public static final int REQUEST_KIND = 10001;
+    public static final int REQUEST_BOOK = 10002;
+    public static final int REQUEST_CHAPTER = 10003;
     private static final int REQUEST_IMAGE = 10000;
     private static final String TAG = "IntroductionFragment";
     private static final String KEY_RECIPE = "recipe";
     private static final String KEY_IMAGE_URI = "image_uri";
+    private static final String KEY_CHOSEN_BOOK = "chosen_book";
+    private static final String KEY_CHOSEN_KIND = "chosen_kind";
+    private static final String KEY_CHOSEN_CHAPTER = "chosen_chapter";
     private Uri mImageURI;
     //    private TypeView mChooseType;
     private Recipe mRecipe;
     private ImageView mImageRecipe, mAddPhoto;
-    private EditText mName, mIntroductionOfDish, mCookingTime, mTipNote, mAuthorEvaluation, mChooseBook, mChooseChapter;
+    private EditText mName, mIntroductionOfDish, mCookingTime, mTipNote, mAuthorEvaluation;
     private LevelView mLevels;
     private View mLayoutChangeImage;
     private RatingBar mLevel;
     private int mChapterId;
-    private EditText mChooseKind;
+    private TextView mChooseKind, mChooseBook, mChooseChapter;
+    private Kind mChosenKind;
+    private Cookbook mChosenBook;
+    private Chapter mChosenChapter;
 
     public static IntroductionFragment newInstance() {
         IntroductionFragment introductionFragment = new IntroductionFragment();
@@ -67,6 +69,9 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
         if (savedInstanceState != null) {
             mImageURI = Uri.parse((String) savedInstanceState.get(KEY_IMAGE_URI));
             mRecipe = (Recipe) savedInstanceState.getSerializable(KEY_RECIPE);
+            mChosenBook = (Cookbook) savedInstanceState.getSerializable(KEY_CHOSEN_BOOK);
+            mChosenChapter = (Chapter) savedInstanceState.getSerializable(KEY_CHOSEN_CHAPTER);
+            mChosenKind = (Kind) savedInstanceState.getSerializable(KEY_CHOSEN_KIND);
         }
     }
 
@@ -85,9 +90,9 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
         mTipNote = (EditText) view.findViewById(R.id.recipe_tip_note);
         mAuthorEvaluation = (EditText) view.findViewById(R.id.author_evaluation);
         mLayoutChangeImage = view.findViewById(R.id.layout_change_picture);
-        mChooseBook = (EditText) view.findViewById(R.id.choose_book);
-        mChooseChapter = (EditText) view.findViewById(R.id.choose_chapter);
-        mChooseKind = (EditText) view.findViewById(R.id.choose_kind);
+        mChooseBook = (TextView) view.findViewById(R.id.choose_book);
+        mChooseChapter = (TextView) view.findViewById(R.id.choose_chapter);
+        mChooseKind = (TextView) view.findViewById(R.id.choose_kind);
     }
 
     @Override
@@ -96,6 +101,12 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
         mChooseBook.setOnClickListener(this);
         mChooseChapter.setOnClickListener(this);
         mChooseKind.setOnClickListener(this);
+//        if (mChosenChapter == null)
+//            mChosenChapter = new Chapter();
+//        if (mChosenBook == null)
+//            mChosenBook = new Cookbook();
+//        if (mChosenKind == null)
+//            mChosenKind = new Kind();
         if (mImageURI != null) {
             mLayoutChangeImage.setVisibility(View.VISIBLE);
             mAddPhoto.setVisibility(View.GONE);
@@ -140,6 +151,12 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
         outState.putSerializable(KEY_RECIPE, mRecipe);
         if (mImageURI != null)
             outState.putString(KEY_IMAGE_URI, mImageURI.toString());
+        if (mChosenBook != null)
+            outState.putSerializable(KEY_CHOSEN_BOOK, mChosenBook);
+        if (mChosenChapter != null)
+            outState.putSerializable(KEY_CHOSEN_CHAPTER, mChosenChapter);
+        if (mChosenKind != null)
+            outState.putSerializable(KEY_CHOSEN_KIND, mChosenKind);
     }
 
     @Override
@@ -153,19 +170,24 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
                         .build();
                 NMediaPickerActivity.open(mNavigationManager.getActivePage(),
                         REQUEST_IMAGE, options);
-                System.out.println("Mj : active page - " + mNavigationManager.getActivePage());
                 break;
             case R.id.choose_book:
-                ChooseBookDialogFragment chooseBookDialogFragment = new ChooseBookDialogFragment();
+                ChooseBookDialogFragment chooseBookDialogFragment = ChooseBookDialogFragment.newInstance(mChosenBook);
+                chooseBookDialogFragment.setTargetFragment(this, REQUEST_BOOK);
                 chooseBookDialogFragment.show(getFragmentManager(), null);
                 break;
             case R.id.choose_chapter:
-                //TODO truyen vao bookId
-                ChooseChapterDialogFragment chooseChapterDialogFragment = ChooseChapterDialogFragment.newInstance(1);
-                chooseChapterDialogFragment.show(getFragmentManager(), null);
+                if (mChosenBook != null) {
+                    ChooseChapterDialogFragment chooseChapterDialogFragment = ChooseChapterDialogFragment.newInstance(mChosenBook, mChosenChapter);
+                    chooseChapterDialogFragment.setTargetFragment(this, REQUEST_CHAPTER);
+                    chooseChapterDialogFragment.show(getFragmentManager(), null);
+                } else {
+                    showDialogMessageError("You haven't chosen book yet.");
+                }
                 break;
             case R.id.choose_kind:
-                ChooseKindDialogFragment chooseKindDialogFragment = ChooseKindDialogFragment.newInstance();
+                ChooseKindDialogFragment chooseKindDialogFragment = ChooseKindDialogFragment.newInstance(mChosenKind);
+                chooseKindDialogFragment.setTargetFragment(this, REQUEST_KIND);
                 chooseKindDialogFragment.show(getFragmentManager(), null);
                 break;
         }
@@ -174,37 +196,59 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("Mj : onActivityResult");
         ArrayList<NMediaItem> mMediaSelectedList;
-        if (requestCode == REQUEST_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                mLayoutChangeImage.setVisibility(View.VISIBLE);
-                mAddPhoto.setVisibility(View.GONE);
-                mMediaSelectedList = NMediaPickerActivity
-                        .getNMediaItemSelected(data);
-                if (mMediaSelectedList != null) {
+        switch (requestCode) {
+            case REQUEST_IMAGE:
+                if (resultCode == Activity.RESULT_OK) {
+                    mLayoutChangeImage.setVisibility(View.VISIBLE);
+                    mAddPhoto.setVisibility(View.GONE);
+                    mMediaSelectedList = NMediaPickerActivity
+                            .getNMediaItemSelected(data);
+                    if (mMediaSelectedList != null) {
 
-                    StringBuilder builder = new StringBuilder();
-                    for (NMediaItem mediaItem : mMediaSelectedList) {
-                        Log.i(TAG, mediaItem.toString());
-                        builder.append(mediaItem.toString());
-                        builder.append(", PathOrigin=");
-                        builder.append(mediaItem.getPathOrigin(getActivity()));
-                        builder.append(", PathCropped=");
-                        builder.append(mediaItem.getPathCropped(getActivity()));
-                        builder.append("\n\n");
+                        StringBuilder builder = new StringBuilder();
+                        for (NMediaItem mediaItem : mMediaSelectedList) {
+                            Log.i(TAG, mediaItem.toString());
+                            builder.append(mediaItem.toString());
+                            builder.append(", PathOrigin=");
+                            builder.append(mediaItem.getPathOrigin(getActivity()));
+                            builder.append(", PathCropped=");
+                            builder.append(mediaItem.getPathCropped(getActivity()));
+                            builder.append("\n\n");
 
-                        addImages(mediaItem);
-                        if (mRecipe == null)
-                            mRecipe = new Recipe();
-                        mRecipe.setImages(mediaItem.getPathCropped(getActivity()));
+                            addImages(mediaItem);
+                            if (mRecipe == null)
+                                mRecipe = new Recipe();
+                            mRecipe.setImages(mediaItem.getPathCropped(getActivity()));
+                        }
+                    } else {
+                        Log.e(TAG, "Error to get media, NULL");
                     }
                 } else {
-                    Log.e(TAG, "Error to get media, NULL");
+                    Log.e(TAG, "Get media cancled.");
                 }
-            } else {
-                Log.e(TAG, "Get media cancled.");
-            }
+                break;
+            case REQUEST_KIND:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    Bundle bundle = data.getBundleExtra(ChooseKindDialogFragment.KEY_DATA);
+                    mChosenKind = (Kind) bundle.getSerializable(ChooseKindDialogFragment.KEY_KIND);
+                    mChooseKind.setText(mChosenKind.getName());
+                }
+                break;
+            case REQUEST_BOOK:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    Bundle bundle = data.getBundleExtra(ChooseBookDialogFragment.KEY_DATA);
+                    mChosenBook = (Cookbook) bundle.getSerializable(ChooseBookDialogFragment.KEY_BOOK);
+                    mChooseBook.setText(mChosenBook.getName());
+                }
+                break;
+            case REQUEST_CHAPTER:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    Bundle bundle = data.getBundleExtra(ChooseChapterDialogFragment.KEY_DATA);
+                    mChosenChapter = (Chapter) bundle.getSerializable(ChooseChapterDialogFragment.KEY_CHAPTER);
+                    mChooseChapter.setText(mChosenChapter.getName());
+                }
+                break;
         }
     }
 

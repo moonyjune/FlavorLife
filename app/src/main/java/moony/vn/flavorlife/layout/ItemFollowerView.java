@@ -20,7 +20,9 @@ import moony.vn.flavorlife.api.model.DfeFollow;
 import moony.vn.flavorlife.api.model.DfeUnFollow;
 import moony.vn.flavorlife.entities.Follow;
 import moony.vn.flavorlife.entities.Follower;
+import moony.vn.flavorlife.fragments.HomeFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
+import moony.vn.flavorlife.utils.DialogUtils;
 
 /**
  * Created by moony on 3/11/15.
@@ -34,10 +36,12 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
     private DfeFollow mDfeFollow;
     private DfeUnFollow mDfeUnFollow;
     private Follower mFollower;
+    private Context mContext;
 
     private OnDataChangedListener onDataChangedFollow = new OnDataChangedListener() {
         @Override
         public void onDataChanged() {
+            DialogUtils.getInstance().hideDialogLoading();
             if (mDfeFollow != null && mDfeFollow.isReady()) {
                 mFollower.setFollowed(true);
                 mFollower.setNumFollowers(mDfeFollow.getNumFollowers());
@@ -50,13 +54,15 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
     private Response.ErrorListener onErrorListenerFollow = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            //TODO show dialog
+            DialogUtils.getInstance().hideDialogLoading();
+            DialogUtils.getInstance().showDialogMessageError(mContext, error);
         }
     };
 
     private OnDataChangedListener onDataChangedUnFollow = new OnDataChangedListener() {
         @Override
         public void onDataChanged() {
+            DialogUtils.getInstance().hideDialogLoading();
             if (mDfeUnFollow != null && mDfeUnFollow.isReady()) {
                 mFollower.setFollowed(false);
                 mFollower.setNumFollowers(mDfeUnFollow.getNumberFollowers());
@@ -69,7 +75,8 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
     private Response.ErrorListener onErrorListenerUnFollow = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            //TODO show dialog
+            DialogUtils.getInstance().hideDialogLoading();
+            DialogUtils.getInstance().showDialogMessageError(mContext, error);
         }
     };
 
@@ -123,6 +130,13 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
         } else {
             setButtonSelected(false);
         }
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavigationManager.showPage(HomeFragment.newInstance(mFollower));
+            }
+        });
     }
 
     @Override
@@ -139,6 +153,7 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
     }
 
     private void requestUnFollow() {
+        DialogUtils.getInstance().showDialogLoading(getContext());
         if (mDfeUnFollow == null) {
             mDfeUnFollow = new DfeUnFollow(FlavorLifeApplication.get().getDfeApi());
             mDfeUnFollow.addDataChangedListener(onDataChangedUnFollow);
@@ -148,6 +163,7 @@ public class ItemFollowerView extends LinearLayout implements View.OnClickListen
     }
 
     private void requestFollow() {
+        DialogUtils.getInstance().showDialogLoading(getContext());
         if (mDfeFollow == null) {
             mDfeFollow = new DfeFollow(FlavorLifeApplication.get().getDfeApi());
             mDfeFollow.addDataChangedListener(onDataChangedFollow);
