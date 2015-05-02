@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_list_item_selector"
     android:orientation="vertical">
 
     <TextView
@@ -17,4 +16,4 @@
         android:text="Chapter 01: The standard Lorem Ipsum passage, used since the 1500s"
         android:textSize="20sp" />
 
-</LinearLayout>
+</merge>

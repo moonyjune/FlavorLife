@@ -120,6 +120,7 @@ public class ChooseBookDialogFragment extends DialogFragment implements OnDataCh
                 Intent data = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(KEY_BOOK, mListCookbooks.get(i));
+                mListCookbooks.get(i).setChosen(true);
                 data.putExtra(KEY_DATA, bundle);
                 getTargetFragment().onActivityResult(IntroductionFragment.REQUEST_BOOK, Activity.RESULT_OK, data);
                 dismiss();
@@ -167,7 +168,6 @@ public class ChooseBookDialogFragment extends DialogFragment implements OnDataCh
         if (mDfeGetUserCookbooks.isReady()) {
             switchToContent();
             mListCookbooks.addAll(mDfeGetUserCookbooks.getListCookbooks());
-            mBookAdapter.notifyDataSetChanged();
             if (mCookbook != null) {
                 for (int i = 0; i < mListCookbooks.size(); i++) {
                     if (mListCookbooks.get(i).getId() == mCookbook.getId()) {
@@ -177,6 +177,7 @@ public class ChooseBookDialogFragment extends DialogFragment implements OnDataCh
                     }
                 }
             }
+            mBookAdapter.notifyDataSetChanged();
         }
     }
 

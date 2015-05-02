@@ -6,7 +6,6 @@
     android:orientation="horizontal"
     android:paddingBottom="5dp"
     android:paddingLeft="20dp"
-    android:background="@drawable/bg_list_item_selector"
     android:paddingRight="20dp"
     android:paddingTop="5dp">
 

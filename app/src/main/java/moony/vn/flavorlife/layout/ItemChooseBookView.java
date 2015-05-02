@@ -50,7 +50,7 @@ public class ItemChooseBookView extends LinearLayout {
 
     public void display(Cookbook cookbook) {
         if (cookbook == null) return;
-//        mCookbook = cookbook;
+        mCookbook = cookbook;
 //        mBookName.setText(cookbook.getName());
 //        if (cookbook.getImage() != null && !cookbook.getImage().isEmpty()) {
 //            mImageLoader.display(cookbook.getImage(), mBookImage);

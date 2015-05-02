@@ -35,7 +35,7 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
     public static final String KEY_CHAPTER = "chapter";
     public static final String KEY_DATA = "data";
     private ListView mListViewChapters;
-    private ChapterAdapter mBookAdapter;
+    private ChapterAdapter mChapterAdapter;
     private View mLayoutContent, mLayoutRetry;
     private View mLayoutLoading;
     private TextView mError;
@@ -99,8 +99,8 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
         mRetry.setOnClickListener(this);
         if (mListChapters == null)
             mListChapters = new ArrayList<Chapter>();
-        if (mBookAdapter == null)
-            mBookAdapter = new ChapterAdapter(getActivity(), 0, mListChapters);
+        if (mChapterAdapter == null)
+            mChapterAdapter = new ChapterAdapter(getActivity(), 0, mListChapters);
         if (mFooter == null) {
             mFooter = getActivity().getLayoutInflater().inflate(R.layout.footer_add_chapter, mListViewChapters, false);
         }
@@ -108,11 +108,11 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
             mListViewChapters.setAdapter(null);
             mListViewChapters.addFooterView(mFooter);
         }
-        mListViewChapters.setAdapter(mBookAdapter);
+        mListViewChapters.setAdapter(mChapterAdapter);
         if (mDfeGetUserChapters != null && mDfeGetUserChapters.isReady()) {
             switchToContent();
             mListChapters.addAll(mDfeGetUserChapters.getListChapters());
-            mBookAdapter.notifyDataSetChanged();
+            mChapterAdapter.notifyDataSetChanged();
         } else {
             switchToLoading();
             requestData();
@@ -129,16 +129,6 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
                 dismiss();
             }
         });
-
-        if (mChapter != null) {
-            for (int i = 0; i < mListChapters.size(); i++) {
-                if (mListChapters.get(i).getId() == mChapter.getId()) {
-                    mListChapters.get(i).setChosen(true);
-                } else {
-                    mListChapters.get(i).setChosen(false);
-                }
-            }
-        }
     }
 
     @Override
@@ -181,7 +171,16 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
         if (mDfeGetUserChapters.isReady()) {
             switchToContent();
             mListChapters.addAll(mDfeGetUserChapters.getListChapters());
-            mBookAdapter.notifyDataSetChanged();
+            if (mChapter != null) {
+                for (int i = 0; i < mListChapters.size(); i++) {
+                    if (mListChapters.get(i).getId() == mChapter.getId()) {
+                        mListChapters.get(i).setChosen(true);
+                    } else {
+                        mListChapters.get(i).setChosen(false);
+                    }
+                }
+            }
+            mChapterAdapter.notifyDataSetChanged();
         }
     }
 
