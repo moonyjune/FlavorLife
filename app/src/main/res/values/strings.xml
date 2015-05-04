@@ -24,5 +24,10 @@
     <string name="plus_follow">+ Follow</string>
     <string name="coming_soon">Coming soon</string>
     <string name="action_bar_title_recipe_detail">Recipe detail</string>
+    <string name="unknow_error">Unknow Error</string>
+    <string name="book_not_exist">book not exist</string>
+    <string name="chapter_not_exist">chapter not exist</string>
+    <string name="recipe_not_exist">recipe not exist</string>
+    <string name="user_not_exist">user not exist</string>
 
 </resources>

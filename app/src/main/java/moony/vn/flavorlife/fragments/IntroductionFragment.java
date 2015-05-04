@@ -279,36 +279,23 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
 
 
     public Recipe getRecipe() {
-//        if (validInformation()) {
         if (mRecipe == null) {
             mRecipe = new Recipe();
         }
         mRecipe.setName(mName.getText().toString());
         mRecipe.setIntroduction(mIntroductionOfDish.getText().toString());
-        mRecipe.setAuthorComments("comment");
+        mRecipe.setAuthorComments(mAuthorEvaluation.getText().toString());
         mRecipe.setLevel(mLevel.getNumStars());
-        mRecipe.setType(1);
+//        mRecipe.setType(1);
         mRecipe.setCookingTime(Integer.valueOf(mCookingTime.getText().toString()));
-        mRecipe.setKind(1);
+        if (mChosenKind != null)
+            mRecipe.setKind(mChosenKind.getKind());
         mRecipe.setCreateTime(new Date());
-        mRecipe.setIdChapter(mChapterId);
+        if (mChosenChapter != null)
+            mRecipe.setIdChapter(mChosenChapter.getId());
         mRecipe.setIdUser(FlavorLifeApplication.get().getUser().getId());
+        mRecipe.setTipNote(mTipNote.getText().toString());
         return mRecipe;
-//        } else {
-//            return null;
-//        }
     }
 
-    private boolean validInformation() {
-        if (mName.getText().toString() == null || mName.getText().toString().isEmpty())
-            return false;
-        if (mIntroductionOfDish.getText().toString() == null || mIntroductionOfDish.getText().toString().isEmpty())
-            return false;
-        if (mLevels.getLevel() == 0) return false;
-//        if (mChooseType.getListTypes().size() == 0) return false;
-        if (mCookingTime.getText().toString() == null || mCookingTime.getText().toString().isEmpty() ||
-                Integer.valueOf(mCookingTime.getText().toString()) <= 0)
-            return false;
-        return true;
-    }
 }

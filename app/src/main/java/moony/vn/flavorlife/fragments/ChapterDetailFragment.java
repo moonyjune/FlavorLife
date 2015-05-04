@@ -27,6 +27,7 @@ public class ChapterDetailFragment extends FlListFragment {
     public static ChapterDetailFragment newInstance(int userId, int chapterId) {
         ChapterDetailFragment chapterDetailFragment = new ChapterDetailFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt(KEY_USER_ID, userId);
         bundle.putInt(KEY_CHAPTER_ID, chapterId);
         chapterDetailFragment.setArguments(bundle);
         return chapterDetailFragment;
@@ -112,4 +113,5 @@ public class ChapterDetailFragment extends FlListFragment {
             return false;
         }
     }
+
 }

@@ -35,7 +35,7 @@ public class UserRecipesFragment extends FlListFragmentForGridView {
         if (savedInstanceState != null) {
             mUserId = savedInstanceState.getInt(USER_ID);
         } else {
-            getArguments().getInt(USER_ID);
+            mUserId = getArguments().getInt(USER_ID);
         }
     }
 

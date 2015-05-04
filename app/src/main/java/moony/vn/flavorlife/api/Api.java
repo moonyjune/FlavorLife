@@ -90,7 +90,7 @@ public interface Api {
     public Request<JSONObject> getUserCookbooks(int userId,
                                                 Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getRecipeDetail(int userId, int recipeId,
+    public Request<JSONObject> getRecipeDetail(int recipeId,
                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> getFollows(int skip, int take, Date requestDate,
@@ -99,7 +99,7 @@ public interface Api {
     public Request<JSONObject> getFollowers(int skip, int take, Date requestDate,
                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getBookDetail(int userId, int bookId,
+    public Request<JSONObject> getBookDetail(int bookId,
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> getChapterDetail(int userId, int chapterId,

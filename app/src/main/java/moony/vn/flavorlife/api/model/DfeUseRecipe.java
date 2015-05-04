@@ -38,7 +38,7 @@ public class DfeUseRecipe extends DfeModel implements Response.Listener<JSONObje
         notifyDataSetChanged();
     }
 
-    public int getNumLikes() {
+    public int getNumUses() {
         return mNumUsed;
     }
 }

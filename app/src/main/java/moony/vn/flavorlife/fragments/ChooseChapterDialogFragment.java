@@ -163,7 +163,7 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
             mDfeGetUserChapters.addDataChangedListener(this);
             mDfeGetUserChapters.addErrorListener(this);
         }
-        mDfeGetUserChapters.makeRequest(mBook.getId(), mBook.getId());
+        mDfeGetUserChapters.makeRequest(mBook.getId());
     }
 
     @Override

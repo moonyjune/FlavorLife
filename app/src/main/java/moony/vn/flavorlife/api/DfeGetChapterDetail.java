@@ -54,5 +54,8 @@ public class DfeGetChapterDetail extends FlPaginatedList<RecipeChapter> {
         return null;
     }
 
-
+    @Override
+    protected boolean checkMoreAvaiable(List<RecipeChapter> response) {
+        return false;
+    }
 }

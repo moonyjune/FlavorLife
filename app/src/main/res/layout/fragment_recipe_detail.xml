@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,6 +40,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@id/recipe_level"
                 style="@style/TextBoldRed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,10 +51,12 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@id/recipe_likes"
                 style="@style/TextBoldRed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
+                android:clickable="true"
                 android:drawableLeft="@drawable/ic_heart_red"
                 android:drawablePadding="3dp"
                 android:gravity="center"
@@ -61,10 +64,12 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@id/recipe_used"
                 style="@style/TextBoldRed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
+                android:clickable="true"
                 android:drawableLeft="@drawable/ic_use_red"
                 android:drawablePadding="3dp"
                 android:gravity="center"
@@ -93,6 +98,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@id/recipe_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -110,6 +116,7 @@
             android:textAllCaps="true" />
 
         <TextView
+            android:id="@id/recipe_info"
             style="@style/TextItalic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,6 +161,7 @@
             android:textAllCaps="true" />
 
         <TextView
+            android:id="@id/recipe_tip_note"
             style="@style/TextItalic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,6 +178,7 @@
             android:textAllCaps="true" />
 
         <TextView
+            android:id="@id/recipe_author_comment"
             style="@style/TextItalic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

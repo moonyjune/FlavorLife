@@ -35,7 +35,7 @@ public class DfeGetBookDetail extends FlPaginatedList<Chapter> {
 
     @Override
     protected Request<JSONObject> makeRequest(int skip, int take, Date requestDate) {
-        return mApi.getBookDetail(mUserId, mBookId, this, this);
+        return mApi.getBookDetail(mBookId, this, this);
     }
 
     @Override

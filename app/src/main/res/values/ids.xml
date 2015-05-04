@@ -135,5 +135,6 @@
     <item name="book" type="id" />
     <item name="recipe" type="id" />
     <item name="follower" type="id" />
+    <item name="recipe_author_comment" type="id" />
 
 </resources>

@@ -116,6 +116,7 @@ public class HomeFragment extends NFragmentSwitcher {
         super.onDataChanged();
         switchToData();
         if (isDataReady()) {
+            mUser.updateUser(mDfeGetUserProfile.getUser());
             setDataToView();
         }
 

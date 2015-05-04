@@ -47,6 +47,7 @@ public class ApiImpl implements Api, ApiKey {
     @Override
     public Request<JSONObject> getNewRecipes(int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
         list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
         list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
         if (requestDate != null) {
@@ -61,6 +62,7 @@ public class ApiImpl implements Api, ApiKey {
     @Override
     public Request<JSONObject> getUserRecipes(int userId, int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(MY_USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
         list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
         list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
         list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
@@ -84,9 +86,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getRecipeDetail(int userId, int recipeId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getRecipeDetail(int recipeId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
         list.add(new BasicNameValuePair(RECIPE_ID, String.valueOf(recipeId)));
         String url = AppRequest.getUrl(toURL(API_GET_RECIPE_DETAIL), list);
 
@@ -125,9 +127,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getBookDetail(int userId, int bookId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getBookDetail(int bookId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
         list.add(new BasicNameValuePair(COOKBOOK_ID, String.valueOf(bookId)));
         String url = AppRequest.getUrl(toURL(API_GET_BOOK_DETAIL), list);
 

@@ -148,4 +148,17 @@ public class User implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public void updateUser(User user){
+        setId(user.getId());
+        setUserName(user.getUserName());
+        setFollowed(user.isFollowed());
+        setNumFollowers(user.getNumFollowers());
+        setNumBooks(user.getNumBooks());
+        setNumRecipes(user.getNumRecipes());
+        setNumFollows(user.getNumFollows());
+        setEmail(user.getEmail());
+        setImage(user.getImage());
+        setInspiration(user.getInspiration());
+    }
 }

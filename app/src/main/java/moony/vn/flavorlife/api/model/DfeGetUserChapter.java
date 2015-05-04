@@ -35,8 +35,8 @@ public class DfeGetUserChapter extends DfeModel implements Response.Listener<JSO
         return listChapters != null && listChapters.size() != 0;
     }
 
-    public void makeRequest(int userId, int bookId) {
-        mApi.getBookDetail(userId, bookId, this, this);
+    public void makeRequest(int bookId) {
+        mApi.getBookDetail(bookId, this, this);
     }
 
     @Override

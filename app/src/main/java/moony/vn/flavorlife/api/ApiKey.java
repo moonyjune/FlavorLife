@@ -11,6 +11,7 @@ public interface ApiKey {
     public static final String PWD = "password";
     public static final String INTRODUCTION = "introduction";
     public static final String USER_ID = "user_id";
+    public static final String MY_USER_ID = "my_user_id";
     public static final String FOLLOW_USER_ID = "follow_user_id";
     public static final String SKIP = "skip";
     public static final String TAKE = "take";

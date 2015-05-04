@@ -19,7 +19,7 @@ public class Recipe implements Serializable {
     private int id;
     @SerializedName("name")
     private String name;
-    @SerializedName("imagse")
+    @SerializedName("images")
     private String images;
     @SerializedName("type")
     private int type;
@@ -49,9 +49,17 @@ public class Recipe implements Serializable {
     private String introduction;
     @SerializedName("author_name")
     private String authorName;
-    private int idBook;
+    @SerializedName("book_name")
     private String bookName;
+    @SerializedName("chapter_name")
     private String chapterName;
+    @SerializedName("is_liked")
+    private int isLiked;
+    @SerializedName("is_used")
+    private int isUsed;
+    @SerializedName("is_bookmarked")
+    private int isBookmarked;
+    private int idBook;
     private ArrayList<SectionIngredient> listSectionIngredients;
     private ArrayList<SectionInstruction> listSectionInstructions;
 
@@ -266,5 +274,70 @@ public class Recipe implements Serializable {
             listSectionInstructions.add(sectionInstruction);
         }
         return listSectionInstructions;
+    }
+
+    public boolean isLiked() {
+        if (isLiked == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setIsLiked(boolean isLiked) {
+        if (isLiked) {
+            this.isLiked = 1;
+        } else {
+            this.isLiked = 0;
+        }
+    }
+
+    public boolean isUsed() {
+        if (isUsed == 1)
+            return true;
+        return false;
+    }
+
+    public void setIsUsed(boolean isUsed) {
+        this.isUsed = 0;
+        if (isUsed)
+            this.isUsed = 1;
+    }
+
+    public boolean isBookmarked() {
+        if (isBookmarked == 1)
+            return true;
+        return false;
+    }
+
+    public void setIsBookmarked(boolean isBookmarked) {
+        this.isBookmarked = 0;
+        if (isBookmarked)
+            this.isBookmarked = 1;
+    }
+
+    public void updateRecipe(Recipe recipe){
+        setId(recipe.getId());
+        setIdBook(recipe.getIdBook());
+        setIdChapter(recipe.getIdChapter());
+        setIdUser(recipe.getIdUser());
+        setImages(recipe.getImages());
+        setIntroduction(recipe.getIntroduction());
+        setIsUsed(recipe.isUsed());
+        setIsLiked(recipe.isLiked());
+        setIsBookmarked(recipe.isBookmarked());
+        setKind(recipe.getKind());
+        setAuthorName(recipe.getAuthorName());
+        setBookName(recipe.getBookName());
+        setChapterName(recipe.getChapterName());
+        setCookingTime(recipe.getCookingTime());
+        setLevel(recipe.getLevel());
+        setLikes(recipe.getLikes());
+        setUsed(recipe.getUsed());
+        setName(recipe.getName());
+        setTipNote(recipe.getTipNote());
+        setAuthorComments(recipe.getAuthorComments());
+        setType(recipe.getType());
+
     }
 }
