@@ -16,6 +16,7 @@ public class Chapter implements Serializable {
     private String name;
     @SerializedName("book_id")
     private int bookId;
+    private int userId;
     private boolean isChosen;
 
     public int getNumChapter() {
@@ -56,5 +57,13 @@ public class Chapter implements Serializable {
 
     public void setBookId(int bookId) {
         this.bookId = bookId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

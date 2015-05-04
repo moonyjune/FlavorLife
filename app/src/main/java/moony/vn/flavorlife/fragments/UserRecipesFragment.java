@@ -46,16 +46,25 @@ public class UserRecipesFragment extends FlListFragmentForGridView {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        syncNoDataView();
+    }
+
+    @Override
     public void onDataChanged() {
         super.onDataChanged();
-        if (mDfeGetUserRecipes != null && mDfeGetUserRecipes.isReady() && mDfeGetUserRecipes.getCount() == 0) {
-            mNoData.setVisibility(View.VISIBLE);
-//            getListView().setVisibility(View.INVISIBLE);
-        } else {
-            mNoData.setVisibility(View.GONE);
-//            getListView().setVisibility(View.VISIBLE);
-        }
+        syncNoDataView();
+    }
 
+    private void syncNoDataView() {
+        if (mDfeGetUserRecipes != null && mDfeGetUserRecipes.isReady()) {
+            if (mDfeGetUserRecipes.getCount() == 0) {
+                mNoData.setVisibility(View.VISIBLE);
+            } else {
+                mNoData.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -66,7 +75,7 @@ public class UserRecipesFragment extends FlListFragmentForGridView {
 
     @Override
     protected FlPaginatedList getFlPaginatedList() {
-        return mDfeGetUserRecipes = new DfeGetUserRecipes(mApi);
+        return mDfeGetUserRecipes = new DfeGetUserRecipes(mApi, mUserId);
     }
 
     @Override

@@ -34,6 +34,7 @@ public interface ApiKey {
     public static final String API_GET_FOLLOWERS = "get_followers";
     public static final String API_GET_BOOK_DETAIL = "get_book_detail";
     public static final String API_GET_CHAPTER_DETAIL = "get_chapter_detail";
+    public static final String API_GET_USER_INFORMATION = "get_user_information";
 
     public static final String API_REGISTER_GCM = "register_gcm";
     public static final String API_LOGIN = "login";

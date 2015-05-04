@@ -4,6 +4,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.fragments.HomeFragment;
 import moony.vn.flavorlife.gcm.GcmIntentService;
@@ -18,7 +19,7 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Fragment fragment = getRootFragment();
         if (fragment == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, new HomeFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, HomeFragment.newInstance(FlavorLifeApplication.get().getUser())).commit();
         } else {
             mActionbar.syncActionBar(fragment);
         }

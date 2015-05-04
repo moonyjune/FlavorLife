@@ -52,6 +52,8 @@ public class Recipe implements Serializable {
     private int idBook;
     private String bookName;
     private String chapterName;
+    private ArrayList<SectionIngredient> listSectionIngredients;
+    private ArrayList<SectionInstruction> listSectionInstructions;
 
     public Recipe() {
 //        this.name = "name";
@@ -238,5 +240,31 @@ public class Recipe implements Serializable {
                 return kindNames[2];
         }
         return null;
+    }
+
+    public ArrayList<SectionIngredient> getListSectionIngredients() {
+        if (listSectionIngredients == null)
+            listSectionIngredients = new ArrayList<SectionIngredient>();
+        for (int i = 0; i < listSection.size(); i++) {
+            SectionIngredient sectionIngredient = new SectionIngredient();
+            sectionIngredient.setName(listSection.get(i).getName());
+            sectionIngredient.setNumberSection(listSection.get(i).getNumberSection());
+            sectionIngredient.setListIngredients(listSection.get(i).getListIngredient());
+            listSectionIngredients.add(sectionIngredient);
+        }
+        return listSectionIngredients;
+    }
+
+    public ArrayList<SectionInstruction> getListSectionInstructions() {
+        if (listSectionInstructions == null)
+            listSectionInstructions = new ArrayList<SectionInstruction>();
+        for (int i = 0; i < listSection.size(); i++) {
+            SectionInstruction sectionInstruction = new SectionInstruction();
+            sectionInstruction.setName(listSection.get(i).getName());
+            sectionInstruction.setNumberSection(listSection.get(i).getNumberSection());
+            sectionInstruction.setListSteps(listSection.get(i).getListStep());
+            listSectionInstructions.add(sectionInstruction);
+        }
+        return listSectionInstructions;
     }
 }

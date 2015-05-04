@@ -49,8 +49,4 @@ public class DfeGetFollows extends FlPaginatedList<Follow> {
         return null;
     }
 
-    @Override
-    public void onErrorResponse(VolleyError volleyerror) {
-        super.onErrorResponse(volleyerror);
-    }
 }

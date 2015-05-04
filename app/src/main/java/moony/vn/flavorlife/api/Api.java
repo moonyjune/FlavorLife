@@ -84,12 +84,13 @@ public interface Api {
     public Request<JSONObject> getNewRecipes(int skip, int take, Date requestDate,
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getUserRecipes(int skip, int take, Date requestedDate,
+    public Request<JSONObject> getUserRecipes(int userId, int skip, int take, Date requestedDate,
                                               Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getUserCookbooks(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+    public Request<JSONObject> getUserCookbooks(int userId,
+                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getRecipeDetail(int recipeId,
+    public Request<JSONObject> getRecipeDetail(int userId, int recipeId,
                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> getFollows(int skip, int take, Date requestDate,
@@ -98,10 +99,10 @@ public interface Api {
     public Request<JSONObject> getFollowers(int skip, int take, Date requestDate,
                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getBookDetail(int bookId,
+    public Request<JSONObject> getBookDetail(int userId, int bookId,
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> getChapterDetail(int chapterId,
+    public Request<JSONObject> getChapterDetail(int userId, int chapterId,
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> registerGcm(int userId, String registerId,

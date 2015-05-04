@@ -12,6 +12,7 @@ import android.widget.TextView;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.activities.BaseActivity;
 import moony.vn.flavorlife.fragments.ChapterDetailFragment;
+import moony.vn.flavorlife.fragments.ComingSoonFragment;
 import moony.vn.flavorlife.fragments.CookBookDetailFragment;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
 import moony.vn.flavorlife.fragments.FollowsFragment;
@@ -82,7 +83,6 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     protected int findResourceIdForActionbar(Fragment activePage) {
-        // TODO check fragment and return layout actionbar for that fragment. (1 layout for group fragment)
         if (activePage instanceof NewRecipesFragment) {
             return R.layout.actionbar;
         } else {
@@ -115,13 +115,22 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     private void setupBtnRight() {
+        setupBtnMessage();
+        setupBtnFinish();
+    }
+
+    private void setupBtnMessage() {
         if (mMessage == null) return;
         mMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO move to screen messages
+                mNavigationManager.showPage(ComingSoonFragment.newInstance());
             }
         });
+    }
+
+    private void setupBtnFinish() {
         if (mFinish == null) return;
         mFinish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +141,6 @@ public class NativeActionbar implements CustomActionbar {
                 }
             }
         });
-
     }
 
     private void setupBtnLeft() {
@@ -209,7 +217,7 @@ public class NativeActionbar implements CustomActionbar {
 
     private void syncBtnMessage(Fragment activePage) {
         if (mMessage == null) return;
-        if (activePage instanceof LoginFragment) {
+        if (activePage instanceof LoginFragment || activePage instanceof ComingSoonFragment) {
             mMessage.setVisibility(View.GONE);
         } else {
             mMessage.setVisibility(View.VISIBLE);
@@ -236,7 +244,7 @@ public class NativeActionbar implements CustomActionbar {
         if (activePage instanceof LoginFragment || activePage instanceof RecipeDetailFragment ||
                 activePage instanceof CookBookDetailFragment ||
                 activePage instanceof ChapterDetailFragment ||
-                activePage instanceof HomeFragment) {
+                activePage instanceof HomeFragment || activePage instanceof ComingSoonFragment) {
             mSearch.setVisibility(View.GONE);
         } else {
             mSearch.setVisibility(View.VISIBLE);

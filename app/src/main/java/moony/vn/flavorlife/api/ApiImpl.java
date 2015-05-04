@@ -59,9 +59,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getUserRecipes(int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getUserRecipes(int userId, int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair(USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
         list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
         list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
         if (requestDate != null) {
@@ -74,9 +74,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getUserCookbooks(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getUserCookbooks(int userId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
-        list.add(new BasicNameValuePair(USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
         String url = AppRequest.getUrl(toURL(API_GET_COOKBOOKS), list);
 
         AppRequest appRequest = new AppRequest(Request.Method.GET, url, null, listener, errorListener);
@@ -84,8 +84,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getRecipeDetail(int recipeId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getRecipeDetail(int userId, int recipeId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
         list.add(new BasicNameValuePair(RECIPE_ID, String.valueOf(recipeId)));
         String url = AppRequest.getUrl(toURL(API_GET_RECIPE_DETAIL), list);
 
@@ -124,8 +125,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getBookDetail(int bookId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getBookDetail(int userId, int bookId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
         list.add(new BasicNameValuePair(COOKBOOK_ID, String.valueOf(bookId)));
         String url = AppRequest.getUrl(toURL(API_GET_BOOK_DETAIL), list);
 
@@ -134,8 +136,9 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> getChapterDetail(int chapterId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public Request<JSONObject> getChapterDetail(int userId, int chapterId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
         list.add(new BasicNameValuePair(CHAPTER_ID, String.valueOf(chapterId)));
         String url = AppRequest.getUrl(toURL(API_GET_CHAPTER_DETAIL), list);
 
@@ -330,6 +333,11 @@ public class ApiImpl implements Api, ApiKey {
 
     @Override
     public Request<JSONObject> getUserInformation(int userId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
+        String url = AppRequest.getUrl(toURL(API_GET_USER_INFORMATION), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.GET, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 }

@@ -25,15 +25,17 @@ import moony.vn.flavorlife.utils.DateFormatUtils;
  */
 public class DfeGetUserRecipes extends FlPaginatedList<Recipe> {
     private Api mApi;
+    private int mUserId;
 
-    public DfeGetUserRecipes(Api api) {
+    public DfeGetUserRecipes(Api api, int userId) {
         super();
         mApi = api;
+        mUserId = userId;
     }
 
     @Override
     protected Request<JSONObject> makeRequest(int skip, int take, Date requestDate) {
-        return mApi.getUserRecipes(skip, take, requestDate, this, this);
+        return mApi.getUserRecipes(mUserId, skip, take, requestDate, this, this);
     }
 
     @Override

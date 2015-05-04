@@ -133,7 +133,6 @@ public class ItemFollowView extends LinearLayout implements View.OnClickListener
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO truyen vao user
                 mNavigationManager.showPage(HomeFragment.newInstance(mFollow));
             }
         });

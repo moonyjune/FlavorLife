@@ -50,8 +50,4 @@ public class DfeGetNewRecipes extends FlPaginatedList<Recipe> {
         return null;
     }
 
-    @Override
-    public void onErrorResponse(VolleyError volleyerror) {
-        super.onErrorResponse(volleyerror);
-    }
 }

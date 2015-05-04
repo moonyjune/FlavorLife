@@ -1,6 +1,9 @@
 package moony.vn.flavorlife.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -19,6 +22,8 @@ import moony.vn.flavorlife.gcm.GcmUtils;
  */
 public class NewRecipesFragment extends FlListFragment {
     private DfeRegisterGcm mDfeRegisterGcm;
+    private DfeGetNewRecipes mDfeGetNewRecipes;
+    private TextView mNoData;
 
     @Override
     protected int getLayoutRes() {
@@ -26,8 +31,14 @@ public class NewRecipesFragment extends FlListFragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mNoData = (TextView) view.findViewById(R.id.footer_no_data);
+    }
+
+    @Override
     protected FlPaginatedList getFlPaginatedList() {
-        return new DfeGetNewRecipes(mApi);
+        return mDfeGetNewRecipes = new DfeGetNewRecipes(mApi);
     }
 
     @Override
@@ -41,6 +52,7 @@ public class NewRecipesFragment extends FlListFragment {
             }
             FlavorLifeApplication.get().updateStateUser(true);
         }
+        syncNoDataView();
     }
 
     private void requestGcm(String registerId) {
@@ -63,4 +75,17 @@ public class NewRecipesFragment extends FlListFragment {
         mDfeRegisterGcm.makeRequest(FlavorLifeApplication.get().getUser().getId(), registerId);
     }
 
+    private void syncNoDataView() {
+        if (mDfeGetNewRecipes != null && mDfeGetNewRecipes.isReady() && mDfeGetNewRecipes.getCount() == 0) {
+            mNoData.setVisibility(View.VISIBLE);
+        } else {
+            mNoData.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        syncNoDataView();
+    }
 }

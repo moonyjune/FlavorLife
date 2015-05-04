@@ -156,7 +156,7 @@ public class ChooseBookDialogFragment extends DialogFragment implements OnDataCh
 
     private void requestData() {
         if (mDfeGetUserCookbooks == null) {
-            mDfeGetUserCookbooks = new DfeGetUserCookbooks(FlavorLifeApplication.get().getDfeApi());
+            mDfeGetUserCookbooks = new DfeGetUserCookbooks(FlavorLifeApplication.get().getDfeApi(), FlavorLifeApplication.get().getUser().getId());
             mDfeGetUserCookbooks.addDataChangedListener(this);
             mDfeGetUserCookbooks.addErrorListener(this);
         }
@@ -193,4 +193,5 @@ public class ChooseBookDialogFragment extends DialogFragment implements OnDataCh
         switchToLoading();
         requestData();
     }
+
 }

@@ -29,8 +29,8 @@ public class DfeGetRecipeDetail extends DfeModel implements Response.Listener<JS
         return mRecipe != null;
     }
 
-    public void makeRequest(int recipeId) {
-        mApi.getRecipeDetail(recipeId, this, this);
+    public void makeRequest(int userId, int recipeId) {
+        mApi.getRecipeDetail(userId, recipeId, this, this);
     }
 
     @Override
@@ -43,5 +43,9 @@ public class DfeGetRecipeDetail extends DfeModel implements Response.Listener<JS
             e.printStackTrace();
         }
         notifyDataSetChanged();
+    }
+
+    public Recipe getRecipe() {
+        return mRecipe;
     }
 }

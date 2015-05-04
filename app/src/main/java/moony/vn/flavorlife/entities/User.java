@@ -7,12 +7,14 @@ import java.io.Serializable;
 /**
  * Created by moony on 3/16/15.
  */
-public class User implements Serializable{
+public class User implements Serializable {
     @SerializedName("id")
     private int id;
     @SerializedName("email")
     private String email;
     @SerializedName("image")
+    private String userName;
+    @SerializedName("user_name")
     private String image;
     @SerializedName("inspiration")
     private String inspiration;
@@ -24,7 +26,8 @@ public class User implements Serializable{
     private int numBooks;
     @SerializedName("num_recipes")
     private int numRecipes;
-    private boolean isFollowed;
+    @SerializedName("is_followed")
+    private int isFollowed;
 
     private int state;
 
@@ -123,10 +126,26 @@ public class User implements Serializable{
     }
 
     public boolean isFollowed() {
-        return isFollowed;
+        if (isFollowed == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setFollowed(boolean isFollowed) {
-        this.isFollowed = isFollowed;
+        if (isFollowed) {
+            this.isFollowed = 1;
+        } else {
+            this.isFollowed = 0;
+        }
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

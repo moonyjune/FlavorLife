@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@id/footer_no_data"
+        style="@style/TextItalic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Haven't had any data yet!"
+        android:textColor="@color/fl_color_text"
+        android:visibility="gone" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@id/swipe_refresh"
@@ -22,4 +34,4 @@
             android:scrollbarFadeDuration="@integer/scrollbar_fade_duration" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+</RelativeLayout>

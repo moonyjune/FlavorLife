@@ -26,9 +26,11 @@ import moony.vn.flavorlife.utils.DateFormatUtils;
 public class DfeGetUserCookbooks extends DfeModel implements Response.Listener<JSONObject> {
     private Api mApi;
     private List<Cookbook> listCookbooks;
+    private int mUserId;
 
-    public DfeGetUserCookbooks(Api mApi) {
+    public DfeGetUserCookbooks(Api mApi, int userId) {
         this.mApi = mApi;
+        mUserId = userId;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class DfeGetUserCookbooks extends DfeModel implements Response.Listener<J
     }
 
     public void makeRequest() {
-        mApi.getUserCookbooks(this, this);
+        mApi.getUserCookbooks(mUserId, this, this);
     }
 
     @Override

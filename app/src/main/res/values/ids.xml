@@ -130,5 +130,10 @@
     <item name="choose_kind" type="id" />
     <item name="kind_name" type="id" />
     <item name="footer_no_data" type="id" />
+    <item name="edit_profile" type="id" />
+    <item name="user_inspiration" type="id" />
+    <item name="book" type="id" />
+    <item name="recipe" type="id" />
+    <item name="follower" type="id" />
 
 </resources>
