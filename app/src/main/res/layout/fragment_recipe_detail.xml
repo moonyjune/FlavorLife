@@ -1,189 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_marginTop="?actionBarSize"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?actionBarSize"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingBottom="50dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-        <TextView
-            android:id="@id/recipe_kind"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Main Course"
-            android:textColor="@color/fl_color_text"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@id/recipe_name"
-            style="@style/TextBoldRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="CHICKEN MUSHROOM  NOODLES" />
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="50dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <TextView
-                android:id="@id/recipe_level"
-                style="@style/TextBoldRed"
-                android:layout_width="wrap_content"
+                android:id="@id/recipe_kind"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_star_red"
-                android:drawablePadding="3dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="3"
-                android:textSize="16sp" />
+                android:text="Main Course"
+                android:textColor="@color/fl_color_text"
+                android:textStyle="italic" />
 
             <TextView
-                android:id="@id/recipe_likes"
+                android:id="@id/recipe_name"
                 style="@style/TextBoldRed"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/ic_heart_red"
-                android:drawablePadding="3dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="124"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@id/recipe_used"
-                style="@style/TextBoldRed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:clickable="true"
-                android:drawableLeft="@drawable/ic_use_red"
-                android:drawablePadding="3dp"
-                android:gravity="center"
-                android:text="37"
-                android:textSize="16sp" />
+                android:text="CHICKEN " />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <Button
-                    style="@style/TextBoldWhite"
+                <TextView
+                    android:id="@id/recipe_level"
+                    style="@style/TextBoldRed"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_selector"
-                    android:drawableLeft="@drawable/ic_upgrade"
-                    android:drawablePadding="5dp"
-                    android:paddingBottom="3dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="3dp"
-                    android:text="Upgrade" />
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_star_red"
+                    android:drawablePadding="3dp"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@id/recipe_likes"
+                    style="@style/TextBoldRed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/ic_heart_red"
+                    android:drawablePadding="3dp"
+                    android:gravity="center"
+                    android:text="124"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@id/recipe_used"
+                    style="@style/TextBoldRed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/ic_use_red"
+                    android:drawablePadding="3dp"
+                    android:gravity="center"
+                    android:text="37"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@id/upgrade"
+                        style="@style/TextBoldWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_selector"
+                        android:drawableLeft="@drawable/ic_upgrade"
+                        android:drawablePadding="5dp"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="3dp"
+                        android:text="Upgrade" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@id/recipe_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:minHeight="200dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_image_create_recipe" />
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Introduction"
+                android:textAllCaps="true" />
+
+            <TextView
+                android:id="@id/recipe_info"
+                style="@style/TextItalic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
+                android:textSize="14sp" />
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Ingredients"
+                android:textAllCaps="true" />
+
+            <moony.vn.flavorlife.layout.DetailRecipeListIngredientsView
+                android:id="@id/list_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/TextBoldRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Instruction"
+                android:textAllCaps="true" />
+
+            <moony.vn.flavorlife.layout.DetailRecipeListInstructionsView
+                android:id="@id/list_instruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@id/layout_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextBoldRed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Tips"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@id/recipe_tip_note"
+                    style="@style/TextItalic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Recipe tip"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@id/layout_comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextBoldRed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Author comments"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@id/recipe_author_comment"
+                    style="@style/TextItalic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Evaluation"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
-
-        <ImageView
-            android:id="@id/recipe_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:adjustViewBounds="true"
-            android:minHeight="200dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/default_image_create_recipe" />
-
-        <TextView
-            style="@style/TextBoldRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Introduction"
-            android:textAllCaps="true" />
-
-        <TextView
-            android:id="@id/recipe_info"
-            style="@style/TextItalic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
-            android:textSize="14sp" />
-
-        <TextView
-            style="@style/TextBoldRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:text="Ingredients"
-            android:textAllCaps="true" />
-
-        <moony.vn.flavorlife.layout.DetailRecipeListIngredientsView
-            android:id="@id/list_ingredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            style="@style/TextBoldRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:text="Instruction"
-            android:textAllCaps="true" />
-
-        <moony.vn.flavorlife.layout.DetailRecipeListInstructionsView
-            android:id="@id/list_instruction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            style="@style/TextBoldRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Tips"
-            android:textAllCaps="true" />
-
-        <TextView
-            android:id="@id/recipe_tip_note"
-            style="@style/TextItalic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Recipe tip"
-            android:textSize="14sp" />
-
-        <TextView
-            style="@style/TextBoldRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Author comments"
-            android:textAllCaps="true" />
-
-        <TextView
-            android:id="@id/recipe_author_comment"
-            style="@style/TextItalic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Evaluation"
-            android:textSize="14sp" />
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

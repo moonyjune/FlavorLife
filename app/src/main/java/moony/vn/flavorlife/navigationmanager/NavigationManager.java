@@ -18,6 +18,7 @@ import moony.vn.flavorlife.activities.HomeActivity;
 import moony.vn.flavorlife.activities.NotificationActivity;
 import moony.vn.flavorlife.activities.SplashActivity;
 import moony.vn.flavorlife.activities.NewRecipesActivity;
+import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.utils.MainThreadStack;
 
 /**
@@ -216,6 +217,10 @@ public class NavigationManager {
         showTab(cls, 0);
     }
 
+    private void showTabCreateRecipe(Class cls, Recipe recipe, int flagCreateRecipe) {
+        showTabCreateRecipe(cls, 0, recipe, flagCreateRecipe);
+    }
+
     /**
      * Show Tab with flags
      *
@@ -224,6 +229,18 @@ public class NavigationManager {
      */
     private void showTab(Class cls, int flags) {
         Intent intent = new Intent(mActivity, cls);
+        if (flags != 0) {
+            intent.addFlags(flags);
+        }
+        mActivity.startActivity(intent);
+    }
+
+    private void showTabCreateRecipe(Class cls, int flags, Recipe recipe, int flagCreateRecipe) {
+        Intent intent = new Intent(mActivity, cls);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(CreateNewRecipeActivity.RECIPE, recipe);
+        bundle.putInt(CreateNewRecipeActivity.FLAG, flagCreateRecipe);
+        intent.putExtra(CreateNewRecipeActivity.DATA, bundle);
         if (flags != 0) {
             intent.addFlags(flags);
         }
@@ -279,12 +296,16 @@ public class NavigationManager {
         showTab(HomeActivity.class);
     }
 
-    public void showMessages() {
+    public void showNotification() {
         showTab(NotificationActivity.class);
     }
 
     public void showCreateNewRecipe() {
         showTab(CreateNewRecipeActivity.class);
+    }
+
+    public void showUpgradeRecipe(Recipe recipe, int flag) {
+        showTabCreateRecipe(CreateNewRecipeActivity.class, recipe, flag);
     }
 
     public void showMain(boolean isClearAllActivity) {

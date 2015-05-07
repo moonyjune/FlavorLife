@@ -3,13 +3,15 @@ package moony.vn.flavorlife.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by moony on 3/14/15.
  */
-public class SectionIngredient implements Parcelable{
+public class SectionIngredient implements Parcelable, Serializable{
+    private int id;
     private String name;
     private int numberSection;
     private List<Ingredient> mListIngredients = new ArrayList<Ingredient>();
@@ -52,12 +54,14 @@ public class SectionIngredient implements Parcelable{
         dest.writeString(name);
         dest.writeInt(numberSection);
         dest.writeList(mListIngredients);
+        dest.writeInt(id);
     }
 
     public SectionIngredient(Parcel source) {
         name = source.readString();
         numberSection = source.readInt();
         source.readList(mListIngredients, Ingredient.class.getClassLoader());
+        id = source.readInt();
     }
 
     public static final Creator<SectionIngredient> CREATOR = new Creator<SectionIngredient>() {
@@ -71,4 +75,12 @@ public class SectionIngredient implements Parcelable{
             return new SectionIngredient[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

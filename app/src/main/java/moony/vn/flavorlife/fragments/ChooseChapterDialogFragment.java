@@ -158,6 +158,7 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
     }
 
     private void requestData() {
+        switchToLoading();
         if (mDfeGetUserChapters == null) {
             mDfeGetUserChapters = new DfeGetUserChapter(FlavorLifeApplication.get().getDfeApi());
             mDfeGetUserChapters.addDataChangedListener(this);
@@ -168,8 +169,8 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
 
     @Override
     public void onDataChanged() {
+        switchToContent();
         if (mDfeGetUserChapters.isReady()) {
-            switchToContent();
             mListChapters.addAll(mDfeGetUserChapters.getListChapters());
             if (mChapter != null) {
                 for (int i = 0; i < mListChapters.size(); i++) {

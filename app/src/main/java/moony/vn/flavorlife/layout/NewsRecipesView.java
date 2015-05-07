@@ -75,7 +75,8 @@ public class NewsRecipesView extends LinearLayout implements View.OnClickListene
         mLevel.setText(String.valueOf(recipe.getLevel()));
         mLikes.setText(String.valueOf(recipe.getLikes()));
         mUses.setText(String.valueOf(recipe.getUsed()));
-        mAuthorName.setText(recipe.getAuthorName());
+        //TODO tam thoi hien thi default
+//        mAuthorName.setText(recipe.getAuthorName());
         //TODO xu ly type
     }
 

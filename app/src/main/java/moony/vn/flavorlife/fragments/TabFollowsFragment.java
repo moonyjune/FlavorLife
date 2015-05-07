@@ -37,7 +37,6 @@ public class TabFollowsFragment extends FlListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mActionbar.syncActionBar(this);
         syncNoDataView();
     }
 

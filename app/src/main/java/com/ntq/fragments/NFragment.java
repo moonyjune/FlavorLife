@@ -10,8 +10,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ import moony.vn.flavorlife.utils.ErrorStrings;
  * It contains some default attributes: Context, Api, ImageLoader,
  * NavigationManager, Actionbar <br>
  */
-public class NFragment extends Fragment {
+public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     protected Context mContext;
     protected Api mApi;
@@ -43,6 +45,7 @@ public class NFragment extends Fragment {
     protected CustomActionbar mActionbar;
     protected AppAnalytics mAppAnalytics;
     private ProgressDialog mProgressDialog;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
 
     public NFragment() {
         setArguments(new Bundle());
@@ -80,6 +83,18 @@ public class NFragment extends Fragment {
                              Bundle savedInstanceState) {
         mSaveInstanceStateCalled = false;
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+//        if (mSwipeRefreshLayout != null) {
+//            mSwipeRefreshLayout.setOnRefreshListener(this);
+//            mSwipeRefreshLayout.setEnabled(false);
+//            mSwipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
+//        }
+
     }
 
     @Override
@@ -155,4 +170,8 @@ public class NFragment extends Fragment {
         NAlertDialogFragment.show(getFragmentManager(), builder);
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
 }

@@ -60,8 +60,8 @@ public class ChooseTypeRecipeDialogFragment extends DialogFragment implements Vi
                 @Override
                 public void onClick(View view) {
                     if ((Integer) mListTypes.get(position).getTag() == R.drawable.ic_launcher) {
-                        mListTypes.get(position).setImageResource(R.drawable.ic_launcher_2);
-                        mListTypes.get(position).setTag(R.drawable.ic_launcher_2);
+                        mListTypes.get(position).setImageResource(R.drawable.ic_launcher);
+                        mListTypes.get(position).setTag(R.drawable.ic_launcher);
                     } else {
                         mListTypes.get(position).setImageResource(R.drawable.ic_launcher);
                         mListTypes.get(position).setTag(R.drawable.ic_launcher);
@@ -75,7 +75,7 @@ public class ChooseTypeRecipeDialogFragment extends DialogFragment implements Vi
     public void onClick(View view) {
         Intent data = new Intent();
         for (int i = 0; i < mListTypes.size(); i++) {
-            if ((Integer) mListTypes.get(i).getTag() == R.drawable.ic_launcher_2) {
+            if ((Integer) mListTypes.get(i).getTag() == R.drawable.ic_launcher) {
                 mListTypeChoose.add(i);
             }
         }

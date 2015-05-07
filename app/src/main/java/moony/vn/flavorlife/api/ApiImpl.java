@@ -196,6 +196,7 @@ public class ApiImpl implements Api, ApiKey {
 
     @Override
     public Request<JSONObject> createRecipe(Recipe recipe, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        recipe.setIdUser(FlavorLifeApplication.get().getUser().getId());
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
         String data = gson.toJson(recipe);
@@ -208,6 +209,7 @@ public class ApiImpl implements Api, ApiKey {
 
     @Override
     public Request<JSONObject> editRecipe(Recipe recipe, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        recipe.setIdUser(FlavorLifeApplication.get().getUser().getId());
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
         String data = gson.toJson(recipe);
@@ -220,6 +222,7 @@ public class ApiImpl implements Api, ApiKey {
 
     @Override
     public Request<JSONObject> upgradeRecipe(Recipe recipe, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        recipe.setIdUser(FlavorLifeApplication.get().getUser().getId());
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
         String data = gson.toJson(recipe);
@@ -336,6 +339,7 @@ public class ApiImpl implements Api, ApiKey {
     @Override
     public Request<JSONObject> getUserInformation(int userId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(MY_USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
         list.add(new BasicNameValuePair(USER_ID, String.valueOf(userId)));
         String url = AppRequest.getUrl(toURL(API_GET_USER_INFORMATION), list);
 

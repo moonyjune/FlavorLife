@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import com.android.volley.VolleyError;
 import com.ntq.fragments.NAlertDialogFragment;
@@ -45,6 +46,22 @@ public class DialogUtils {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(mess);
         builder.setNegativeButton(context.getString(R.string.ok), null);
+        NAlertDialogFragment.show(((BaseActivity) context).getSupportFragmentManager(), builder);
+    }
+
+    public void showDialogMessage(Context context, String mess, DialogInterface.OnClickListener onClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(mess);
+        builder.setNegativeButton(context.getString(R.string.ok), onClickListener);
+        builder.setPositiveButton(context.getString(R.string.cancel), null);
+        NAlertDialogFragment.show(((BaseActivity) context).getSupportFragmentManager(), builder);
+    }
+
+    public void showDialogMessage(Context context, String mess, DialogInterface.OnClickListener onClickListener, DialogInterface.OnClickListener onClickListener2) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(mess);
+        builder.setNegativeButton(context.getString(R.string.ok), onClickListener);
+        builder.setPositiveButton(context.getString(R.string.cancel), onClickListener2);
         NAlertDialogFragment.show(((BaseActivity) context).getSupportFragmentManager(), builder);
     }
 

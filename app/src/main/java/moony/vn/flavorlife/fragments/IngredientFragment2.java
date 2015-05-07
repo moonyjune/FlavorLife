@@ -14,6 +14,7 @@ import java.util.List;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.IngredientsExpandableAdapter;
 import moony.vn.flavorlife.adapters.SectionIngredientAdapter;
+import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.entities.SectionIngredient;
 import moony.vn.flavorlife.utils.ListViewUtils;
 
@@ -21,14 +22,17 @@ import moony.vn.flavorlife.utils.ListViewUtils;
  * Created by moony on 3/4/15.
  */
 public class IngredientFragment2 extends NFragmentSwitcher implements View.OnClickListener {
+    private final static String RECIPE = "recipe";
     private final String KEY_SECTION_INGREDIENTS = "section_ingredients";
     private List<SectionIngredient> mSectionIngredients;
     private IngredientsExpandableAdapter mIngredientExpandableAdapter;
     private ExpandableListView mListSectionIngredients;
+    private Recipe mRecipe;
 
-    public static IngredientFragment2 newInstance() {
+    public static IngredientFragment2 newInstance(Recipe recipe) {
         IngredientFragment2 ingredientFragment2 = new IngredientFragment2();
         Bundle bundle = new Bundle();
+        bundle.putSerializable(RECIPE, recipe);
         ingredientFragment2.setArguments(bundle);
         return ingredientFragment2;
     }
@@ -36,8 +40,13 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState != null)
+        if (savedInstanceState != null) {
             mSectionIngredients = savedInstanceState.getParcelableArrayList(KEY_SECTION_INGREDIENTS);
+//            mSectionIngredients = (List<SectionIngredient>) savedInstanceState.getSerializable(KEY_SECTION_INGREDIENTS);
+            mRecipe = (Recipe) savedInstanceState.getSerializable(RECIPE);
+        } else {
+            mRecipe = (Recipe) getArguments().getSerializable(RECIPE);
+        }
     }
 
     @Override
@@ -51,14 +60,26 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
         super.onSaveInstanceState(outState);
         if (mSectionIngredients != null)
             outState.putParcelableArrayList(KEY_SECTION_INGREDIENTS, new ArrayList<SectionIngredient>(mSectionIngredients));
+//            outState.putSerializable(KEY_SECTION_INGREDIENTS, mSectionIngredients);
+        if (mRecipe != null)
+            outState.putSerializable(RECIPE, mRecipe);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setup();
+    }
+
+    private void setup() {
         if (mSectionIngredients == null) {
             mSectionIngredients = new ArrayList<SectionIngredient>();
-            mSectionIngredients.add(new SectionIngredient());
+            if (mRecipe != null) {
+                mSectionIngredients.addAll(mRecipe.getListSectionIngredients());
+                mRecipe = null;
+            } else {
+                mSectionIngredients.add(new SectionIngredient());
+            }
         }
         if (mIngredientExpandableAdapter == null) {
             mIngredientExpandableAdapter = new IngredientsExpandableAdapter(getActivity(), mSectionIngredients) {
@@ -92,5 +113,13 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
 
     public List<SectionIngredient> getSectionIngredients() {
         return mSectionIngredients;
+    }
+
+    public void resetData() {
+        if (mSectionIngredients != null)
+            mSectionIngredients.clear();
+        mSectionIngredients = null;
+        mIngredientExpandableAdapter = null;
+        setup();
     }
 }

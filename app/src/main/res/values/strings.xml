@@ -13,7 +13,7 @@
     <string name="error_unknown">Unknow error</string>
     <string name="action_bar_title_recipes">Recipes</string>
     <string name="action_bar_title_follows">Follows</string>
-    <string name="acion_bar_title_home">Home</string>
+    <string name="acion_bar_title_home">Profile</string>
     <string name="action_bar_title_messages">Messages</string>
     <string name="action_bar_title_create_recipe">Create Recipe</string>
     <string name="forget_account">Forget your account ?</string>
@@ -29,5 +29,7 @@
     <string name="chapter_not_exist">chapter not exist</string>
     <string name="recipe_not_exist">recipe not exist</string>
     <string name="user_not_exist">user not exist</string>
+    <string name="action_bar_title_cookbook_detail">Cookbook Detail</string>
+    <string name="action_bar_title_chapter_detail">Chapter Detail</string>
 
 </resources>

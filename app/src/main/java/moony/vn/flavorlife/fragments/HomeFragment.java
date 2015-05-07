@@ -1,5 +1,6 @@
 package moony.vn.flavorlife.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.ntq.api.model.OnDataChangedListener;
 import com.ntq.fragments.NFragment;
 import com.ntq.fragments.NFragmentSwitcher;
 
@@ -20,14 +24,17 @@ import java.util.List;
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.adapters.HomePagerAdapter;
+import moony.vn.flavorlife.api.model.DfeFollow;
 import moony.vn.flavorlife.api.model.DfeGetUserProfile;
+import moony.vn.flavorlife.api.model.DfeUnFollow;
 import moony.vn.flavorlife.entities.User;
 import moony.vn.flavorlife.layout.TabIndicator;
+import moony.vn.flavorlife.utils.DialogUtils;
 
 /**
  * Created by moony on 3/1/15.
  */
-public class HomeFragment extends NFragmentSwitcher {
+public class HomeFragment extends NFragmentSwitcher implements View.OnClickListener {
     private static final String KEY_USER = "user";
     private TabIndicator mTabIndicator;
     private ViewPager mHomePager;
@@ -37,6 +44,51 @@ public class HomeFragment extends NFragmentSwitcher {
     private DfeGetUserProfile mDfeGetUserProfile;
     private ImageView mUserImage;
     private TextView mNumBook, mNumRecipe, mNumFollower, mUserInspiration, mBookLabel, mRecipeLabel, mFollowerLabel;
+    private Button mButtonFollow;
+    private DfeFollow mDfeFollow;
+    private DfeUnFollow mDfeUnFollow;
+
+    private OnDataChangedListener onDataChangedFollow = new OnDataChangedListener() {
+        @Override
+        public void onDataChanged() {
+            DialogUtils.getInstance().hideDialogLoading();
+            if (mDfeFollow != null && mDfeFollow.isReady()) {
+                mUser.setFollowed(true);
+                mUser.setNumFollowers(mDfeFollow.getNumFollowers());
+                setButtonSelected(true);
+                mNumFollower.setText(String.valueOf(mDfeFollow.getNumFollowers()));
+            }
+        }
+    };
+
+    private Response.ErrorListener onErrorListenerFollow = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            DialogUtils.getInstance().hideDialogLoading();
+            DialogUtils.getInstance().showDialogMessageError(mContext, error);
+        }
+    };
+
+    private OnDataChangedListener onDataChangedUnFollow = new OnDataChangedListener() {
+        @Override
+        public void onDataChanged() {
+            DialogUtils.getInstance().hideDialogLoading();
+            if (mDfeUnFollow != null && mDfeUnFollow.isReady()) {
+                mUser.setFollowed(false);
+                mUser.setNumFollowers(mDfeUnFollow.getNumberFollowers());
+                setButtonSelected(false);
+                mNumFollower.setText(String.valueOf(mDfeUnFollow.getNumberFollowers()));
+            }
+        }
+    };
+
+    private Response.ErrorListener onErrorListenerUnFollow = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            DialogUtils.getInstance().hideDialogLoading();
+            DialogUtils.getInstance().showDialogMessageError(mContext, error);
+        }
+    };
 
     public static HomeFragment newInstance(User user) {
         HomeFragment homeFragment = new HomeFragment();
@@ -98,6 +150,7 @@ public class HomeFragment extends NFragmentSwitcher {
         mBookLabel = (TextView) view.findViewById(R.id.book);
         mRecipeLabel = (TextView) view.findViewById(R.id.recipe);
         mFollowerLabel = (TextView) view.findViewById(R.id.follower);
+        mButtonFollow = (Button) view.findViewById(R.id.follow);
     }
 
     @Override
@@ -124,6 +177,12 @@ public class HomeFragment extends NFragmentSwitcher {
 
     private void setDataToView() {
         switchToData();
+        mButtonFollow.setOnClickListener(this);
+        if (mUser.isFollowed()) {
+            setButtonSelected(true);
+        } else {
+            setButtonSelected(false);
+        }
         List<Fragment> listPager = new ArrayList<Fragment>();
         listPager.add(UserRecipesFragment.newInstance(mUser.getId()));
         listPager.add(UserCookbooksFragment.newInstance(mUser.getId()));
@@ -163,10 +222,16 @@ public class HomeFragment extends NFragmentSwitcher {
             mNumFollower.setText(user.getNumFollowers() + "");
 //            mUserInspiration.setText(user.getInspiration());
         }
+        syncButtonFollowEditProfile();
+    }
+
+    private void syncButtonFollowEditProfile() {
         if (isOwner()) {
             mEditProfile.setVisibility(View.VISIBLE);
+            mButtonFollow.setVisibility(View.GONE);
         } else {
             mEditProfile.setVisibility(View.GONE);
+            mButtonFollow.setVisibility(View.VISIBLE);
         }
     }
 
@@ -189,5 +254,52 @@ public class HomeFragment extends NFragmentSwitcher {
         if (mDfeGetUserProfile != null && mDfeGetUserProfile.isReady())
             return true;
         return false;
+    }
+
+    private void requestUnFollow() {
+        DialogUtils.getInstance().showDialogLoading(getActivity());
+        if (mDfeUnFollow == null) {
+            mDfeUnFollow = new DfeUnFollow(FlavorLifeApplication.get().getDfeApi());
+            mDfeUnFollow.addDataChangedListener(onDataChangedUnFollow);
+            mDfeUnFollow.addErrorListener(onErrorListenerUnFollow);
+        }
+        mDfeUnFollow.makeRequest(mUser.getId());
+    }
+
+    private void requestFollow() {
+        DialogUtils.getInstance().showDialogLoading(getActivity());
+        if (mDfeFollow == null) {
+            mDfeFollow = new DfeFollow(FlavorLifeApplication.get().getDfeApi());
+            mDfeFollow.addDataChangedListener(onDataChangedFollow);
+            mDfeFollow.addErrorListener(onErrorListenerFollow);
+        }
+        mDfeFollow.makeRequest(mUser.getId());
+    }
+
+    private void setButtonSelected(boolean isSelected) {
+        if (isSelected) {
+            mButtonFollow.setSelected(true);
+            mButtonFollow.setTextColor(Color.WHITE);
+            mButtonFollow.setText("Following");
+//            mButtonFollow.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_followed, 0, 0, 0);
+        } else {
+            mButtonFollow.setSelected(false);
+            mButtonFollow.setTextColor(getResources().getColor(R.color.fl_color));
+            mButtonFollow.setText("+ Follow");
+//            mButtonFollow.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.follow:
+                if (!mButtonFollow.isSelected()) {
+                    requestFollow();
+                } else {
+                    requestUnFollow();
+                }
+                break;
+        }
     }
 }

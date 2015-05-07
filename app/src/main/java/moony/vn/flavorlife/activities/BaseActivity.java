@@ -2,13 +2,13 @@ package moony.vn.flavorlife.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.Window;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.ntq.activities.NActivity;
 import com.ntq.imageloader.NImageLoader;
 import com.ntq.utils.OSUtils;
@@ -19,8 +19,10 @@ import moony.vn.flavorlife.actionbar.CustomActionBarFactory;
 import moony.vn.flavorlife.actionbar.CustomActionbar;
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.api.Api;
+import moony.vn.flavorlife.fragments.CreateRecipeFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 import moony.vn.flavorlife.utils.AppPrefers;
+import moony.vn.flavorlife.utils.DialogUtils;
 import moony.vn.flavorlife.widget.TabWidget;
 
 /**
@@ -62,9 +64,11 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
 
     }
 
-    public Fragment getRootFragment(){
+    public Fragment getRootFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.content_layout);
-    };
+    }
+
+    ;
 
     @Override
     protected void onStart() {
@@ -122,22 +126,95 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
 
     @Override
     public void onNewRecipesTabSelected() {
-        mNavigationManager.showNewRecipes();
+        final Fragment activePage = mNavigationManager.getActivePage();
+        if (activePage instanceof CreateRecipeFragment) {
+            if (((CreateRecipeFragment) activePage).hasData()) {
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                            BaseActivity.this.finish();
+                        mNavigationManager.showNewRecipes();
+                    }
+                });
+            } else {
+                if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                    BaseActivity.this.finish();
+                mNavigationManager.showNewRecipes();
+            }
+        } else {
+            mNavigationManager.showNewRecipes();
+        }
     }
 
     @Override
     public void onFollowsTabSelected() {
-        mNavigationManager.showFollows();
+        final Fragment activePage = mNavigationManager.getActivePage();
+        if (activePage instanceof CreateRecipeFragment) {
+            if (((CreateRecipeFragment) activePage).hasData()) {
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                            BaseActivity.this.finish();
+                        mNavigationManager.showFollows();
+                    }
+                });
+            } else {
+                if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                    BaseActivity.this.finish();
+                mNavigationManager.showFollows();
+            }
+        } else {
+            mNavigationManager.showFollows();
+        }
     }
 
     @Override
     public void onHomeTabSelected() {
-        mNavigationManager.showHome();
+        final Fragment activePage = mNavigationManager.getActivePage();
+        if (activePage instanceof CreateRecipeFragment) {
+            if (((CreateRecipeFragment) activePage).hasData()) {
+                //TODO sua message tuong ung
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                            BaseActivity.this.finish();
+                        mNavigationManager.showHome();
+                    }
+                });
+            } else {
+                if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                    BaseActivity.this.finish();
+                mNavigationManager.showHome();
+            }
+        } else {
+            mNavigationManager.showHome();
+        }
     }
 
     @Override
-    public void onMessageTabSelected() {
-        mNavigationManager.showMessages();
+    public void onNotificationTabSelected() {
+        final Fragment activePage = mNavigationManager.getActivePage();
+        if (activePage instanceof CreateRecipeFragment) {
+            if (((CreateRecipeFragment) activePage).hasData()) {
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                            BaseActivity.this.finish();
+                        mNavigationManager.showNotification();
+                    }
+                });
+            } else {
+                if (BaseActivity.this instanceof CreateNewRecipeActivity)
+                    BaseActivity.this.finish();
+                mNavigationManager.showNotification();
+            }
+        } else {
+            mNavigationManager.showNotification();
+        }
     }
 
     @Override

@@ -1,8 +1,6 @@
 package moony.vn.flavorlife.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -41,7 +39,7 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
 
         public void onHomeTabSelected();
 
-        public void onMessageTabSelected();
+        public void onNotificationTabSelected();
 
         public void onCreateRecipeTabSelected();
     }
@@ -149,14 +147,14 @@ public class TabWidget extends LinearLayout implements View.OnClickListener {
                 if (mTabMainChangeListener != null) mTabMainChangeListener.onHomeTabSelected();
                 break;
             case R.id.notification:
-                if (mTabMainChangeListener != null) mTabMainChangeListener.onMessageTabSelected();
+                if (mTabMainChangeListener != null) mTabMainChangeListener.onNotificationTabSelected();
                 break;
             case R.id.create_recipe:
                 if (mTabMainChangeListener != null)
                     mTabMainChangeListener.onCreateRecipeTabSelected();
                 break;
         }
-        focusTab(v.getId());
+//        focusTab(v.getId());
     }
 
     public void unFocusAll() {

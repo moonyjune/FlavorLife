@@ -83,7 +83,7 @@ public class NativeActionbar implements CustomActionbar {
     }
 
     protected int findResourceIdForActionbar(Fragment activePage) {
-        if (activePage instanceof NewRecipesFragment) {
+        if (activePage instanceof NewRecipesFragment || activePage instanceof ComingSoonFragment) {
             return R.layout.actionbar;
         } else {
             return R.layout.actionbar_2;
@@ -197,7 +197,6 @@ public class NativeActionbar implements CustomActionbar {
     private void syncBtnRight(Fragment activePage) {
         syncBtnMessage(activePage);
         syncBtnFinish(activePage);
-        syncBtnBack(activePage);
     }
 
     private void syncBtnBack(Fragment activePage) {
@@ -217,7 +216,7 @@ public class NativeActionbar implements CustomActionbar {
 
     private void syncBtnMessage(Fragment activePage) {
         if (mMessage == null) return;
-        if (activePage instanceof LoginFragment || activePage instanceof ComingSoonFragment) {
+        if (activePage instanceof LoginFragment || activePage instanceof ComingSoonFragment || activePage instanceof CreateRecipeFragment) {
             mMessage.setVisibility(View.GONE);
         } else {
             mMessage.setVisibility(View.VISIBLE);
@@ -254,22 +253,35 @@ public class NativeActionbar implements CustomActionbar {
     private void syncTitle(Fragment activePage) {
         if (mTitle == null) return;
         mTitle.setVisibility(View.VISIBLE);
-        String text = mBaseActivity.getString(R.string.app_name);
+        int stringId = R.string.app_name;
+//        String title = "";
         if (activePage instanceof NewRecipesFragment) {
-            text = mBaseActivity.getString(R.string.action_bar_title_recipes);
+            stringId = R.string.action_bar_title_recipes;
         } else if (activePage instanceof FollowsFragment) {
-            text = mBaseActivity.getString(R.string.action_bar_title_follows);
+            stringId = R.string.action_bar_title_follows;
         } else if (activePage instanceof HomeFragment) {
-            text = mBaseActivity.getString(R.string.acion_bar_title_home);
+            stringId = R.string.acion_bar_title_home;
         } else if (activePage instanceof MessagesFragment) {
-            text = mBaseActivity.getString(R.string.action_bar_title_messages);
+            stringId = R.string.action_bar_title_messages;
         } else if (activePage instanceof CreateRecipeFragment) {
-            text = mBaseActivity.getString(R.string.action_bar_title_create_recipe);
+            stringId = R.string.action_bar_title_create_recipe;
         } else if (activePage instanceof RecipeDetailFragment) {
-            mBaseActivity.getString(R.string.action_bar_title_recipe_detail);
+            stringId = R.string.action_bar_title_recipe_detail;
+        } else if (activePage instanceof CookBookDetailFragment) {
+//            stringId = 0;
+//            title = ((CookBookDetailFragment) activePage).getTitle();
+            stringId = R.string.action_bar_title_cookbook_detail;
+        } else if (activePage instanceof ChapterDetailFragment) {
+//            stringId = 0;
+//            title = ((ChapterDetailFragment) activePage).getTitle();
+            stringId = R.string.action_bar_title_chapter_detail;
         }
 
-        mTitle.setText(text);
+//        if (stringId != 0) {
+            mTitle.setText(stringId);
+//        } else {
+//            mTitle.setText(title);
+//        }
     }
 
     @Override

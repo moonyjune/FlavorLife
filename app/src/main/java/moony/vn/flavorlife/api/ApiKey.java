@@ -25,6 +25,7 @@ public interface ApiKey {
 
     public static final String REQUEST_TIME = "requested_at";
     public static final String DATA = "data";
+    public static final String CODE = "code";
     public static final String BASE_URL = Config.SERVER_URL;
 
     public static final String API_GET_RECIPE_DETAIL = "get_recipe_detail";
@@ -52,4 +53,6 @@ public interface ApiKey {
     public static final String API_EDIT_RECIPE = "edit_recipe";
     public static final String API_UPGRADE_RECIPE = "upgrade_recipe";
     public static final String API_UPLOAD_IMAGE = "upload_image";
+
+    public static final int SUCCESS = 0;
 }

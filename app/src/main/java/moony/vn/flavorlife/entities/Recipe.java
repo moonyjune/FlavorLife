@@ -11,9 +11,9 @@ import java.util.Date;
  */
 public class Recipe implements Serializable {
     private static final String[] kindNames = new String[]{"Starter", "Main course", "Desserts"};
-    private static final int STARTER = 0;
-    private static final int MAIN_COURSE = 1;
-    private static final int DESSERT = 2;
+    private static final int STARTER = 1;
+    private static final int MAIN_COURSE = 2;
+    private static final int DESSERT = 3;
 
     @SerializedName("id")
     private int id;
@@ -59,6 +59,7 @@ public class Recipe implements Serializable {
     private int isUsed;
     @SerializedName("is_bookmarked")
     private int isBookmarked;
+    @SerializedName("book_id")
     private int idBook;
     private ArrayList<SectionIngredient> listSectionIngredients;
     private ArrayList<SectionInstruction> listSectionInstructions;
@@ -251,27 +252,35 @@ public class Recipe implements Serializable {
     }
 
     public ArrayList<SectionIngredient> getListSectionIngredients() {
-        if (listSectionIngredients == null)
+        if (listSectionIngredients == null) {
             listSectionIngredients = new ArrayList<SectionIngredient>();
-        for (int i = 0; i < listSection.size(); i++) {
-            SectionIngredient sectionIngredient = new SectionIngredient();
-            sectionIngredient.setName(listSection.get(i).getName());
-            sectionIngredient.setNumberSection(listSection.get(i).getNumberSection());
-            sectionIngredient.setListIngredients(listSection.get(i).getListIngredient());
-            listSectionIngredients.add(sectionIngredient);
+        }
+        if (listSectionIngredients.isEmpty()) {
+            for (int i = 0; i < listSection.size(); i++) {
+                SectionIngredient sectionIngredient = new SectionIngredient();
+                sectionIngredient.setId(listSection.get(i).getId());
+                sectionIngredient.setName(listSection.get(i).getName());
+                sectionIngredient.setNumberSection(listSection.get(i).getNumberSection());
+                sectionIngredient.setListIngredients(listSection.get(i).getListIngredient());
+                listSectionIngredients.add(sectionIngredient);
+            }
         }
         return listSectionIngredients;
     }
 
     public ArrayList<SectionInstruction> getListSectionInstructions() {
-        if (listSectionInstructions == null)
+        if (listSectionInstructions == null) {
             listSectionInstructions = new ArrayList<SectionInstruction>();
-        for (int i = 0; i < listSection.size(); i++) {
-            SectionInstruction sectionInstruction = new SectionInstruction();
-            sectionInstruction.setName(listSection.get(i).getName());
-            sectionInstruction.setNumberSection(listSection.get(i).getNumberSection());
-            sectionInstruction.setListSteps(listSection.get(i).getListStep());
-            listSectionInstructions.add(sectionInstruction);
+        }
+        if (listSectionInstructions.isEmpty()) {
+            for (int i = 0; i < listSection.size(); i++) {
+                SectionInstruction sectionInstruction = new SectionInstruction();
+                sectionInstruction.setId(listSection.get(i).getId());
+                sectionInstruction.setName(listSection.get(i).getName());
+                sectionInstruction.setNumberSection(listSection.get(i).getNumberSection());
+                sectionInstruction.setListSteps(listSection.get(i).getListStep());
+                listSectionInstructions.add(sectionInstruction);
+            }
         }
         return listSectionInstructions;
     }
@@ -316,7 +325,7 @@ public class Recipe implements Serializable {
             this.isBookmarked = 1;
     }
 
-    public void updateRecipe(Recipe recipe){
+    public void updateRecipe(Recipe recipe, boolean isUpdateListSection) {
         setId(recipe.getId());
         setIdBook(recipe.getIdBook());
         setIdChapter(recipe.getIdChapter());
@@ -338,6 +347,22 @@ public class Recipe implements Serializable {
         setTipNote(recipe.getTipNote());
         setAuthorComments(recipe.getAuthorComments());
         setType(recipe.getType());
+        if (isUpdateListSection)
+            updateListSection(recipe.getListSection());
+        setCreateTime(recipe.getCreateTime());
+    }
 
+    private void updateListSection(ArrayList<Section> listSection) {
+        this.listSection.clear();
+        for (int i = 0; i < listSection.size(); i++) {
+            Section section = new Section();
+            Section temp = listSection.get(i);
+            section.setId(temp.getId());
+            section.setNumberSection(temp.getNumberSection());
+            section.setName(temp.getName());
+            section.updateListIngredients(temp.getListIngredient());
+            section.updateListSteps(temp.getListStep());
+            this.listSection.add(section);
+        }
     }
 }

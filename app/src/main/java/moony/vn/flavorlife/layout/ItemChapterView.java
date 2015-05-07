@@ -62,6 +62,6 @@ public class ItemChapterView extends LinearLayout implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        mNavigationManager.showPage(ChapterDetailFragment.newInstance(mChapter.getUserId(), mChapter.getId()));
+        mNavigationManager.showPage(ChapterDetailFragment.newInstance(mChapter.getUserId(), mChapter));
     }
 }

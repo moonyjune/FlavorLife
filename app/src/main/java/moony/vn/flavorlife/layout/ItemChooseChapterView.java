@@ -39,13 +39,12 @@ public class ItemChooseChapterView extends LinearLayout {
     public void display(Chapter chapter) {
         if (chapter == null) return;
         mChapter = chapter;
-
+        mChapterName.setText(chapter.getName());
         if (chapter.isChosen()) {
             setBackgroundColor(getResources().getColor(R.color.fl_color_gray_red_light));
         } else {
             setBackgroundColor(Color.WHITE);
         }
-//        mChapterName.setText(chapter.getName());
     }
 
 }

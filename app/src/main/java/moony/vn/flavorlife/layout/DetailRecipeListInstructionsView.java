@@ -34,6 +34,7 @@ public class DetailRecipeListInstructionsView extends LinearLayout {
         setOrientation(VERTICAL);
         for (int i = 0; i < mListSectionInstruction.size(); i++) {
             DetailRecipeSectionInstructionView detailRecipeSectionInstructionView = new DetailRecipeSectionInstructionView(getContext());
+            detailRecipeSectionInstructionView.display(mListSectionInstruction.get(i));
             addView(detailRecipeSectionInstructionView);
 
             DetailRecipeListItemStepView detailRecipeListItemStepView = new DetailRecipeListItemStepView(getContext());
@@ -43,7 +44,7 @@ public class DetailRecipeListInstructionsView extends LinearLayout {
 
     }
 
-    public void setListSectionIngredient(List<SectionInstruction> mListSectionInstruction) {
+    public void setListSectionInstruction(List<SectionInstruction> mListSectionInstruction) {
         this.mListSectionInstruction = mListSectionInstruction;
         init(this.mListSectionInstruction);
     }

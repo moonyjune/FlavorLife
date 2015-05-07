@@ -28,7 +28,7 @@ public class ChooseKindDialogFragment extends DialogFragment {
     public static final String KEY_DATA = "data";
     private static final int NUM_KIND = 3;
     private static final String[] kindNames = new String[]{"Starter", "Main course", "Desserts"};
-    private static final int[] kindTypes = new int[]{0, 1, 2};
+    private static final int[] kindTypes = new int[]{1, 2, 3};
     private ListView mListViewKinds;
     private KindAdapter mKindAdapter;
     private List<Kind> mListKinds;

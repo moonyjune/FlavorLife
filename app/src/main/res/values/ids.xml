@@ -136,5 +136,9 @@
     <item name="recipe" type="id" />
     <item name="follower" type="id" />
     <item name="recipe_author_comment" type="id" />
+    <item name="add_section_content" type="id" />
+    <item name="upgrade" type="id" />
+    <item name="layout_tips" type="id" />
+    <item name="layout_comments" type="id" />
 
 </resources>

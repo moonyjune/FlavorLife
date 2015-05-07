@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity {
                 replaceFragment(fragment = new FollowsFragment());
                 break;
             case EXTRA_OPEN_CREATE_RECIPE:
-                replaceFragment(fragment = new CreateRecipeFragment());
+                replaceFragment(fragment = CreateRecipeFragment.newInstance(null, CreateRecipeFragment.FLAG_CREATE));
                 break;
             case EXTRA_OPEN_NOTIFICATION:
                 replaceFragment(fragment = new ComingSoonFragment());

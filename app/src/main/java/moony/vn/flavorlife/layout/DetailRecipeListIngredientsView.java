@@ -34,6 +34,7 @@ public class DetailRecipeListIngredientsView extends LinearLayout {
         setOrientation(VERTICAL);
         for (int i = 0; i < mListSectionIngredient.size(); i++) {
             DetailRecipeSectionIngredientView detailRecipeSectionIngredientView = new DetailRecipeSectionIngredientView(getContext());
+            detailRecipeSectionIngredientView.display(mListSectionIngredient.get(i));
             addView(detailRecipeSectionIngredientView);
 
             DetailRecipeListItemIngredientsView detailRecipeListItemIngredientsView = new DetailRecipeListItemIngredientsView(getContext());

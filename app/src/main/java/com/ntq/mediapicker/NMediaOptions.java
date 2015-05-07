@@ -53,6 +53,7 @@ public class NMediaOptions implements Parcelable {
 	private File croppedFile;
 	private List<NMediaItem> mediaListSelected = new ArrayList<NMediaItem>();
 	private boolean showWarningVideoDuration;
+    private boolean cropCircleImage;
 
 	public boolean isShowWarningVideoDuration() {
 		return showWarningVideoDuration;
@@ -486,4 +487,11 @@ public class NMediaOptions implements Parcelable {
 		return true;
 	}
 
+    public boolean isCropCircleImage() {
+        return cropCircleImage;
+    }
+
+    public void setCropCircleImage(boolean cropCircleImage) {
+        this.cropCircleImage = cropCircleImage;
+    }
 }

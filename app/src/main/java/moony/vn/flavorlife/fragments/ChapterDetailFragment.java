@@ -11,24 +11,25 @@ import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.api.DfeGetChapterDetail;
 import moony.vn.flavorlife.api.model.FlPaginatedList;
+import moony.vn.flavorlife.entities.Chapter;
 
 /**
  * Created by moony on 4/30/15.
  */
 public class ChapterDetailFragment extends FlListFragment {
-    private static final String KEY_CHAPTER_ID = "chapter_id";
+    private static final String KEY_CHAPTER = "chapter";
     private static final String KEY_USER_ID = "user_id";
-    private int mChapterId;
+    private Chapter mChapter;
     private int mUserId;
     private View mFooter;
     private TextView mNoData;
     private DfeGetChapterDetail mDfeGetChapterDetail;
 
-    public static ChapterDetailFragment newInstance(int userId, int chapterId) {
+    public static ChapterDetailFragment newInstance(int userId, Chapter chapter) {
         ChapterDetailFragment chapterDetailFragment = new ChapterDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(KEY_USER_ID, userId);
-        bundle.putInt(KEY_CHAPTER_ID, chapterId);
+        bundle.putSerializable(KEY_CHAPTER, chapter);
         chapterDetailFragment.setArguments(bundle);
         return chapterDetailFragment;
     }
@@ -37,10 +38,10 @@ public class ChapterDetailFragment extends FlListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
-            mChapterId = getArguments().getInt(KEY_CHAPTER_ID);
+            mChapter = (Chapter) getArguments().getSerializable(KEY_CHAPTER);
             mUserId = getArguments().getInt(KEY_USER_ID);
         } else {
-            mChapterId = savedInstanceState.getInt(KEY_CHAPTER_ID);
+            mChapter = (Chapter) savedInstanceState.getSerializable(KEY_CHAPTER);
             mUserId = savedInstanceState.getInt(KEY_USER_ID);
         }
     }
@@ -48,7 +49,8 @@ public class ChapterDetailFragment extends FlListFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_CHAPTER_ID, mChapterId);
+        if (mChapter != null)
+            outState.putSerializable(KEY_CHAPTER, mChapter);
         outState.putInt(KEY_USER_ID, mUserId);
     }
 
@@ -98,7 +100,7 @@ public class ChapterDetailFragment extends FlListFragment {
 
     @Override
     protected FlPaginatedList getFlPaginatedList() {
-        return mDfeGetChapterDetail = new DfeGetChapterDetail(mApi, mUserId, mChapterId);
+        return mDfeGetChapterDetail = new DfeGetChapterDetail(mApi, mUserId, mChapter.getId());
     }
 
     @Override
@@ -114,4 +116,9 @@ public class ChapterDetailFragment extends FlListFragment {
         }
     }
 
+    public String getTitle() {
+        if (mChapter != null)
+            return mChapter.getName();
+        return null;
+    }
 }

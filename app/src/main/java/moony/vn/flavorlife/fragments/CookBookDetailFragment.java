@@ -11,23 +11,24 @@ import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.api.model.DfeGetBookDetail;
 import moony.vn.flavorlife.api.model.FlPaginatedList;
+import moony.vn.flavorlife.entities.Cookbook;
 
 /**
  * Created by moony on 4/30/15.
  */
 public class CookBookDetailFragment extends FlListFragment {
-    private static final String KEY_BOOK_ID = "book_id";
+    private static final String KEY_BOOK = "book";
     private static final String KEY_USER_ID = "user_id";
-    private int mBookId;
+    private Cookbook mBook;
     private int mUserId;
     private View mFooter;
     private TextView mNoData;
     private DfeGetBookDetail mDfeGetBookDetail;
 
-    public static CookBookDetailFragment newInstance(int userId, int bookId) {
+    public static CookBookDetailFragment newInstance(int userId, Cookbook book) {
         CookBookDetailFragment cookBookDetailFragment = new CookBookDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_BOOK_ID, bookId);
+        bundle.putSerializable(KEY_BOOK, book);
         bundle.putInt(KEY_USER_ID, userId);
         cookBookDetailFragment.setArguments(bundle);
         return cookBookDetailFragment;
@@ -37,10 +38,10 @@ public class CookBookDetailFragment extends FlListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
-            mBookId = getArguments().getInt(KEY_BOOK_ID);
+            mBook = (Cookbook) getArguments().getSerializable(KEY_BOOK);
             mUserId = getArguments().getInt(KEY_USER_ID);
         } else {
-            mBookId = savedInstanceState.getInt(KEY_BOOK_ID);
+            mBook = (Cookbook) savedInstanceState.getSerializable(KEY_BOOK);
             mUserId = savedInstanceState.getInt(KEY_USER_ID);
         }
     }
@@ -54,7 +55,8 @@ public class CookBookDetailFragment extends FlListFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(KEY_BOOK_ID, mBookId);
+        if (mBook != null)
+            outState.putSerializable(KEY_BOOK, mBook);
         outState.putInt(KEY_USER_ID, mUserId);
     }
 
@@ -91,7 +93,7 @@ public class CookBookDetailFragment extends FlListFragment {
 
     @Override
     protected FlPaginatedList getFlPaginatedList() {
-        return mDfeGetBookDetail = new DfeGetBookDetail(mApi, mUserId, mBookId);
+        return mDfeGetBookDetail = new DfeGetBookDetail(mApi, mUserId, mBook.getId());
     }
 
     @Override
@@ -112,5 +114,11 @@ public class CookBookDetailFragment extends FlListFragment {
         } else {
             return false;
         }
+    }
+
+    public String getTitle() {
+        if (mBook != null)
+            return mBook.getName();
+        return null;
     }
 }

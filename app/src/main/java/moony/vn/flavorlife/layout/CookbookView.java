@@ -69,6 +69,6 @@ public class CookbookView extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         //TODO chuyen sang book detail
-        mNavigationManager.showPage(CookBookDetailFragment.newInstance(mCookbook.getUserId(), mCookbook.getId()));
+        mNavigationManager.showPage(CookBookDetailFragment.newInstance(mCookbook.getUserId(), mCookbook));
     }
 }

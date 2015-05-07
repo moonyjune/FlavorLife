@@ -7,6 +7,7 @@ package com.ntq.fragments;
  */
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,12 @@ import com.ntq.api.model.OnDataChangedListener;
  * screens in application.
  */
 public abstract class NFragmentSwitcher extends NFragment implements
-        RetryButtonListener, ErrorListener, OnDataChangedListener {
+        RetryButtonListener, ErrorListener, OnDataChangedListener, SwipeRefreshLayout.OnRefreshListener {
 
     protected ViewGroup mDataView;
     protected boolean mRefreshRequired;
     protected LayoutSwitcher mLayoutSwitcher;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
 
     public NFragmentSwitcher() {
         setArguments(new Bundle());
@@ -50,6 +52,17 @@ public abstract class NFragmentSwitcher extends NFragment implements
         mLayoutSwitcher = new LayoutSwitcher(contentframe,
                 R.id.content_layout, R.id.error_layout,
                 R.id.loading_layout, this, LayoutSwitcher.DATA_MODE);
+
+        if (mDataView instanceof SwipeRefreshLayout) {
+            mSwipeRefreshLayout = (SwipeRefreshLayout) mDataView;
+        } else {
+            mSwipeRefreshLayout = (SwipeRefreshLayout) mDataView.findViewById(R.id.swipe_refresh);
+        }
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setOnRefreshListener(this);
+            mSwipeRefreshLayout.setEnabled(false);
+            mSwipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
+        }
         return contentframe;
     }
 
@@ -136,4 +149,9 @@ public abstract class NFragmentSwitcher extends NFragment implements
      * Should start make request in here
      */
     protected abstract void requestData();
+
+    @Override
+    public void onRefresh() {
+
+    }
 }

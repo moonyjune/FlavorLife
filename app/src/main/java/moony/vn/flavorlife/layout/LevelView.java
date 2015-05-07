@@ -1,8 +1,6 @@
 package moony.vn.flavorlife.layout;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -66,8 +64,8 @@ public class LevelView extends LinearLayout {
                 mListLevels.get(i).setImageResource(R.drawable.ic_launcher);
                 mListLevels.get(i).setTag(R.drawable.ic_launcher);
             } else {
-                mListLevels.get(i).setImageResource(R.drawable.ic_launcher_2);
-                mListLevels.get(i).setTag(R.drawable.ic_launcher_2);
+                mListLevels.get(i).setImageResource(R.drawable.ic_launcher);
+                mListLevels.get(i).setTag(R.drawable.ic_launcher);
             }
         }
     }

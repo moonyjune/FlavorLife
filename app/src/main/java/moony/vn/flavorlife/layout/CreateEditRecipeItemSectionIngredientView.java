@@ -85,8 +85,11 @@ public class CreateEditRecipeItemSectionIngredientView extends LinearLayout {
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            if (mValue.getText() != null && !mValue.getText().toString().isEmpty())
+            if (mValue.getText() != null && !mValue.getText().toString().isEmpty()) {
                 mIngredient.setValue(Float.valueOf(mValue.getText().toString()));
+            } else {
+                mIngredient.setValue(0);
+            }
         }
 
         @Override

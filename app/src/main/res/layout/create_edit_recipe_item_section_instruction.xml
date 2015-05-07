@@ -17,14 +17,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Section instruction"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:textSize="20sp" />
 
         <requestFocus />
 
         <ImageView
             android:id="@id/delete_section_instruction"
             android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_height="match_parent"
             android:scaleType="centerInside"
             android:src="@drawable/ic_delete_section" />
 

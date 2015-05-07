@@ -112,7 +112,7 @@ public class InstructionExpandableAdapter extends BaseExpandableListAdapter {
                 if (convertView == null || !(convertView instanceof AddSectionView)) {
                     convertView = new AddSectionView(mContext);
                 }
-                convertView.setOnClickListener(new View.OnClickListener() {
+                ((AddSectionView) convertView).setOnAddSectionListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         SectionInstruction newSectionInstruction = new SectionInstruction();
@@ -153,7 +153,7 @@ public class InstructionExpandableAdapter extends BaseExpandableListAdapter {
                 if (convertView == null || !(convertView instanceof AddSectionContentView)) {
                     convertView = new AddSectionContentView(mContext);
                 }
-                convertView.setOnClickListener(new View.OnClickListener() {
+                ((AddSectionContentView) convertView).setOnAddSectionContentListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Step step = new Step();

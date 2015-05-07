@@ -2,8 +2,12 @@ package moony.vn.flavorlife.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -12,6 +16,7 @@ import com.ntq.fragments.NFragmentSwitcher;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.activities.CreateNewRecipeActivity;
 import moony.vn.flavorlife.api.model.DfeGetRecipeDetail;
 import moony.vn.flavorlife.api.model.DfeLikeRecipe;
 import moony.vn.flavorlife.api.model.DfeUnLikeRecipe;
@@ -36,6 +41,8 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     private DfeUnLikeRecipe mDfeUnLikeRecipe;
     private DfeUseRecipe mDfeUseRecipe;
     private DfeUnUseRecipe mDfeUnUseRecipe;
+    private LinearLayout mLayoutTips, mLayoutComments;
+    //    private Button mUpgrade, mEdit, mDelete;
 
     private OnDataChangedListener onLikeListener = new OnDataChangedListener() {
         @Override
@@ -94,6 +101,16 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         return recipeDetailFragment;
     }
 
+    public static RecipeDetailFragment newInstance(int recipeId) {
+        RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
+        Bundle argument = new Bundle();
+        Recipe recipe = new Recipe();
+        recipe.setId(recipeId);
+        argument.putSerializable(RECIPE, recipe);
+        recipeDetailFragment.setArguments(argument);
+        return recipeDetailFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +133,8 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         super.onViewCreated(view, savedInstanceState);
         mDetailRecipeListIngredientsView = (DetailRecipeListIngredientsView) view.findViewById(R.id.list_ingredients);
         mDetailRecipeListInstructionsView = (DetailRecipeListInstructionsView) view.findViewById(R.id.list_instruction);
+        mLayoutTips = (LinearLayout) view.findViewById(R.id.layout_tips);
+        mLayoutComments = (LinearLayout) view.findViewById(R.id.layout_comments);
         mKind = (TextView) view.findViewById(R.id.recipe_kind);
         mTitle = (TextView) view.findViewById(R.id.recipe_name);
         mLikes = (TextView) view.findViewById(R.id.recipe_likes);
@@ -125,41 +144,19 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         mTips = (TextView) view.findViewById(R.id.recipe_tip_note);
         mLevel = (TextView) view.findViewById(R.id.recipe_level);
         mAuthorComments = (TextView) view.findViewById(R.id.recipe_author_comment);
+        view.findViewById(R.id.upgrade).setOnClickListener(this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        List<SectionIngredient> sectionIngredientList = new ArrayList<SectionIngredient>();
-//        SectionIngredient sectionIngredient = new SectionIngredient();
-//        List<Ingredient> ingredients = new ArrayList<Ingredient>();
-//        Ingredient ingredient = new Ingredient();
-//        ingredients.add(ingredient);
-//        ingredients.add(ingredient);
-//        ingredients.add(ingredient);
-//        sectionIngredient.setListIngredients(ingredients);
-//        sectionIngredientList.add(sectionIngredient);
-//        sectionIngredientList.add(sectionIngredient);
-//        sectionIngredientList.add(sectionIngredient);
-//        mDetailRecipeListIngredientsView.setListSectionIngredient(sectionIngredientList);
-//
-//        List<SectionInstruction> sectionInstructionList = new ArrayList<SectionInstruction>();
-//        SectionInstruction sectionInstruction = new SectionInstruction();
-//        List<Step> steps = new ArrayList<Step>();
-//        Step step = new Step();
-//        steps.add(step);
-//        steps.add(step);
-//        steps.add(step);
-//        sectionInstruction.setListSteps(steps);
-//        sectionInstructionList.add(sectionInstruction);
-//        sectionInstructionList.add(sectionInstruction);
-//        sectionInstructionList.add(sectionInstruction);
-//        mDetailRecipeListInstructionsView.setListSectionIngredient(sectionInstructionList);
+        mActionbar.syncActionBar(this);
         if (isDataReady()) {
             switchToData();
             mDetailRecipeListIngredientsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionIngredients());
-            mDetailRecipeListInstructionsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionInstructions());
+            mDetailRecipeListInstructionsView.setListSectionInstruction(mDfeGetRecipeDetail.getRecipe().getListSectionInstructions());
             setDataToViews(mDfeGetRecipeDetail.getRecipe());
+            if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setEnabled(true);
         } else {
             requestData();
         }
@@ -172,6 +169,10 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
 
     @Override
     protected void requestData() {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setEnabled(false);
+        }
         switchToLoading();
         if (mDfeGetRecipeDetail == null) {
             mDfeGetRecipeDetail = new DfeGetRecipeDetail(mApi);
@@ -184,11 +185,14 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onDataChanged() {
         super.onDataChanged();
-        switchToData();
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(true);
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
         if (isDataReady()) {
-            mRecipe.updateRecipe(mDfeGetRecipeDetail.getRecipe());
+            mRecipe.updateRecipe(mDfeGetRecipeDetail.getRecipe(), true);
             mDetailRecipeListIngredientsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionIngredients());
-            mDetailRecipeListInstructionsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionInstructions());
+            mDetailRecipeListInstructionsView.setListSectionInstruction(mDfeGetRecipeDetail.getRecipe().getListSectionInstructions());
             setDataToViews(mDfeGetRecipeDetail.getRecipe());
         }
     }
@@ -208,8 +212,18 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         mUses.setText(recipe.getUsed() + "");
         mLevel.setText(recipe.getLevel() + "");
         mIntro.setText(recipe.getIntroduction());
-        mTips.setText(recipe.getTipNote());
-        mAuthorComments.setText(recipe.getAuthorComments());
+        if (recipe.getTipNote() != null && !recipe.getTipNote().isEmpty()) {
+            mLayoutTips.setVisibility(View.VISIBLE);
+            mTips.setText(recipe.getTipNote());
+        } else {
+            mLayoutTips.setVisibility(View.GONE);
+        }
+        if (recipe.getAuthorComments() != null && !recipe.getAuthorComments().isEmpty()) {
+            mLayoutComments.setVisibility(View.VISIBLE);
+            mAuthorComments.setText(recipe.getAuthorComments());
+        } else {
+            mLayoutComments.setVisibility(View.GONE);
+        }
         if (recipe.getImages() != null && !recipe.getImages().isEmpty()) {
             mImageLoader.display(recipe.getImages(), mImage);
         } else {
@@ -269,6 +283,14 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
                     requestUse();
                 }
                 break;
+            case R.id.upgrade:
+//                mNavigationManager.showUpgradeRecipe(mRecipe, CreateRecipeFragment.FLAG_UPGRADE);
+                if (getActivity() instanceof CreateNewRecipeActivity) {
+                    mNavigationManager.showPage(CreateRecipeFragment.newInstance(mRecipe, CreateRecipeFragment.FLAG_UPGRADE));
+                } else {
+                    mNavigationManager.showUpgradeRecipe(mRecipe, CreateRecipeFragment.FLAG_EDIT);
+                }
+                break;
         }
     }
 
@@ -318,6 +340,14 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         super.onErrorResponse(volleyError);
         hideDialogLoading();
         showDialogMessageError(volleyError);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setEnabled(true);
+        }
     }
 
+    @Override
+    public void onRefresh() {
+        requestData();
+    }
 }

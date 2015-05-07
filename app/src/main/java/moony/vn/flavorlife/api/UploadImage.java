@@ -92,7 +92,7 @@ public class UploadImage extends AsyncTask<String, Void, String> {
     }
 
     private String getImageFileName(String userId, String recipeId) {
-        String timeStamp = new SimpleDateFormat(DateFormatUtils.DATE_FORMAT).format(new Date());
+        String timeStamp = new SimpleDateFormat(DateFormatUtils.IMAGE_DATE_FORMAT).format(new Date());
         String fileName = APP_NAME + "_" + userId + "_" + recipeId + "_" + timeStamp;
         return fileName;
     }

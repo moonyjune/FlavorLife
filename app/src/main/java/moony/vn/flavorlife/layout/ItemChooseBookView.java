@@ -51,12 +51,12 @@ public class ItemChooseBookView extends LinearLayout {
     public void display(Cookbook cookbook) {
         if (cookbook == null) return;
         mCookbook = cookbook;
-//        mBookName.setText(cookbook.getName());
-//        if (cookbook.getImage() != null && !cookbook.getImage().isEmpty()) {
-//            mImageLoader.display(cookbook.getImage(), mBookImage);
-//        } else {
-//            mBookImage.setImageResource(R.drawable.default_cookbook_image);
-//        }
+        mBookName.setText(cookbook.getName());
+        if (cookbook.getImage() != null && !cookbook.getImage().isEmpty()) {
+            mImageLoader.display(cookbook.getImage(), mBookImage);
+        } else {
+            mBookImage.setImageResource(R.drawable.default_cookbook_image);
+        }
         if (cookbook.isChosen()) {
             setBackgroundColor(getResources().getColor(R.color.fl_color_gray_red_light));
         } else {

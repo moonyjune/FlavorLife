@@ -13,6 +13,9 @@ import moony.vn.flavorlife.R;
  * Created by moony on 4/8/15.
  */
 public class AddSectionView extends LinearLayout {
+    private OnClickListener onAddSectionListener;
+    private ImageView mAddSection;
+
     public AddSectionView(Context context) {
         super(context);
         init();
@@ -30,5 +33,12 @@ public class AddSectionView extends LinearLayout {
 
     private void init() {
         inflate(getContext(), R.layout.add_section_layout, this);
+        setOnClickListener(null);
+        mAddSection = (ImageView) findViewById(R.id.add_section);
+    }
+
+    public void setOnAddSectionListener(OnClickListener onAddSectionListener) {
+        this.onAddSectionListener = onAddSectionListener;
+        mAddSection.setOnClickListener(onAddSectionListener);
     }
 }

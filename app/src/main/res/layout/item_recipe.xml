@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
     android:gravity="center">
 
     <LinearLayout
@@ -10,9 +10,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.makeramen.RoundedImageView
+        <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@id/user_image"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
@@ -35,27 +34,27 @@
             android:textColor="@color/fl_color"
             android:textStyle="bold" />
 
-        <com.makeramen.RoundedImageView
+        <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@id/recipe_type"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/avatar"
+            android:visibility="gone"
             app:riv_border_color="@android:color/transparent"
             app:riv_border_width="1dp"
             app:riv_mutate_background="true"
             app:riv_oval="true" />
     </LinearLayout>
 
-    <ImageView
+    <moony.vn.flavorlife.widget.SquareImageView
         android:id="@id/recipe_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/author_info"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@drawable/default_recipe_image" />
 
     <ImageView
@@ -79,7 +78,7 @@
         android:id="@id/recipe_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/recipe_image"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_margin="10dp"

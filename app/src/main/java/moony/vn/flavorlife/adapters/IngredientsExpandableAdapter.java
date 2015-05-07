@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import moony.vn.flavorlife.entities.Ingredient;
@@ -30,6 +31,8 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
     private List<SectionIngredient> mListSectionIngredients;
     private int mCurrentSection;
     private int mCurrentIngredient;
+    private List<Integer> mDeletedSectionId;
+    private List<Integer> mDeletedIngredientId;
 
     public IngredientsExpandableAdapter(Context context, List<SectionIngredient> mListSectionIngredients) {
         mContext = context;
@@ -101,6 +104,10 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                                 mListSectionIngredients.get(i).setNumberSection(mListSectionIngredients.get(i).getNumberSection() - 1);
                             }
                         }
+                        if (mDeletedSectionId == null)
+                            mDeletedSectionId = new ArrayList<Integer>();
+                        if (mListSectionIngredients.get(groupPosition).getId() != 0)
+                            mDeletedSectionId.add(mListSectionIngredients.get(groupPosition).getId());
                         mListSectionIngredients.remove(groupPosition);
                         notifyDataSetChanged();
                     }
@@ -111,10 +118,14 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                 if (convertView == null || !(convertView instanceof AddSectionView)) {
                     convertView = new AddSectionView(mContext);
                 }
-                convertView.setOnClickListener(new View.OnClickListener() {
+                ((AddSectionView) convertView).setOnAddSectionListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         SectionIngredient newSectionIngredient = new SectionIngredient();
+                        if (mDeletedSectionId != null && !mDeletedSectionId.isEmpty()) {
+                            newSectionIngredient.setId(mDeletedSectionId.get(0));
+                            mDeletedSectionId.remove(0);
+                        }
                         newSectionIngredient.setNumberSection(mListSectionIngredients.size() + 1);
                         mListSectionIngredients.add(newSectionIngredient);
                         notifyDataSetChanged();
@@ -137,6 +148,10 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                 ((CreateEditRecipeItemSectionIngredientView) convertView).setOnDeleteIngredient(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (mDeletedIngredientId == null)
+                            mDeletedIngredientId = new ArrayList<Integer>();
+                        if (mListSectionIngredients.get(groupPosition).getListIngredients().get(childPosition).getId() != 0)
+                            mDeletedIngredientId.add(mListSectionIngredients.get(groupPosition).getListIngredients().get(childPosition).getId());
                         mListSectionIngredients.get(groupPosition).getListIngredients().remove(childPosition);
                         notifyDataSetChanged();
                     }
@@ -147,10 +162,15 @@ public class IngredientsExpandableAdapter extends BaseExpandableListAdapter {
                 if (convertView == null || !(convertView instanceof AddSectionContentView)) {
                     convertView = new AddSectionContentView(mContext);
                 }
-                convertView.setOnClickListener(new View.OnClickListener() {
+                ((AddSectionContentView) convertView).setOnAddSectionContentListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mListSectionIngredients.get(groupPosition).getListIngredients().add(new Ingredient());
+                        Ingredient ingredient1 = new Ingredient();
+                        if (mDeletedIngredientId != null && !mDeletedIngredientId.isEmpty()) {
+                            ingredient1.setId(mDeletedIngredientId.get(0));
+                            mDeletedIngredientId.remove(0);
+                        }
+                        mListSectionIngredients.get(groupPosition).getListIngredients().add(ingredient1);
                         notifyDataSetChanged();
                     }
                 });

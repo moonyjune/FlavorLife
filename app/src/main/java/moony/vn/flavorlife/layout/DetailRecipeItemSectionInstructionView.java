@@ -42,7 +42,13 @@ public class DetailRecipeItemSectionInstructionView extends LinearLayout {
     }
 
     public void display(Step step) {
-        SpannableString spannableString = new SpannableString("01 Bring 2 liters of water to the boil, season with the tomato paste then add tomato and pineapple with all the juice. Simmer for several minutes until the tomato begins to break up.");
+        if (step == null) return;
+        SpannableString spannableString = null;
+        if (step.getNumberStep() < 10) {
+            spannableString = new SpannableString("0" + step.getNumberStep() + " " + step.getContent());
+        } else {
+            spannableString = new SpannableString(step.getNumberStep() + " " + step.getContent());
+        }
         spannableString.setSpan(new TextAppearanceSpan(getContext(), R.style.StepNumber), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new TextAppearanceSpan(getContext(), R.style.StepContent), 2, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mStepContent.setText(spannableString, TextView.BufferType.SPANNABLE);

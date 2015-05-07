@@ -68,6 +68,6 @@ public class ItemRecipeInChapter extends LinearLayout implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        mNavigationManager.showPage(CookBookDetailFragment.newInstance(mCookbook.getUserId(), mCookbook.getId()));
+        mNavigationManager.showPage(CookBookDetailFragment.newInstance(mCookbook.getUserId(), mCookbook));
     }
 }

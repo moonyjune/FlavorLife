@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import com.edmodo.cropper.CropImageView;
 
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.widget.CircleCropImageView;
 
 import com.ntq.fragments.NFragment;
 import com.ntq.utils.PhotoUtils;
@@ -45,7 +46,7 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
     private NCropListener mCropListener;
     private NMediaOptions mMediaOptions;
     private NMediaItem mMediaItemSelected;
-    private CropImageView mCropImageView;
+    private CircleCropImageView mCropImageView;
     private View mRotateLeft, mRotateRight;
     private View mCancle;
     private View mSave;
@@ -100,7 +101,7 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
     }
 
     private void init(View view) {
-        mCropImageView = (CropImageView) view.findViewById(R.id.crop);
+        mCropImageView = (CircleCropImageView) view.findViewById(R.id.crop);
         mRotateLeft = view.findViewById(R.id.rotate_left);
         mRotateRight = view.findViewById(R.id.rotate_right);
         mCancle = view.findViewById(R.id.cancel);
@@ -217,7 +218,12 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
             // must try-catch, maybe getCroppedImage() method crash because not
             // set bitmap in mCropImageView
             try {
-                Bitmap bitmap = mCropImageView.getCroppedImage();
+                Bitmap bitmap = null;
+                if (mMediaOptions.isCropCircleImage()) {
+                    bitmap = mCropImageView.getCroppedCircleImage();
+                } else {
+                    bitmap = mCropImageView.getCroppedImage();
+                }
                 uri = saveBitmapCropped(bitmap);
                 if (bitmap != null) {
                     bitmap.recycle();

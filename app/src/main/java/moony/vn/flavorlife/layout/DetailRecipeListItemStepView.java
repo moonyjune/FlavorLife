@@ -34,6 +34,7 @@ public class DetailRecipeListItemStepView extends LinearLayout {
         removeAllViews();
         for (int i = 0; i < mStepList.size(); i++) {
             DetailRecipeItemSectionInstructionView detailRecipeItemSectionInstructionView = new DetailRecipeItemSectionInstructionView(getContext());
+            detailRecipeItemSectionInstructionView.display(mStepList.get(i));
             addView(detailRecipeItemSectionInstructionView);
         }
     }
