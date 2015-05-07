@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.activities.CreateNewRecipeActivity;
 import moony.vn.flavorlife.api.DfeGetChapterDetail;
 import moony.vn.flavorlife.api.model.FlPaginatedList;
 import moony.vn.flavorlife.entities.Chapter;
@@ -69,6 +70,16 @@ public class ChapterDetailFragment extends FlListFragment {
             if (mFooter == null) {
                 mFooter = getActivity().getLayoutInflater().inflate(R.layout.footer_add_recipe, listView, false);
             }
+            mFooter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (getActivity() instanceof CreateNewRecipeActivity) {
+                        mNavigationManager.showPage(CreateRecipeFragment.newInstance(null, CreateRecipeFragment.FLAG_CREATE));
+                    } else {
+                        mNavigationManager.showCreateNewRecipe();
+                    }
+                }
+            });
 
             if (listAdapter != null) {
                 //must remove Adapter before addHeaderView

@@ -31,5 +31,5 @@
     <string name="user_not_exist">user not exist</string>
     <string name="action_bar_title_cookbook_detail">Cookbook Detail</string>
     <string name="action_bar_title_chapter_detail">Chapter Detail</string>
-
+    <string name="chapter_name">Chapter %1$s: %2$s</string>
 </resources>

@@ -140,5 +140,6 @@
     <item name="upgrade" type="id" />
     <item name="layout_tips" type="id" />
     <item name="layout_comments" type="id" />
+    <item name="author_info" type="id" />
 
 </resources>

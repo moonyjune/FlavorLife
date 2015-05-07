@@ -4,10 +4,20 @@
     android:layout_height="wrap_content"
     android:gravity="center">
 
-    <LinearLayout
-        android:id="@+id/author_info"
+    <moony.vn.flavorlife.widget.SquareImageView
+        android:id="@id/recipe_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@id/author_info"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_recipe_image" />
+
+    <LinearLayout
+        android:id="@id/author_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/while_transparent"
         android:orientation="horizontal">
 
         <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,28 +44,17 @@
             android:textColor="@color/fl_color"
             android:textStyle="bold" />
 
-        <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@id/recipe_type"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/avatar"
-            android:visibility="gone"
-            app:riv_border_color="@android:color/transparent"
-            app:riv_border_width="1dp"
-            app:riv_mutate_background="true"
-            app:riv_oval="true" />
+        <TextView
+            android:id="@id/recipe_kind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:padding="5dp"
+            android:text="Main Course"
+            android:textColor="@color/fl_color_text"
+            android:textStyle="italic" />
     </LinearLayout>
-
-    <moony.vn.flavorlife.widget.SquareImageView
-        android:id="@id/recipe_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/author_info"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/default_recipe_image" />
 
     <ImageView
         android:layout_width="match_parent"

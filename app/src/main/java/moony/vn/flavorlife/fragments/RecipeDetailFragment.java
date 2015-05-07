@@ -288,9 +288,10 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
                 if (getActivity() instanceof CreateNewRecipeActivity) {
                     mNavigationManager.showPage(CreateRecipeFragment.newInstance(mRecipe, CreateRecipeFragment.FLAG_UPGRADE));
                 } else {
-                    mNavigationManager.showUpgradeRecipe(mRecipe, CreateRecipeFragment.FLAG_EDIT);
+                    mNavigationManager.showUpgradeRecipe(mRecipe);
                 }
                 break;
+            //TODO case edit
         }
     }
 

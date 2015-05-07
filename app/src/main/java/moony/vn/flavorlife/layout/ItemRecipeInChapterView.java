@@ -60,13 +60,12 @@ public class ItemRecipeInChapterView extends LinearLayout implements View.OnClic
         } else {
             mImage.setImageResource(R.drawable.default_recipe_image);
         }
-//        mName.setText(cookbook.getName());
+        mName.setText(chapterRecipe.getName());
         setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        //TODO chuyen sang recipe detail
         mNavigationManager.showPage(RecipeDetailFragment.newInstance(mChapterRecipe));
     }
 }

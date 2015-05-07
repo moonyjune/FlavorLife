@@ -27,14 +27,11 @@
             android:id="@id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="@color/fl_color"
             android:dividerHeight="1dp"
             android:fadeScrollbars="true"
             android:listSelector="@android:color/transparent"
             android:scrollbarFadeDuration="@integer/scrollbar_fade_duration" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <FrameLayout
-        android:id="@id/tab_new_recipes"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </FrameLayout>

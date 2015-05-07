@@ -37,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="CHICKEN " />
+                android:text="CHICKEN "
+                android:textAllCaps="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"

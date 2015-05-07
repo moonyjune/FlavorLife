@@ -42,7 +42,7 @@ public class NImageLoaderImpl implements NImageLoader {
         mDisplayImageBuilder = new DisplayImageOptions.Builder()
                 .cacheInMemory(true).cacheOnDisk(true)
                         // TODO change image on loading
-                .showImageOnLoading(R.drawable.ic_launcher)
+                .showImageOnLoading(R.drawable.ic_loading)
                 .considerExifParams(true).resetViewBeforeLoading(true);
         mDisplayImageOptions = mDisplayImageBuilder.build();
         mImageLoaderConfig = new ImageLoaderConfiguration.Builder(context)

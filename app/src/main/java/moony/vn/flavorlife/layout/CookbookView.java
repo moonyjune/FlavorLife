@@ -61,14 +61,14 @@ public class CookbookView extends LinearLayout implements View.OnClickListener {
         } else {
             mImage.setImageResource(R.drawable.default_cookbook_image);
         }
-//        mName.setText(cookbook.getName());
+        mName.setText(cookbook.getName());
+        //TODO chua co intro
 //        mIntro.setText(cookbook.getIntro());
         setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        //TODO chuyen sang book detail
         mNavigationManager.showPage(CookBookDetailFragment.newInstance(mCookbook.getUserId(), mCookbook));
     }
 }
