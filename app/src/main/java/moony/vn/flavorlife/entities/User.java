@@ -30,7 +30,7 @@ public class User implements Serializable {
     private int isFollowed;
     @SerializedName("socialnetwork_image")
     private String socialNetworkImage;
-
+    private boolean isUpdatedProfile;
     private int state;
 
     public enum State {
@@ -115,6 +115,13 @@ public class User implements Serializable {
         return image;
     }
 
+    public String getImageDisplay(){
+        if (image != null && !image.isEmpty())
+            return image;
+        else
+            return socialNetworkImage;
+    }
+
     public void setImage(String image) {
         this.image = image;
     }
@@ -151,7 +158,7 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public void updateUser(User user){
+    public void updateUser(User user) {
         setId(user.getId());
         setUserName(user.getUserName());
         setFollowed(user.isFollowed());
@@ -171,5 +178,13 @@ public class User implements Serializable {
 
     public void setSocialNetworkImage(String socialNetworkImage) {
         this.socialNetworkImage = socialNetworkImage;
+    }
+
+    public boolean isUpdatedProfile() {
+        return isUpdatedProfile;
+    }
+
+    public void setUpdatedProfile(boolean isUpdatedProfile) {
+        this.isUpdatedProfile = isUpdatedProfile;
     }
 }

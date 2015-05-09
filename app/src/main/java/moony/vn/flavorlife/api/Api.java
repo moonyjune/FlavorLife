@@ -10,6 +10,7 @@ import java.util.Date;
 import moony.vn.flavorlife.entities.Chapter;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.entities.User;
 
 public interface Api {
     public Request<JSONObject> register(String email,
@@ -67,6 +68,9 @@ public interface Api {
                                       Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> unFollow(int userId,
+                                        Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> editUserProfile(User user,
                                         Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     //TODO search

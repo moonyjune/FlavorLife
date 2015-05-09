@@ -112,6 +112,11 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
         }
     }
 
+    public void updateCheckUpdatedProfile(boolean check){
+        mUser.setUpdatedProfile(check);
+        storeUser();
+    }
+
     public void updateEmail(String email){
         mUser.setEmail(email);
         storeUser();

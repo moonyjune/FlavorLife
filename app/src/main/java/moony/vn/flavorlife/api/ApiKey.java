@@ -54,7 +54,10 @@ public interface ApiKey {
     public static final String API_UNBOOKMARK_RECIPE = "unbookmark_recipe";
     public static final String API_EDIT_RECIPE = "edit_recipe";
     public static final String API_UPGRADE_RECIPE = "upgrade_recipe";
-    public static final String API_UPLOAD_IMAGE = "upload_image";
+    public static final String API_UPLOAD_RECIPE_IMAGE = "upload_recipe_image";
+    public static final String API_UPLOAD_USER_IMAGE = "upload_user_image";
+    public static final String API_DELETE_RECIPE = "delete_recipe";
+    public static final String API_EDIT_PROFILE = "edit_profile";
 
     public static final int SUCCESS = 0;
 }

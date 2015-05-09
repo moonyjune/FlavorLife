@@ -2,7 +2,6 @@ package moony.vn.flavorlife.api;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,6 +15,8 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,12 +36,22 @@ public class UploadImage extends AsyncTask<String, Void, String> {
     private int SIZE = 64 * 1024;
     private Bitmap bm;
     private String APP_NAME = "flavorlife";
+    private String api;
+    private String recipeId;
+    private String userId;
 
     @Override
     protected String doInBackground(String... params) {
-        String api = params[0];
-        String recipeId = params[2];
-        String s = uploadMultipart(recipeId, SERVER_IMAGE + api, params[1]);
+        String s = "";
+        api = params[0];
+        if (api.equals(ApiKey.API_UPLOAD_RECIPE_IMAGE)) {
+            recipeId = params[2];
+            s = uploadMultipart(recipeId, SERVER_IMAGE + api, params[1]);
+        } else if (api.equals(ApiKey.API_UPLOAD_USER_IMAGE)) {
+            userId = params[2];
+            s = uploadMultipart(userId, SERVER_IMAGE + api, params[1]);
+        }
+
         return s;
     }
 
@@ -48,9 +59,34 @@ public class UploadImage extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
         Log.e("Mj", "Result : " + result);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(result);
+            int code = jsonObject.getInt(ApiKey.CODE);
+            if (code != ApiKey.SUCCESS) {
+                onSuccess(jsonObject);
+            } else {
+                onFailed(jsonObject);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            onException(e);
+        }
     }
 
-    private String uploadMultipart(String recipeId, String url, String imagePath) {
+    protected void onException(JSONException e) {
+
+    }
+
+    protected void onFailed(JSONObject jsonObject) {
+
+    }
+
+    protected void onSuccess(JSONObject jsonObject) {
+
+    }
+
+    private String uploadMultipart(String id, String url, String imagePath) {
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
         try {
@@ -58,10 +94,15 @@ public class UploadImage extends AsyncTask<String, Void, String> {
             MultipartEntity reqEntity = new MultipartEntity();
             reqEntity.addPart("image", bin);
             reqEntity.addPart("ext", new StringBody("png"));
-            String imageName = getImageFileName(String.valueOf(FlavorLifeApplication.get().getUser().getId()), recipeId);
+            String imageName = "";
+            if (id.equals(recipeId)) {
+                reqEntity.addPart("recipe_id", new StringBody(id));
+                imageName = getImageFileName(String.valueOf(FlavorLifeApplication.get().getUser().getId()), id);
+            } else if (id.equals(userId)) {
+                reqEntity.addPart("user_id", new StringBody(id));
+                imageName = getImageFileName(String.valueOf(FlavorLifeApplication.get().getUser().getId()));
+            }
             reqEntity.addPart("file_name", new StringBody(imageName));
-            reqEntity.addPart("recipe_id", new StringBody(recipeId));
-
             httpPost.setEntity(reqEntity);
             System.out.println("Requesting : " + httpPost.getRequestLine());
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -94,6 +135,12 @@ public class UploadImage extends AsyncTask<String, Void, String> {
     private String getImageFileName(String userId, String recipeId) {
         String timeStamp = new SimpleDateFormat(DateFormatUtils.IMAGE_DATE_FORMAT).format(new Date());
         String fileName = APP_NAME + "_" + userId + "_" + recipeId + "_" + timeStamp;
+        return fileName;
+    }
+
+    private String getImageFileName(String userId) {
+        String timeStamp = new SimpleDateFormat(DateFormatUtils.IMAGE_DATE_FORMAT).format(new Date());
+        String fileName = APP_NAME + "_" + userId + "_" + timeStamp;
         return fileName;
     }
 

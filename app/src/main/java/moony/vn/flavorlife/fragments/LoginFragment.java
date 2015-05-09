@@ -23,6 +23,7 @@ import com.sromku.simple.fb.utils.PictureAttributes;
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.api.model.DfeLogin;
+import moony.vn.flavorlife.entities.User;
 import moony.vn.flavorlife.utils.ToastUtils;
 
 public class LoginFragment extends NFragment implements View.OnClickListener, OnDataChangedListener, Response.ErrorListener {
@@ -35,7 +36,11 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
         public void onComplete(Profile profile) {
             super.onComplete(profile);
             FlavorLifeApplication.get().updateEmail(profile.getEmail());
-            FlavorLifeApplication.get().updateUserName(profile.getName());
+            if (!FlavorLifeApplication.get().getUser().isUpdatedProfile()) {
+                FlavorLifeApplication.get().updateUserName(profile.getName());
+            } else {
+
+            }
             FlavorLifeApplication.get().updateSocialNetworkImage(profile.getPicture());
             requestLogin();
         }

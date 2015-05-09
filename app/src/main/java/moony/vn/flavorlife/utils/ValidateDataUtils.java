@@ -35,6 +35,10 @@ public class ValidateDataUtils {
     public static final int RECIPE_CHAPTER_EMPTY = -17;
     public static final int RECIPE_IMAGE_EMPTY = -18;
 
+    public static final int USERNAME_EMPTY = -19;
+    public static final int EMAIL_EMPTY = -20;
+    public static final int WRONG_EMAIL_PATTERN = -21;
+
     public static String get(Context context, int code) {
         String s = context.getString(R.string.error_unknown);
         switch (code) {

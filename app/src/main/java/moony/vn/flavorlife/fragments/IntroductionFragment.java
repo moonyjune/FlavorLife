@@ -259,7 +259,7 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
                         Log.e(TAG, "Error to get media, NULL");
                     }
                 } else {
-                    Log.e(TAG, "Get media cancled.");
+                    Log.e(TAG, "Get media canceled.");
                 }
                 break;
             case REQUEST_KIND:

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -509,7 +508,7 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     private void uploadImage() {
         showDialogLoading();
         String[] params = new String[3];
-        params[0] = ApiKey.API_UPLOAD_IMAGE;
+        params[0] = ApiKey.API_UPLOAD_RECIPE_IMAGE;
         params[1] = mRecipe.getImages();
         switch (mFlag) {
             case FLAG_CREATE:
@@ -525,53 +524,97 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
         if (mRecipe.getImages() != null && !mRecipe.getImages().isEmpty()) {
             new UploadImage() {
                 @Override
-                protected void onPostExecute(String result) {
-                    super.onPostExecute(result);
-                    hideDialogLoading();
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        int code = jsonObject.getInt(ApiKey.CODE);
-                        if (code != ApiKey.SUCCESS) {
-                            DialogUtils.getInstance().showDialogMessage(getActivity(), "Upload image fail. Do you want to retry ?", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    uploadImage();
-                                }
-                            }, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    if (mFlag == FLAG_CREATE) {
-                                        Toast.makeText(getActivity(), "You've created a new recipe!", Toast.LENGTH_SHORT).show();
-                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeCreateRecipe.getRecipeId()));
-                                    } else if (mFlag == FLAG_EDIT) {
-                                        Toast.makeText(getActivity(), "You've edit a new recipe!", Toast.LENGTH_SHORT).show();
-//                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mRecipe.getId()));
-                                        getActivity().finish();
-                                    } else {
-                                        Toast.makeText(getActivity(), "You've upgrade a new recipe!", Toast.LENGTH_SHORT).show();
-                                        getActivity().finish();
-//                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeUpgradeRecipe.getRecipeId()));
-                                    }
-                                }
-                            });
-                        } else {
+                protected void onSuccess(JSONObject jsonObject) {
+                    super.onSuccess(jsonObject);
+                    DialogUtils.getInstance().showDialogMessage(getActivity(), "Upload image fail. Do you want to retry ?", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            uploadImage();
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
                             if (mFlag == FLAG_CREATE) {
-                                Toast.makeText(getActivity(), "You've created a new recipe successfully!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "You've created a new recipe!", Toast.LENGTH_SHORT).show();
                                 mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeCreateRecipe.getRecipeId()));
                             } else if (mFlag == FLAG_EDIT) {
-                                Toast.makeText(getActivity(), "You've edited a recipe successfully!", Toast.LENGTH_SHORT).show();
-//                                mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mRecipe.getId()));
+                                Toast.makeText(getActivity(), "You've edit a new recipe!", Toast.LENGTH_SHORT).show();
+//                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mRecipe.getId()));
                                 getActivity().finish();
                             } else {
-                                Toast.makeText(getActivity(), "You've upgraded a recipe successfully!", Toast.LENGTH_SHORT).show();
-//                                mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeUpgradeRecipe.getRecipeId()));
+                                Toast.makeText(getActivity(), "You've upgrade a new recipe!", Toast.LENGTH_SHORT).show();
                                 getActivity().finish();
+//                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeUpgradeRecipe.getRecipeId()));
                             }
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    });
+                }
+
+                @Override
+                protected void onFailed(JSONObject jsonObject) {
+                    super.onFailed(jsonObject);
+                    if (mFlag == FLAG_CREATE) {
+                        Toast.makeText(getActivity(), "You've created a new recipe successfully!", Toast.LENGTH_SHORT).show();
+                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeCreateRecipe.getRecipeId()));
+                    } else if (mFlag == FLAG_EDIT) {
+                        Toast.makeText(getActivity(), "You've edited a recipe successfully!", Toast.LENGTH_SHORT).show();
+//                                mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mRecipe.getId()));
+                        getActivity().finish();
+                    } else {
+                        Toast.makeText(getActivity(), "You've upgraded a recipe successfully!", Toast.LENGTH_SHORT).show();
+//                                mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeUpgradeRecipe.getRecipeId()));
+                        getActivity().finish();
                     }
                 }
+
+//                @Override
+//                protected void onPostExecute(String result) {
+//                    super.onPostExecute(result);
+//                    hideDialogLoading();
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(result);
+//                        int code = jsonObject.getInt(ApiKey.CODE);
+//                        if (code != ApiKey.SUCCESS) {
+//                            DialogUtils.getInstance().showDialogMessage(getActivity(), "Upload image fail. Do you want to retry ?", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    uploadImage();
+//                                }
+//                            }, new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    if (mFlag == FLAG_CREATE) {
+//                                        Toast.makeText(getActivity(), "You've created a new recipe!", Toast.LENGTH_SHORT).show();
+//                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeCreateRecipe.getRecipeId()));
+//                                    } else if (mFlag == FLAG_EDIT) {
+//                                        Toast.makeText(getActivity(), "You've edit a new recipe!", Toast.LENGTH_SHORT).show();
+////                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mRecipe.getId()));
+//                                        getActivity().finish();
+//                                    } else {
+//                                        Toast.makeText(getActivity(), "You've upgrade a new recipe!", Toast.LENGTH_SHORT).show();
+//                                        getActivity().finish();
+////                                        mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeUpgradeRecipe.getRecipeId()));
+//                                    }
+//                                }
+//                            });
+//                        } else {
+//                            if (mFlag == FLAG_CREATE) {
+//                                Toast.makeText(getActivity(), "You've created a new recipe successfully!", Toast.LENGTH_SHORT).show();
+//                                mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeCreateRecipe.getRecipeId()));
+//                            } else if (mFlag == FLAG_EDIT) {
+//                                Toast.makeText(getActivity(), "You've edited a recipe successfully!", Toast.LENGTH_SHORT).show();
+////                                mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mRecipe.getId()));
+//                                getActivity().finish();
+//                            } else {
+//                                Toast.makeText(getActivity(), "You've upgraded a recipe successfully!", Toast.LENGTH_SHORT).show();
+////                                mNavigationManager.showPageWithoutStack(RecipeDetailFragment.newInstance(mDfeUpgradeRecipe.getRecipeId()));
+//                                getActivity().finish();
+//                            }
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
             }.execute(params);
         }
     }

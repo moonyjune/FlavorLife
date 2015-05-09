@@ -15,6 +15,7 @@ import com.ntq.fragments.NFragmentSwitcher;
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.activities.CreateNewRecipeActivity;
+import moony.vn.flavorlife.api.model.DfeDeleteRecipe;
 import moony.vn.flavorlife.api.model.DfeGetRecipeDetail;
 import moony.vn.flavorlife.api.model.DfeLikeRecipe;
 import moony.vn.flavorlife.api.model.DfeUnLikeRecipe;
@@ -40,8 +41,20 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     private DfeUnLikeRecipe mDfeUnLikeRecipe;
     private DfeUseRecipe mDfeUseRecipe;
     private DfeUnUseRecipe mDfeUnUseRecipe;
+    private DfeDeleteRecipe mDfeDeleteRecipe;
     private LinearLayout mLayoutTips, mLayoutComments;
     //    private Button mUpgrade, mEdit, mDelete;
+
+    private OnDataChangedListener onDeleteRecipeListener = new OnDataChangedListener() {
+        @Override
+        public void onDataChanged() {
+            hideDialogLoading();
+            if (mDfeDeleteRecipe != null && mDfeDeleteRecipe.isReady()) {
+                Toast.makeText(getActivity(), "You've deleted a recipe...", Toast.LENGTH_SHORT).show();
+                getActivity().onBackPressed();
+            }
+        }
+    };
 
     private OnDataChangedListener onLikeListener = new OnDataChangedListener() {
         @Override
@@ -328,11 +341,10 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
                 }
                 break;
             case R.id.delete_recipe:
-                //TODO call api
                 DialogUtils.getInstance().showDialog(getActivity(), "Are you sure that you want to delete this recipe ?", true, true, "Yes", "No", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getActivity(), "You've deleted a recipe...", Toast.LENGTH_SHORT).show();
+                        requestDeleteRecipe();
                         DialogUtils.getInstance().dismissDialog();
                     }
                 }, new View.OnClickListener() {
@@ -385,6 +397,15 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         mDfeUnUseRecipe.makeRequest(mRecipe.getId());
     }
 
+    private void requestDeleteRecipe() {
+        showDialogLoading();
+        if (mDfeDeleteRecipe == null) {
+            mDfeDeleteRecipe = new DfeDeleteRecipe(mApi);
+            mDfeDeleteRecipe.addErrorListener(this);
+            mDfeDeleteRecipe.addDataChangedListener(onDeleteRecipeListener);
+        }
+        mDfeDeleteRecipe.makeRequest(mRecipe.getId());
+    }
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {

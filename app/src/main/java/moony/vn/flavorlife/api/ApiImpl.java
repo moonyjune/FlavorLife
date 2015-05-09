@@ -18,6 +18,7 @@ import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.entities.Chapter;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.entities.User;
 import moony.vn.flavorlife.utils.DateFormatUtils;
 
 public class ApiImpl implements Api, ApiKey {
@@ -303,7 +304,13 @@ public class ApiImpl implements Api, ApiKey {
 
     @Override
     public Request<JSONObject> deleteRecipe(int recipeId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
+        list.add(new BasicNameValuePair(RECIPE_ID, String.valueOf(recipeId)));
+        String url = AppRequest.getUrl(toURL(API_DELETE_RECIPE), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 
     @Override
@@ -323,6 +330,19 @@ public class ApiImpl implements Api, ApiKey {
         list.add(new BasicNameValuePair(USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
         list.add(new BasicNameValuePair(FOLLOW_USER_ID, String.valueOf(followUserId)));
         String url = AppRequest.getUrl(toURL(API_UNFOLLOW), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
+    }
+
+    @Override
+    public Request<JSONObject> editUserProfile(User user, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        user.setId(FlavorLifeApplication.get().getUser().getId());
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
+        String data = gson.toJson(user);
+        list.add(new BasicNameValuePair(DATA, data));
+        String url = AppRequest.getUrl(toURL(API_EDIT_PROFILE), list);
 
         AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
         return mQueue.add(appRequest);

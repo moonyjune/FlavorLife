@@ -94,8 +94,12 @@ public class DialogUtils {
 
         if (!isHaveLeft)
             yes.setVisibility(View.GONE);
+        else
+            yes.setVisibility(View.VISIBLE);
         if (!isHaveRight)
             no.setVisibility(View.GONE);
+        else
+            no.setVisibility(View.VISIBLE);
 
         messagesTv.setText(messages);
         yes.setText(buttonLeft);

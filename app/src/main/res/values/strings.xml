@@ -12,7 +12,7 @@
     <string name="error_authenticate">Authenticate error</string>
     <string name="error_unknown">Unknow error</string>
     <string name="action_bar_title_recipes">Recipes</string>
-    <string name="action_bar_title_follows">Follows</string>
+    <string name="action_bar_title_follows">People</string>
     <string name="acion_bar_title_home">Profile</string>
     <string name="action_bar_title_messages">Messages</string>
     <string name="action_bar_title_create_recipe">Create Recipe</string>
@@ -29,8 +29,9 @@
     <string name="chapter_not_exist">chapter not exist</string>
     <string name="recipe_not_exist">recipe not exist</string>
     <string name="user_not_exist">user not exist</string>
-    <string name="action_bar_title_cookbook_detail">Cookbook Detail</string>
-    <string name="action_bar_title_chapter_detail">Chapter Detail</string>
+    <string name="action_bar_title_cookbook_detail">Cookbook</string>
+    <string name="action_bar_title_chapter_detail">Chapter</string>
     <string name="chapter_name">Chapter %1$s: %2$s</string>
     <string name="type_recipe">From "Who want fried chicken leg"</string>
+    <string name="action_bar_title_edit_profile">Edit Profile</string>
 </resources>

@@ -15,6 +15,7 @@ import moony.vn.flavorlife.fragments.ChapterDetailFragment;
 import moony.vn.flavorlife.fragments.ComingSoonFragment;
 import moony.vn.flavorlife.fragments.CookBookDetailFragment;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
+import moony.vn.flavorlife.fragments.EditProfileFragment;
 import moony.vn.flavorlife.fragments.FollowsFragment;
 import moony.vn.flavorlife.fragments.HomeFragment;
 import moony.vn.flavorlife.fragments.LoginFragment;
@@ -203,7 +204,8 @@ public class NativeActionbar implements CustomActionbar {
 
     private void syncBtnBack(Fragment activePage) {
         if (mBack == null) return;
-        if (activePage instanceof RecipeDetailFragment || activePage instanceof CookBookDetailFragment || activePage instanceof ChapterDetailFragment) {
+        if (activePage instanceof RecipeDetailFragment || activePage instanceof CookBookDetailFragment || activePage instanceof ChapterDetailFragment ||
+                activePage instanceof EditProfileFragment) {
             mBack.setVisibility(View.VISIBLE);
         } else if (activePage instanceof HomeFragment) {
             if ((((HomeFragment) activePage).isOwner())) {
@@ -218,7 +220,8 @@ public class NativeActionbar implements CustomActionbar {
 
     private void syncBtnMessage(Fragment activePage) {
         if (mMessage == null) return;
-        if (activePage instanceof LoginFragment || activePage instanceof ComingSoonFragment || activePage instanceof CreateRecipeFragment) {
+        if (activePage instanceof LoginFragment || activePage instanceof ComingSoonFragment || activePage instanceof CreateRecipeFragment ||
+                activePage instanceof EditProfileFragment) {
             mMessage.setVisibility(View.GONE);
         } else {
             mMessage.setVisibility(View.VISIBLE);
@@ -282,6 +285,8 @@ public class NativeActionbar implements CustomActionbar {
 //            stringId = 0;
 //            title = ((ChapterDetailFragment) activePage).getTitle();
             stringId = R.string.action_bar_title_chapter_detail;
+        } else if (activePage instanceof EditProfileFragment) {
+            stringId = R.string.action_bar_title_edit_profile;
         }
 
         if (stringId != 0) {

@@ -136,16 +136,6 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
             mDfeGetUserProfile.addErrorListener(this);
         }
         mDfeGetUserProfile.makeRequest(mUser.getId());
-//        if (mHomePagerAdapter != null) {
-//            for (int i = 0; i < mHomePagerAdapter.getCount(); i++) {
-//                Fragment fragment = mHomePagerAdapter.getItem(i);
-//                if (fragment instanceof UserCookbooksFragment) {
-//                    ((UserCookbooksFragment) fragment).requestData();
-//                } else if (fragment instanceof UserRecipesFragment) {
-//                    ((UserRecipesFragment) fragment).requestData();
-//                }
-//            }
-//        }
     }
 
     @Override
@@ -186,12 +176,13 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
             mUser.updateUser(mDfeGetUserProfile.getUser());
             setDataToView();
         }
-
     }
 
     private void setDataToView() {
         switchToData();
         mButtonFollow.setOnClickListener(this);
+        mEditProfile.setOnClickListener(this);
+        mActionbar.syncActionBar(this);
         if (mUser.isFollowed()) {
             setButtonSelected(true);
         } else {
@@ -200,15 +191,15 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
 
         if (isDataReady()) {
             User user = mDfeGetUserProfile.getUser();
-            if (user.getImage() != null && !user.getImage().isEmpty()) {
-                mImageLoader.display(user.getImage(), mUserImage);
+            if (user.getImageDisplay() != null && !user.getImageDisplay().isEmpty()) {
+                mImageLoader.display(user.getImageDisplay(), mUserImage);
             } else {
-                if (user.getSocialNetworkImage() != null && !user.getSocialNetworkImage().isEmpty()) {
-                    mImageLoader.display(user.getSocialNetworkImage(), mUserImage);
-                } else {
+//                if (user.getSocialNetworkImage() != null && !user.getSocialNetworkImage().isEmpty()) {
+//                    mImageLoader.display(user.getSocialNetworkImage(), mUserImage);
+//                } else {
                     //TODO can anh default khac LOL
                     mUserImage.setImageResource(R.drawable.default_monkey_image);
-                }
+//                }
             }
 
             if (user.getNumBooks() > 1) {
@@ -324,6 +315,9 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
                 } else {
                     requestUnFollow();
                 }
+                break;
+            case R.id.edit_profile:
+                mNavigationManager.showPage(EditProfileFragment.newInstance(mUser));
                 break;
         }
     }
