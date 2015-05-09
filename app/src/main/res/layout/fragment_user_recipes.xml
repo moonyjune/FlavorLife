@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/footer_no_data"
         style="@style/TextItalic"
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         android:padding="5dp"
         android:text="Haven't had any data yet!"
         android:textColor="@color/fl_color_text"
-        android:visibility="gone" />
+        fl:font="elle_baskerville_semibold_it" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@id/swipe_refresh"
@@ -24,7 +25,6 @@
         android:layout_marginLeft="@dimen/padding_root_for_list"
         android:layout_marginRight="@dimen/padding_root_for_list"
         android:layout_marginStart="@dimen/padding_root_for_list"
-        android:background="@android:color/transparent"
         android:orientation="vertical">
 
         <GridView
@@ -46,7 +46,5 @@
             android:scrollbars="none"
             android:stretchMode="columnWidth"
             android:verticalSpacing="@dimen/picker_photo_spacing" />
-
     </android.support.v4.widget.SwipeRefreshLayout>
-
 </RelativeLayout>

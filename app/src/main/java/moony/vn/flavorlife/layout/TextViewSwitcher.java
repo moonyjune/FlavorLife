@@ -12,11 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.widget.FlTextView;
 
 /**
  * Created by moony on 3/4/15.
  */
-public class TextViewSwitcher extends TextView {
+public class TextViewSwitcher extends FlTextView {
 
     private boolean isDrawableSelected = false;
     private int mDrawableIdSelected;

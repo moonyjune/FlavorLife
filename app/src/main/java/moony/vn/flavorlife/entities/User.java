@@ -12,9 +12,9 @@ public class User implements Serializable {
     private int id;
     @SerializedName("email")
     private String email;
-    @SerializedName("image")
-    private String userName;
     @SerializedName("user_name")
+    private String userName;
+    @SerializedName("image")
     private String image;
     @SerializedName("inspiration")
     private String inspiration;
@@ -28,6 +28,8 @@ public class User implements Serializable {
     private int numRecipes;
     @SerializedName("is_followed")
     private int isFollowed;
+    @SerializedName("socialnetwork_image")
+    private String socialNetworkImage;
 
     private int state;
 
@@ -160,5 +162,14 @@ public class User implements Serializable {
         setEmail(user.getEmail());
         setImage(user.getImage());
         setInspiration(user.getInspiration());
+        setSocialNetworkImage(user.getSocialNetworkImage());
+    }
+
+    public String getSocialNetworkImage() {
+        return socialNetworkImage;
+    }
+
+    public void setSocialNetworkImage(String socialNetworkImage) {
+        this.socialNetworkImage = socialNetworkImage;
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -47,7 +48,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -106,7 +107,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -147,7 +148,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -176,12 +177,13 @@
                     android:padding="7dp" />
 
 
-                <TextView
+                <moony.vn.flavorlife.widget.FlTextView
                     style="@style/TextBoldRed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="MINS" />
+                    android:text="MINS"
+                    fl:font="elle_baskerville_semibold_it" />
             </LinearLayout>
         </LinearLayout>
 
@@ -211,7 +213,7 @@
             android:clickable="false"
             android:orientation="horizontal">
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -243,7 +245,7 @@
             android:clickable="false"
             android:orientation="horizontal">
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -276,7 +278,7 @@
             android:clickable="false"
             android:orientation="horizontal">
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -12,6 +12,7 @@ import com.ntq.fragments.NFragmentSwitcher;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.api.model.FlPaginatedList;
+import moony.vn.flavorlife.utils.ListViewUtils;
 
 /**
  * Created by moony on 3/4/15.

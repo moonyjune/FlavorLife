@@ -5,7 +5,7 @@ public class Config {
     public static final String SENDER_ID = "859620921661";
 
     public static final int SERVER_DEV = 1;
-//    public static final String IP_ADRESS = "192.168.1.17";
+//    public static final String IP_ADRESS = "192.168.65.204";
     public static final String IP_ADRESS = "192.168.1.23";
 //    public static final String IP_ADRESS = "192.168.43.51";
     public static int BUILD_SERVER = SERVER_DEV;

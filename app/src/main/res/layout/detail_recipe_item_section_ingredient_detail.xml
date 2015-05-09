@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/ingredient_value"
         style="@style/TextItalic"
         android:layout_width="wrap_content"
@@ -14,9 +15,10 @@
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
         android:text="400"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        fl:font="elle_baskerville_semibold_it" />
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/ingredient_unit"
         style="@style/TextItalic"
         android:layout_width="wrap_content"
@@ -26,9 +28,10 @@
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
         android:text="g"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        fl:font="elle_baskerville_semibold_it" />
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/ingredient_name"
         style="@style/TextItalic"
         android:layout_width="match_parent"
@@ -37,6 +40,7 @@
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
         android:text="prawns"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        fl:font="elle_baskerville_semibold_it" />
 
 </LinearLayout>

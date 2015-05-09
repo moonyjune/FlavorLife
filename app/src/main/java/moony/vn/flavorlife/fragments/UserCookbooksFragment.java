@@ -57,6 +57,7 @@ public class UserCookbooksFragment extends FlListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (isOwner()) {
+            mNoData.setVisibility(View.GONE);
             ListView listView = getListView();
             ListAdapter listAdapter = listView.getAdapter();
             if (mFooter == null) {
@@ -74,6 +75,7 @@ public class UserCookbooksFragment extends FlListFragment {
         } else {
             syncNoDataView();
         }
+
     }
 
     private void syncNoDataView() {
@@ -94,6 +96,8 @@ public class UserCookbooksFragment extends FlListFragment {
         super.onDataChanged();
         if (!isOwner())
             syncNoDataView();
+        else
+            mNoData.setVisibility(View.GONE);
     }
 
     @Override

@@ -10,7 +10,7 @@ import moony.vn.flavorlife.R;
 /**
  * Created by moony on 4/27/15.
  */
-public class MyEditText extends EditText {
+public class MyEditText extends FlEditText {
     public MyEditText(Context context) {
         super(context);
     }
@@ -29,12 +29,12 @@ public class MyEditText extends EditText {
         if (getText().toString().isEmpty()) {
             if (getCurrentTextColor() == getResources().getColor(R.color.fl_color)) {
                 setTextColor(getResources().getColor(R.color.fl_color_hint));
-                setTypeface(getTypeface(), Typeface.BOLD_ITALIC);
+                setUpFont(getContext(), ELLE_BASKERVILLE_SEMIBOLD_IT);
             }
         } else {
             if (getCurrentTextColor() == getResources().getColor(R.color.fl_color_hint)) {
                 setTextColor(getResources().getColor(R.color.fl_color));
-                setTypeface(getTypeface(), Typeface.BOLD);
+                setUpFont(getContext(), ELLE_BASKERVILLE_BOLD);
             }
         }
     }

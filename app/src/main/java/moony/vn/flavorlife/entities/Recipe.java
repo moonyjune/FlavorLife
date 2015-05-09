@@ -15,6 +15,9 @@ public class Recipe implements Serializable {
     private static final int MAIN_COURSE = 2;
     private static final int DESSERT = 3;
 
+    private static final int CREATE_NEW = 0;
+    private static final int EDIT = 1;
+    private static final int UPGRADE = 2;
     @SerializedName("id")
     private int id;
     @SerializedName("name")
@@ -48,7 +51,7 @@ public class Recipe implements Serializable {
     @SerializedName("introduction")
     private String introduction;
     @SerializedName("author_name")
-    private String authorName;
+    private String authorName = "author name default";
     @SerializedName("book_name")
     private String bookName;
     @SerializedName("chapter_name")
@@ -61,6 +64,15 @@ public class Recipe implements Serializable {
     private int isBookmarked;
     @SerializedName("book_id")
     private int idBook;
+    @SerializedName("from_author")
+    private String fromAuthor = "author name default";
+    @SerializedName("from_recipe_name")
+    private String fromRecipeName = "recipe name default";
+    @SerializedName("from_recipe_id")
+    private int fromRecipeId;
+    @SerializedName("author_image")
+    private String authorImage;
+
     private ArrayList<SectionIngredient> listSectionIngredients;
     private ArrayList<SectionInstruction> listSectionInstructions;
 
@@ -239,6 +251,69 @@ public class Recipe implements Serializable {
         this.chapterName = chapterName;
     }
 
+    public static enum Type {
+        CREATE_NEW,
+        EDIT,
+        UPGRADE,
+        NONE
+    }
+
+    public void setTypeRecipe(Type type) {
+        switch (type) {
+            case CREATE_NEW:
+                this.type = CREATE_NEW;
+                break;
+            case EDIT:
+                this.type = EDIT;
+                break;
+            case UPGRADE:
+                this.type = UPGRADE;
+                break;
+        }
+    }
+
+    private Type getTypeRecipe() {
+        switch (type) {
+            case CREATE_NEW:
+                return Type.CREATE_NEW;
+            case EDIT:
+                return Type.EDIT;
+            case UPGRADE:
+                return Type.UPGRADE;
+        }
+        return Type.NONE;
+    }
+
+    public boolean isCreateNew() {
+        if (getTypeRecipe() == Type.CREATE_NEW)
+            return true;
+        return false;
+    }
+
+    public boolean isEdit() {
+        if (getTypeRecipe() == Type.EDIT)
+            return true;
+        return false;
+    }
+
+    public boolean isUpgrade() {
+        if (getTypeRecipe() == Type.UPGRADE)
+            return true;
+        return false;
+    }
+
+
+    public String getTypePrefix() {
+        switch (getType()) {
+            case CREATE_NEW:
+            case EDIT:
+                return "Created by ";
+            case UPGRADE:
+                return "Upgraded by ";
+        }
+        return null;
+    }
+
     public String getKindName() {
         switch (kind) {
             case STARTER:
@@ -364,5 +439,21 @@ public class Recipe implements Serializable {
             section.updateListSteps(temp.getListStep());
             this.listSection.add(section);
         }
+    }
+
+    public String getTypeName() {
+        return getTypePrefix() + authorName;
+    }
+
+    public String getSubTypeContent() {
+        return "From \"" + fromRecipeName + "\"";
+    }
+
+    public String getAuthorImage() {
+        return authorImage;
+    }
+
+    public void setAuthorImage(String authorImage) {
+        this.authorImage = authorImage;
     }
 }

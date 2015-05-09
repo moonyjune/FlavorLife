@@ -170,9 +170,11 @@ public class NativeActionbar implements CustomActionbar {
             public void onClick(View v) {
                 if (mNavigationManager.getActivePage() instanceof OnBackButtonListener) {
                     boolean handled = ((OnBackButtonListener) mNavigationManager.getActivePage()).onBackButtonClicked();
-                    if (!handled) mNavigationManager.goBack();
+//                    if (!handled) mNavigationManager.goBack();
+                    mBaseActivity.onBackPressed();
                 } else {
-                    mNavigationManager.goBack();
+//                    mNavigationManager.goBack();
+                    mBaseActivity.onBackPressed();
                 }
             }
         });
@@ -254,13 +256,18 @@ public class NativeActionbar implements CustomActionbar {
         if (mTitle == null) return;
         mTitle.setVisibility(View.VISIBLE);
         int stringId = R.string.app_name;
-//        String title = "";
+        String title = "";
         if (activePage instanceof NewRecipesFragment) {
             stringId = R.string.action_bar_title_recipes;
         } else if (activePage instanceof FollowsFragment) {
             stringId = R.string.action_bar_title_follows;
         } else if (activePage instanceof HomeFragment) {
-            stringId = R.string.acion_bar_title_home;
+            title = ((HomeFragment) activePage).getTitleActionBar();
+            if (title != null && !title.isEmpty()) {
+                stringId = 0;
+            } else {
+                stringId = R.string.acion_bar_title_home;
+            }
         } else if (activePage instanceof MessagesFragment) {
             stringId = R.string.action_bar_title_messages;
         } else if (activePage instanceof CreateRecipeFragment) {
@@ -277,11 +284,11 @@ public class NativeActionbar implements CustomActionbar {
             stringId = R.string.action_bar_title_chapter_detail;
         }
 
-//        if (stringId != 0) {
+        if (stringId != 0) {
             mTitle.setText(stringId);
-//        } else {
-//            mTitle.setText(title);
-//        }
+        } else {
+            mTitle.setText(title);
+        }
     }
 
     @Override

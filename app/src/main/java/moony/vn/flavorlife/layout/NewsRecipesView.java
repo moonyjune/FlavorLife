@@ -21,7 +21,7 @@ public class NewsRecipesView extends LinearLayout implements View.OnClickListene
     private NavigationManager mNavigationManager;
     private Recipe mRecipe;
     private TextView mRecipeName, mLevel, mLikes, mUses, mTime, mAuthorName, mKind;
-    private ImageView mRecipeImage, mUserImage;
+    private ImageView mRecipeImage, mAuthorImage;
     private NImageLoader mImageLoader;
 
     public NewsRecipesView(Context context, AttributeSet attrs) {
@@ -48,7 +48,7 @@ public class NewsRecipesView extends LinearLayout implements View.OnClickListene
 
     private void init(Context context) {
         inflate(context, R.layout.item_recipe, this);
-        mUserImage = (ImageView) findViewById(R.id.user_image);
+        mAuthorImage = (ImageView) findViewById(R.id.user_image);
         mRecipeName = (TextView) findViewById(R.id.recipe_name);
         mRecipeImage = (ImageView) findViewById(R.id.recipe_image);
         mAuthorName = (TextView) findViewById(R.id.recipe_author);
@@ -69,13 +69,17 @@ public class NewsRecipesView extends LinearLayout implements View.OnClickListene
         } else {
             mRecipeImage.setImageResource(R.drawable.default_recipe_image);
         }
+        if (recipe.getAuthorImage() != null && !recipe.getAuthorImage().isEmpty()) {
+            mImageLoader.display(recipe.getAuthorImage(), mAuthorImage);
+        } else {
+            mAuthorImage.setImageResource(R.drawable.default_user_image);
+        }
         mTime.setText(String.valueOf(recipe.getCookingTime()));
         mLevel.setText(String.valueOf(recipe.getLevel()));
         mLikes.setText(String.valueOf(recipe.getLikes()));
         mUses.setText(String.valueOf(recipe.getUsed()));
         mKind.setText(recipe.getKindName());
-        //TODO tam thoi hien thi default
-//        mAuthorName.setText(recipe.getAuthorName());
+        mAuthorName.setText(recipe.getAuthorName());
     }
 
     @Override

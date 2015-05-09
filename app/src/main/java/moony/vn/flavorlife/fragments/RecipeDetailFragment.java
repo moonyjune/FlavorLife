@@ -2,13 +2,11 @@ package moony.vn.flavorlife.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.ntq.api.model.OnDataChangedListener;
@@ -25,6 +23,7 @@ import moony.vn.flavorlife.api.model.DfeUseRecipe;
 import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.layout.DetailRecipeListIngredientsView;
 import moony.vn.flavorlife.layout.DetailRecipeListInstructionsView;
+import moony.vn.flavorlife.utils.DialogUtils;
 
 /**
  * Created by moony on 3/9/15.
@@ -35,8 +34,8 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     private DetailRecipeListIngredientsView mDetailRecipeListIngredientsView;
     private DetailRecipeListInstructionsView mDetailRecipeListInstructionsView;
     private DfeGetRecipeDetail mDfeGetRecipeDetail;
-    private TextView mKind, mTitle, mLevel, mLikes, mUses, mIntro, mTips, mAuthorComments;
-    private ImageView mImage;
+    private TextView mKind, mTitle, mLevel, mLikes, mUses, mIntro, mTips, mAuthorComments, mCookingTime, mType, mSubType;
+    private ImageView mImage, mFlav, mEdit, mDelete;
     private DfeLikeRecipe mDfeLikeRecipe;
     private DfeUnLikeRecipe mDfeUnLikeRecipe;
     private DfeUseRecipe mDfeUseRecipe;
@@ -145,6 +144,15 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         mLevel = (TextView) view.findViewById(R.id.recipe_level);
         mAuthorComments = (TextView) view.findViewById(R.id.recipe_author_comment);
         view.findViewById(R.id.upgrade).setOnClickListener(this);
+        mEdit = (ImageView) view.findViewById(R.id.edit_recipe);
+        mEdit.setOnClickListener(this);
+        mDelete = (ImageView) view.findViewById(R.id.delete_recipe);
+        mDelete.setOnClickListener(this);
+
+        mFlav = (ImageView) view.findViewById(R.id.flav_recipe);
+        mCookingTime = (TextView) view.findViewById(R.id.recipe_cooking_time);
+        mType = (TextView) view.findViewById(R.id.recipe_type);
+        mSubType = (TextView) view.findViewById(R.id.type_subcontent);
     }
 
     @Override
@@ -156,7 +164,6 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
             mDetailRecipeListIngredientsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionIngredients());
             mDetailRecipeListInstructionsView.setListSectionInstruction(mDfeGetRecipeDetail.getRecipe().getListSectionInstructions());
             setDataToViews(mDfeGetRecipeDetail.getRecipe());
-            if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setEnabled(true);
         } else {
             requestData();
         }
@@ -169,10 +176,7 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
 
     @Override
     protected void requestData() {
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(false);
-            mSwipeRefreshLayout.setEnabled(false);
-        }
+        disableSwipeRefresh();
         switchToLoading();
         if (mDfeGetRecipeDetail == null) {
             mDfeGetRecipeDetail = new DfeGetRecipeDetail(mApi);
@@ -185,10 +189,6 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onDataChanged() {
         super.onDataChanged();
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setEnabled(true);
-            mSwipeRefreshLayout.setRefreshing(false);
-        }
         if (isDataReady()) {
             mRecipe.updateRecipe(mDfeGetRecipeDetail.getRecipe(), true);
             mDetailRecipeListIngredientsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionIngredients());
@@ -197,7 +197,8 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         }
     }
 
-    private boolean isDataReady() {
+    @Override
+    protected boolean isDataReady() {
         if (mDfeGetRecipeDetail != null && mDfeGetRecipeDetail.isReady()) {
             return true;
         } else {
@@ -212,29 +213,57 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         mUses.setText(recipe.getUsed() + "");
         mLevel.setText(recipe.getLevel() + "");
         mIntro.setText(recipe.getIntroduction());
+        String mins = "";
+        if (recipe.getCookingTime() <= 1) {
+            mins = "min";
+        } else {
+            mins = "mins";
+        }
+        mCookingTime.setText(recipe.getCookingTime() + " " + mins);
         if (recipe.getTipNote() != null && !recipe.getTipNote().isEmpty()) {
             mLayoutTips.setVisibility(View.VISIBLE);
             mTips.setText(recipe.getTipNote());
         } else {
             mLayoutTips.setVisibility(View.GONE);
         }
-        if (recipe.getAuthorComments() != null && !recipe.getAuthorComments().isEmpty()) {
-            mLayoutComments.setVisibility(View.VISIBLE);
-            mAuthorComments.setText(recipe.getAuthorComments());
-        } else {
-            mLayoutComments.setVisibility(View.GONE);
-        }
+//        if (recipe.getAuthorComments() != null && !recipe.getAuthorComments().isEmpty()) {
+//            mLayoutComments.setVisibility(View.VISIBLE);
+//            mAuthorComments.setText(recipe.getAuthorComments());
+//        } else {
+//            mLayoutComments.setVisibility(View.GONE);
+//        }
         if (recipe.getImages() != null && !recipe.getImages().isEmpty()) {
             mImageLoader.display(recipe.getImages(), mImage);
         } else {
             mImage.setImageResource(R.drawable.default_recipe_image);
         }
 
+        mType.setText(recipe.getTypeName());
+
+        if (recipe.isCreateNew()) {
+            mSubType.setVisibility(View.GONE);
+        } else if (recipe.isEdit()) {
+            mSubType.setVisibility(View.GONE);
+        } else if (recipe.isUpgrade()) {
+            mSubType.setVisibility(View.VISIBLE);
+            mSubType.setText(recipe.getSubTypeContent());
+        }
+
         syncLikeIcon(recipe.isLiked());
         syncUseIcon(recipe.isUsed());
-
-        mLikes.setOnClickListener(this);
+        syncOwner();
         mUses.setOnClickListener(this);
+        mFlav.setOnClickListener(this);
+    }
+
+    private void syncOwner() {
+        if (isOwner()) {
+            mDelete.setVisibility(View.VISIBLE);
+            mEdit.setVisibility(View.VISIBLE);
+        } else {
+            mDelete.setVisibility(View.GONE);
+            mEdit.setVisibility(View.GONE);
+        }
     }
 
     private void syncLikeIcon(boolean isLiked) {
@@ -242,24 +271,24 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
             mRecipe.setIsLiked(isLiked);
         }
         if (isLiked) {
-            mLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_red, 0, 0, 0);
+            mFlav.setImageResource(R.drawable.ic_flaved);
         } else {
-            mLikes.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_border_red, 0, 0, 0);
+            mFlav.setImageResource(R.drawable.ic_flav);
         }
     }
 
     private void syncUseIcon(boolean isUsed) {
         if (mRecipe != null)
             mRecipe.setIsUsed(isUsed);
-        if (isUsed) {
-            mUses.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_use_red, 0, 0, 0);
-        } else {
-            mUses.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_use_black, 0, 0, 0);
-        }
+//        if (isUsed) {
+//            mUses.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_use_red, 0, 0, 0);
+//        } else {
+//            mUses.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_use_black, 0, 0, 0);
+//        }
     }
 
     private boolean isOwner() {
-        if (mRecipe.getId() == FlavorLifeApplication.get().getUser().getId()) {
+        if (mRecipe.getIdUser() == FlavorLifeApplication.get().getUser().getId()) {
             return true;
         } else {
             return false;
@@ -269,7 +298,7 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.recipe_likes:
+            case R.id.flav_recipe:
                 if (mRecipe.isLiked()) {
                     requestUnlike();
                 } else {
@@ -291,7 +320,28 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
                     mNavigationManager.showUpgradeRecipe(mRecipe);
                 }
                 break;
-            //TODO case edit
+            case R.id.edit_recipe:
+                if (getActivity() instanceof CreateNewRecipeActivity) {
+                    mNavigationManager.showPage(CreateRecipeFragment.newInstance(mRecipe, CreateRecipeFragment.FLAG_EDIT));
+                } else {
+                    mNavigationManager.showEditRecipe(mRecipe);
+                }
+                break;
+            case R.id.delete_recipe:
+                //TODO call api
+                DialogUtils.getInstance().showDialog(getActivity(), "Are you sure that you want to delete this recipe ?", true, true, "Yes", "No", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(), "You've deleted a recipe...", Toast.LENGTH_SHORT).show();
+                        DialogUtils.getInstance().dismissDialog();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DialogUtils.getInstance().dismissDialog();
+                    }
+                });
+                break;
         }
     }
 
@@ -341,14 +391,6 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         super.onErrorResponse(volleyError);
         hideDialogLoading();
         showDialogMessageError(volleyError);
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(false);
-            mSwipeRefreshLayout.setEnabled(true);
-        }
     }
 
-    @Override
-    public void onRefresh() {
-        requestData();
-    }
 }

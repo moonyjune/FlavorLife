@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <moony.vn.flavorlife.widget.FlTextView
                     android:id="@id/user_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -52,7 +52,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <moony.vn.flavorlife.widget.FlTextView
                         android:id="@id/user_num_book"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -65,19 +65,19 @@
                         android:textColor="@color/fl_color" />
 
 
-                    <TextView
+                    <moony.vn.flavorlife.widget.FlTextView
                         android:id="@id/user_num_recipe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawableLeft="@drawable/ic_number_recipes"
                         android:drawablePadding="5dp"
-                        android:singleLine="true"
                         android:gravity="bottom"
+                        android:singleLine="true"
                         android:text="174"
                         android:textColor="@color/fl_color" />
 
-                    <TextView
+                    <moony.vn.flavorlife.widget.FlTextView
                         android:id="@id/user_num_follower"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <Button
+                <moony.vn.flavorlife.widget.FlButton
                     android:id="@id/follow"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"

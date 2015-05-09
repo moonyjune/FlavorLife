@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/state_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
+    <moony.vn.flavorlife.widget.FlButton
         android:id="@id/retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

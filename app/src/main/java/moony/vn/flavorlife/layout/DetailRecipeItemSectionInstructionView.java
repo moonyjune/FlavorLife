@@ -2,6 +2,7 @@ package moony.vn.flavorlife.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.text.SpannableString;
 import android.text.Spanned;

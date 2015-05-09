@@ -15,7 +15,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/default_image_create_recipe" />
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/recipe_name"
         style="@style/TextBoldRed"
         android:layout_width="match_parent"

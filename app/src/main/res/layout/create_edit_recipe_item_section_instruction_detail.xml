@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <moony.vn.flavorlife.widget.FlTextView
             android:id="@id/step_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -17,7 +18,8 @@
             android:text="01"
             android:textColor="@color/fl_color_hint"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            fl:font="elle_baskerville_semibold_it" />
 
         <moony.vn.flavorlife.widget.MyEditText
             android:id="@id/step_content"

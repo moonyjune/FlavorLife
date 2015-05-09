@@ -1,5 +1,5 @@
 <resources>
-
+    <string name="fb_app_id">1590897404505661</string>
     <string name="app_name">FlavorLife</string>
     <string name="waiting">Waiting&#8230;</string>
     <string name="cancel">Cancel</string>
@@ -23,7 +23,7 @@
     <string name="following">Following</string>
     <string name="plus_follow">+ Follow</string>
     <string name="coming_soon">Coming soon</string>
-    <string name="action_bar_title_recipe_detail">Recipe detail</string>
+    <string name="action_bar_title_recipe_detail">Recipe</string>
     <string name="unknow_error">Unknow Error</string>
     <string name="book_not_exist">book not exist</string>
     <string name="chapter_not_exist">chapter not exist</string>
@@ -32,4 +32,5 @@
     <string name="action_bar_title_cookbook_detail">Cookbook Detail</string>
     <string name="action_bar_title_chapter_detail">Chapter Detail</string>
     <string name="chapter_name">Chapter %1$s: %2$s</string>
+    <string name="type_recipe">From "Who want fried chicken leg"</string>
 </resources>

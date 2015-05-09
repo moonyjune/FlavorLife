@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/swipe_refresh"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
+    android:id="@id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?actionBarSize"
@@ -20,25 +21,62 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
-                android:id="@id/recipe_kind"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="Main Course"
-                android:textColor="@color/fl_color_text"
-                android:textStyle="italic" />
+                android:layout_height="wrap_content">
 
-            <TextView
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_centerInParent="true"
+                    android:background="@color/fl_color_text" />
+
+                <moony.vn.flavorlife.widget.FlTextView
+                    android:id="@id/recipe_kind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Main Course"
+                    android:textAllCaps="true"
+                    android:textColor="@color/fl_color_text"
+                    fl:font="elle_baskerville_semibold_it"
+                    fl:txtStyle="bold_italic" />
+
+            </RelativeLayout>
+
+            <moony.vn.flavorlife.widget.FlTextView
                 android:id="@id/recipe_name"
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="CHICKEN "
-                android:textAllCaps="true" />
+                android:textAllCaps="true"
+                fl:font="elle_baskerville_bold" />
+
+            <moony.vn.flavorlife.widget.FlTextView
+                android:id="@id/recipe_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Created by Daniel Chole"
+                android:textColor="@color/fl_color_text"
+                fl:font="elle_baskerville_semibold_it"
+                fl:txtStyle="italic" />
+
+            <moony.vn.flavorlife.widget.FlTextView
+                android:id="@id/type_subcontent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/type_recipe"
+                android:textColor="@color/fl_color_text"
+                fl:font="elle_baskerville_semibold_it"
+                fl:txtStyle="italic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +85,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <moony.vn.flavorlife.widget.FlTextView
                     android:id="@id/recipe_level"
                     style="@style/TextBoldRed"
                     android:layout_width="wrap_content"
@@ -56,9 +94,10 @@
                     android:drawablePadding="3dp"
                     android:gravity="center"
                     android:text="3"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    fl:font="elle_baskerville_bold" />
 
-                <TextView
+                <moony.vn.flavorlife.widget.FlTextView
                     android:id="@id/recipe_likes"
                     style="@style/TextBoldRed"
                     android:layout_width="wrap_content"
@@ -69,9 +108,10 @@
                     android:drawablePadding="3dp"
                     android:gravity="center"
                     android:text="124"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    fl:font="elle_baskerville_bold" />
 
-                <TextView
+                <moony.vn.flavorlife.widget.FlTextView
                     android:id="@id/recipe_used"
                     style="@style/TextBoldRed"
                     android:layout_width="wrap_content"
@@ -82,7 +122,8 @@
                     android:drawablePadding="3dp"
                     android:gravity="center"
                     android:text="37"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    fl:font="elle_baskerville_bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,7 +131,7 @@
                     android:gravity="right"
                     android:orientation="horizontal">
 
-                    <Button
+                    <moony.vn.flavorlife.widget.FlButton
                         android:id="@id/upgrade"
                         style="@style/TextBoldWhite"
                         android:layout_width="wrap_content"
@@ -98,11 +139,13 @@
                         android:background="@drawable/bg_selector"
                         android:drawableLeft="@drawable/ic_upgrade"
                         android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
                         android:paddingBottom="3dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:paddingTop="3dp"
-                        android:text="Upgrade" />
+                        android:text="Upgrade"
+                        fl:font="elle_baskerville_bold" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -116,45 +159,103 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/default_image_create_recipe" />
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@id/flav_recipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:src="@drawable/ic_flav" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_comments" />
+
+                <ImageView
+                    android:id="@id/edit_recipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_edit" />
+
+                <ImageView
+                    android:id="@id/delete_recipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_delete_recipe" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <moony.vn.flavorlife.widget.FlTextView
+                    android:id="@id/recipe_cooking_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_cooking_time"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical|right"
+                    android:text="45 mins"
+                    android:textColor="@color/fl_color"
+                    android:textStyle="italic"
+                    fl:font="elle_baskerville_semibold_it" />
+            </LinearLayout>
+
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Introduction"
-                android:textAllCaps="true" />
+                android:textAllCaps="true"
+                fl:font="elle_baskerville_bold" />
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 android:id="@id/recipe_info"
                 style="@style/TextItalic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                fl:font="elle_baskerville_semibold_it" />
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
                 android:text="Ingredients"
-                android:textAllCaps="true" />
+                android:textAllCaps="true"
+                fl:font="elle_baskerville_bold" />
 
             <moony.vn.flavorlife.layout.DetailRecipeListIngredientsView
                 android:id="@id/list_ingredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <TextView
+            <moony.vn.flavorlife.widget.FlTextView
                 style="@style/TextBoldRed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
                 android:text="Instruction"
-                android:textAllCaps="true" />
+                android:textAllCaps="true"
+                fl:font="elle_baskerville_bold" />
 
             <moony.vn.flavorlife.layout.DetailRecipeListInstructionsView
                 android:id="@id/list_instruction"
@@ -167,29 +268,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <moony.vn.flavorlife.widget.FlTextView
                     style="@style/TextBoldRed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Tips"
-                    android:textAllCaps="true" />
+                    android:textAllCaps="true"
+                    fl:font="elle_baskerville_bold" />
 
-                <TextView
+                <moony.vn.flavorlife.widget.FlTextView
                     android:id="@id/recipe_tip_note"
                     style="@style/TextItalic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Recipe tip"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    fl:font="elle_baskerville_semibold_it" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@id/layout_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/TextBoldRed"

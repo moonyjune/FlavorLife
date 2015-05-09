@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:id="@+id/actionbar_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fl_color"
     android:gravity="center">
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="ACTION BAR"
+        android:textAllCaps="true"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        fl:font="elle_baskerville_bold" />
 
     <ImageView
         android:id="@id/search"

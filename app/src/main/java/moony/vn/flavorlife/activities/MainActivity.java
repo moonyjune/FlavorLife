@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.sromku.simple.fb.SimpleFacebook;
+
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.fragments.ComingSoonFragment;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
@@ -27,6 +29,7 @@ public class MainActivity extends BaseActivity {
 
     public static final String ACTION_OPEN = "open";
     public static final String ACTION_TAG = "tag";
+    private SimpleFacebook mSimpleFacebook;
 
     public static void startMainActivity(Context context, int extra) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -54,10 +57,17 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
         mTabWidget.setVisibility(View.GONE);
 //        mTabWidget.unFocusAll();
         if (savedInstanceState == null)
             parseIntent(getIntent());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
     }
 
     @Override
@@ -98,5 +108,11 @@ public class MainActivity extends BaseActivity {
 
     private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, fragment).commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data);
     }
 }

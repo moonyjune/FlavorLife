@@ -5,17 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ntq.api.model.OnDataChangedListener;
-import com.ntq.fragments.NFragment;
 import com.ntq.fragments.NFragmentSwitcher;
 
 import java.util.ArrayList;
@@ -36,9 +36,6 @@ import moony.vn.flavorlife.utils.DialogUtils;
  */
 public class HomeFragment extends NFragmentSwitcher implements View.OnClickListener {
     private static final String KEY_USER = "user";
-    private TabIndicator mTabIndicator;
-    private ViewPager mHomePager;
-    private HomePagerAdapter mHomePagerAdapter;
     private User mUser;
     private Button mEditProfile;
     private DfeGetUserProfile mDfeGetUserProfile;
@@ -47,6 +44,11 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
     private Button mButtonFollow;
     private DfeFollow mDfeFollow;
     private DfeUnFollow mDfeUnFollow;
+    //    private WorkResultFragment workResultFragment;
+    private TabIndicator mTabIndicator;
+    private ViewPager mHomePager;
+    private HomePagerAdapter mHomePagerAdapter;
+    private LinearLayout mUserProfileLayout, mUserInforLayout;
 
     private OnDataChangedListener onDataChangedFollow = new OnDataChangedListener() {
         @Override
@@ -134,14 +136,26 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
             mDfeGetUserProfile.addErrorListener(this);
         }
         mDfeGetUserProfile.makeRequest(mUser.getId());
+//        if (mHomePagerAdapter != null) {
+//            for (int i = 0; i < mHomePagerAdapter.getCount(); i++) {
+//                Fragment fragment = mHomePagerAdapter.getItem(i);
+//                if (fragment instanceof UserCookbooksFragment) {
+//                    ((UserCookbooksFragment) fragment).requestData();
+//                } else if (fragment instanceof UserRecipesFragment) {
+//                    ((UserRecipesFragment) fragment).requestData();
+//                }
+//            }
+//        }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEditProfile = (Button) view.findViewById(R.id.edit_profile);
+        mUserProfileLayout = (LinearLayout) view.findViewById(R.id.user_profile);
+        mUserInforLayout = (LinearLayout) view.findViewById(R.id.user_info);
         mTabIndicator = (TabIndicator) view.findViewById(R.id.hf_vp_tab_indicator);
         mHomePager = (ViewPager) view.findViewById(R.id.hf_view_content);
+        mEditProfile = (Button) view.findViewById(R.id.edit_profile);
         mUserImage = (ImageView) view.findViewById(R.id.user_image);
         mNumBook = (TextView) view.findViewById(R.id.user_num_book);
         mNumRecipe = (TextView) view.findViewById(R.id.user_num_recipe);
@@ -183,20 +197,18 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
         } else {
             setButtonSelected(false);
         }
-        List<Fragment> listPager = new ArrayList<Fragment>();
-        listPager.add(UserRecipesFragment.newInstance(mUser.getId()));
-        listPager.add(UserCookbooksFragment.newInstance(mUser.getId()));
-        mHomePagerAdapter = new HomePagerAdapter(getChildFragmentManager(), listPager);
-        mHomePager.setAdapter(mHomePagerAdapter);
-        mTabIndicator.setViewPager(mHomePager, getTabNames());
 
         if (isDataReady()) {
             User user = mDfeGetUserProfile.getUser();
             if (user.getImage() != null && !user.getImage().isEmpty()) {
                 mImageLoader.display(user.getImage(), mUserImage);
             } else {
-                //TODO can anh default khac LOL
-                mUserImage.setImageResource(R.drawable.default_monkey_image);
+                if (user.getSocialNetworkImage() != null && !user.getSocialNetworkImage().isEmpty()) {
+                    mImageLoader.display(user.getSocialNetworkImage(), mUserImage);
+                } else {
+                    //TODO can anh default khac LOL
+                    mUserImage.setImageResource(R.drawable.default_monkey_image);
+                }
             }
 
             if (user.getNumBooks() > 1) {
@@ -220,7 +232,26 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
             mNumBook.setText(user.getNumBooks() + "");
             mNumRecipe.setText(user.getNumRecipes() + "");
             mNumFollower.setText(user.getNumFollowers() + "");
-//            mUserInspiration.setText(user.getInspiration());
+            if (user.getInspiration() != null && !user.getInspiration().isEmpty()) {
+                mUserInspiration.setVisibility(View.VISIBLE);
+                mUserInspiration.setText(user.getInspiration());
+            } else {
+                mUserInspiration.setVisibility(View.GONE);
+            }
+            ViewGroup.LayoutParams layoutParams = mUserProfileLayout.getLayoutParams();
+            layoutParams.height = mUserInforLayout.getMeasuredHeight() + mUserInspiration.getMeasuredHeight();
+            mUserProfileLayout.setLayoutParams(layoutParams);
+//            if (getChildFragmentManager().findFragmentById(R.id.workresult) == null) {
+//                workResultFragment = WorkResultFragment.newInstance(mUser);
+//                getChildFragmentManager().beginTransaction().replace(R.id.workresult, workResultFragment).commit();
+//            }
+            List<Fragment> listPager = new ArrayList<Fragment>();
+            listPager.add(UserRecipesFragment.newInstance(mUser.getId()));
+            listPager.add(UserCookbooksFragment.newInstance(mUser.getId()));
+            if (mHomePagerAdapter == null)
+                mHomePagerAdapter = new HomePagerAdapter(getChildFragmentManager(), listPager);
+            mHomePager.setAdapter(mHomePagerAdapter);
+            mTabIndicator.setViewPager(mHomePager, getTabNames());
         }
         syncButtonFollowEditProfile();
     }
@@ -235,13 +266,6 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
         }
     }
 
-    public List<String> getTabNames() {
-        List<String> tabNames = new ArrayList<String>();
-        tabNames.add("My Recipes");
-        tabNames.add("My Cookbooks");
-        return tabNames;
-    }
-
     public boolean isOwner() {
         if (mUser.getId() == FlavorLifeApplication.get().getUser().getId()) {
             return true;
@@ -250,7 +274,8 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
         }
     }
 
-    private boolean isDataReady() {
+    @Override
+    protected boolean isDataReady() {
         if (mDfeGetUserProfile != null && mDfeGetUserProfile.isReady())
             return true;
         return false;
@@ -302,4 +327,18 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
                 break;
         }
     }
+
+    public String getTitleActionBar() {
+        if (mUser != null)
+            return mUser.getUserName();
+        return null;
+    }
+
+    public List<String> getTabNames() {
+        List<String> tabNames = new ArrayList<String>();
+        tabNames.add("Recipes");
+        tabNames.add("Cookbooks");
+        return tabNames;
+    }
+
 }

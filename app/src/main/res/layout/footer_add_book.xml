@@ -12,7 +12,7 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/add_new" />
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         style="@style/TextBoldGray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

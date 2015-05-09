@@ -14,10 +14,11 @@ import moony.vn.flavorlife.entities.SectionInstruction;
 /**
  * Created by moony on 4/8/15.
  */
-public class CreateEditRecipeSectionInstructionView extends LinearLayout implements View.OnClickListener, TextWatcher {
+public class CreateEditRecipeSectionInstructionView extends LinearLayout implements View.OnClickListener, TextWatcher, View.OnFocusChangeListener {
     private OnClickListener onDeleteSection;
     private EditText mName;
     private SectionInstruction mSection;
+    private long mTextLostFocusTimestamp;
 
     public CreateEditRecipeSectionInstructionView(Context context) {
         super(context);
@@ -44,6 +45,8 @@ public class CreateEditRecipeSectionInstructionView extends LinearLayout impleme
         if (sectionInstruction == null) return;
         mSection = sectionInstruction;
         mName.setText(sectionInstruction.getName());
+        mName.setOnFocusChangeListener(this);
+        reclaimFocus(mName, mTextLostFocusTimestamp);
     }
 
     @Override
@@ -68,5 +71,22 @@ public class CreateEditRecipeSectionInstructionView extends LinearLayout impleme
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        if ((view.getId() == R.id.instruction_section_name) && !hasFocus)
+            mTextLostFocusTimestamp = System.currentTimeMillis();
+    }
+
+    private void reclaimFocus(View v, long timestamp) {
+        if (timestamp == -1)
+            return;
+        if ((System.currentTimeMillis() - timestamp) < 250) {
+            v.requestFocus();
+        }
+        if (v == mName) {
+            mName.setSelection(mName.getText().length());
+        }
     }
 }

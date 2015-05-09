@@ -5,7 +5,7 @@
     android:background="@drawable/bg_list_item_selector"
     android:orientation="vertical">
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/kind_name"
         style="@style/TextBoldRed"
         android:layout_width="match_parent"

@@ -141,5 +141,15 @@
     <item name="layout_tips" type="id" />
     <item name="layout_comments" type="id" />
     <item name="author_info" type="id" />
+    <item name="type_subcontent" type="id" />
+    <item name="delete_recipe" type="id" />
+    <item name="edit_recipe" type="id" />
+    <item name="flav_recipe" type="id" />
+    <item name="no" type="id" />
+    <item name="yes" type="id" />
+    <item name="swipe_refresh_layout" type="id" />
+    <item name="workresult" type="id" />
+    <item name="user_profile" type="id" />
+    <item name="user_info" type="id" />
 
 </resources>

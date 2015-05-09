@@ -64,6 +64,11 @@ public class InstructionFragment extends NFragmentSwitcher implements View.OnCli
     }
 
     @Override
+    protected boolean isDataReady() {
+        return false;
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mSectionInstructions != null)

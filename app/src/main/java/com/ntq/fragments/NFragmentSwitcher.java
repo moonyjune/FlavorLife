@@ -36,7 +36,7 @@ public abstract class NFragmentSwitcher extends NFragment implements
     protected ViewGroup mDataView;
     protected boolean mRefreshRequired;
     protected LayoutSwitcher mLayoutSwitcher;
-    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public NFragmentSwitcher() {
         setArguments(new Bundle());
@@ -52,11 +52,10 @@ public abstract class NFragmentSwitcher extends NFragment implements
         mLayoutSwitcher = new LayoutSwitcher(contentframe,
                 R.id.content_layout, R.id.error_layout,
                 R.id.loading_layout, this, LayoutSwitcher.DATA_MODE);
-
         if (mDataView instanceof SwipeRefreshLayout) {
             mSwipeRefreshLayout = (SwipeRefreshLayout) mDataView;
         } else {
-            mSwipeRefreshLayout = (SwipeRefreshLayout) mDataView.findViewById(R.id.swipe_refresh);
+            mSwipeRefreshLayout = (SwipeRefreshLayout) mDataView.findViewById(R.id.swipe_refresh_layout);
         }
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -64,6 +63,13 @@ public abstract class NFragmentSwitcher extends NFragment implements
             mSwipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
         }
         return contentframe;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (isDataReady())
+            if (mSwipeRefreshLayout != null) mSwipeRefreshLayout.setEnabled(true);
     }
 
     public void onResume() {
@@ -119,12 +125,14 @@ public abstract class NFragmentSwitcher extends NFragment implements
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        enableSwipeRefresh();
         if (canChangeFragmentManagerState())
             switchToError(ErrorStrings.get(mContext, volleyError));
     }
 
     @Override
     public void onDataChanged() {
+        enableSwipeRefresh();
         if (!isAdded()) {
             mRefreshRequired = true;
         } else {
@@ -150,8 +158,25 @@ public abstract class NFragmentSwitcher extends NFragment implements
      */
     protected abstract void requestData();
 
+    protected abstract boolean isDataReady();
+
+    protected void disableSwipeRefresh() {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setEnabled(false);
+        }
+    }
+
+    protected void enableSwipeRefresh() {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.setEnabled(true);
+        }
+    }
+
     @Override
     public void onRefresh() {
-
+        requestData();
     }
+
 }

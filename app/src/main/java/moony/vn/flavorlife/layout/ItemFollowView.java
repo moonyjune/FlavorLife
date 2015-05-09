@@ -116,13 +116,17 @@ public class ItemFollowView extends LinearLayout implements View.OnClickListener
     public void display(Follow follow) {
         if (follow == null) return;
         mFollow = follow;
-        mName.setText(follow.getEmail());
+        mName.setText(follow.getUserName());
         mNumberBook.setText(String.valueOf(follow.getNumBooks()));
         mNumberFollower.setText(String.valueOf(follow.getNumFollowers()));
         if (follow.getImage() != null && !follow.getImage().isEmpty()) {
             mImageLoader.display(follow.getImage(), mUserImage);
         } else {
-            mUserImage.setImageResource(R.drawable.default_monkey_image);
+            if (follow.getSocialNetworkImage() != null && !follow.getSocialNetworkImage().isEmpty()) {
+                mImageLoader.display(follow.getSocialNetworkImage(), mUserImage);
+            } else {
+                mUserImage.setImageResource(R.drawable.default_monkey_image);
+            }
         }
         mNumberRecipe.setText(String.valueOf(follow.getNumRecipes()));
         if (follow.isFollowed()) {

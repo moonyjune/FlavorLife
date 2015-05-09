@@ -163,6 +163,8 @@ public class ApiImpl implements Api, ApiKey {
     public Request<JSONObject> login(String email, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new BasicNameValuePair(EMAIL, email));
+        list.add(new BasicNameValuePair(USER_NAME, FlavorLifeApplication.get().getUser().getUserName()));
+        list.add(new BasicNameValuePair(SOCIALNETWORK_IMAGE, FlavorLifeApplication.get().getUser().getSocialNetworkImage()));
         String url = AppRequest.getUrl(toURL(API_LOGIN), list);
 
         AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);

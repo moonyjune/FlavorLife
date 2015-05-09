@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -12,7 +13,7 @@
         android:layout_marginLeft="10dp"
         android:src="@drawable/add_new" />
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         style="@style/TextBoldGray"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

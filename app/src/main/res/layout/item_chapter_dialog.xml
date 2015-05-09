@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/chapter_name"
         style="@style/TextBoldRed"
         android:layout_width="match_parent"

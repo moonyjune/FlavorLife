@@ -9,8 +9,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.facebook.SessionDefaultAudience;
 import com.ntq.imageloader.NImageLoader;
 import com.ntq.imageloader.NImageLoaderImpl;
+import com.sromku.simple.fb.Permission;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.SimpleFacebookConfiguration;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +31,8 @@ import moony.vn.flavorlife.entities.User;
 import moony.vn.flavorlife.utils.AppPrefers;
 
 public class FlavorLifeApplication extends Application implements ApiProvider {
+    private static final String APP_ID = "719478654805827";
+    private static final String APP_NAMESPACE = "moony_flavorlife";
     private static FlavorLifeApplication mFlavorLifeApplication;
     private User mUser;
     private RequestQueue mRequestQueue;
@@ -50,6 +56,22 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
             mUser.setState(User.State.LOGGED_OUT);
             storeUser();
         }
+
+        //Config facebook
+        Permission[] permissions = new Permission[]{
+                Permission.PUBLIC_PROFILE,
+                Permission.PUBLISH_ACTION
+        };
+
+        SimpleFacebookConfiguration configuration = new SimpleFacebookConfiguration.Builder()
+                .setAppId(APP_ID)
+                .setNamespace(APP_NAMESPACE)
+                .setPermissions(permissions)
+                .setDefaultAudience(SessionDefaultAudience.FRIENDS)
+                .setAskForAllPermissionsAtOnce(false)
+                .build();
+
+        SimpleFacebook.setConfiguration(configuration);
     }
 
     private static Network createNetwork() {
@@ -88,6 +110,21 @@ public class FlavorLifeApplication extends Application implements ApiProvider {
         } catch (IOException e) {
 
         }
+    }
+
+    public void updateEmail(String email){
+        mUser.setEmail(email);
+        storeUser();
+    }
+
+    public void updateUserName(String userName) {
+        mUser.setUserName(userName);
+        storeUser();
+    }
+
+    public void updateSocialNetworkImage(String image) {
+        mUser.setSocialNetworkImage(image);
+        storeUser();
     }
 
     public void updateIdUser(int userId) {

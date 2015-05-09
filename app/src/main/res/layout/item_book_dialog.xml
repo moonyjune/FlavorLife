@@ -16,7 +16,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/default_cookbook_image" />
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/book_name"
         style="@style/TextBoldRed"
         android:layout_width="match_parent"

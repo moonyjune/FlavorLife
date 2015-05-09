@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <moony.vn.flavorlife.widget.FlTextView
         android:id="@id/ingredient_section_name"
         style="@style/TextItalicRed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="2dp"
         android:paddingTop="2dp"
-        android:text="Section" />
+        android:text="Section"
+        fl:font="elle_baskerville_semibold_it" />
 
 </LinearLayout>

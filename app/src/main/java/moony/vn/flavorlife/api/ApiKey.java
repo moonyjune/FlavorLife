@@ -22,6 +22,8 @@ public interface ApiKey {
     public static final String NUMBER_LIKES = "number_likes";
     public static final String NUMBER_USED = "number_used";
     public static final String NUMBER_FOLLOWERS = "number_followers";
+    public static final String USER_NAME = "user_name";
+    public static final String SOCIALNETWORK_IMAGE = "socialnetwork_image";
 
     public static final String REQUEST_TIME = "requested_at";
     public static final String DATA = "data";

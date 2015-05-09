@@ -3,6 +3,7 @@ package moony.vn.flavorlife.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
@@ -95,6 +96,7 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
         mListSectionIngredients.setAdapter(mIngredientExpandableAdapter);
         mListSectionIngredients.setGroupIndicator(null);
         mIngredientExpandableAdapter.notifyDataSetChanged();
+        mListSectionIngredients.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
     }
 
     @Override
@@ -105,6 +107,11 @@ public class IngredientFragment2 extends NFragmentSwitcher implements View.OnCli
     @Override
     protected void requestData() {
 
+    }
+
+    @Override
+    protected boolean isDataReady() {
+        return false;
     }
 
     @Override

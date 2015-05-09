@@ -122,8 +122,15 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
             mChooseBook.setText(mRecipe.getBookName());
             mChooseChapter.setText(mRecipe.getChapterName());
             mChooseKind.setText(mRecipe.getKindName());
-            mLayoutChangeImage.setVisibility(View.VISIBLE);
-            mAddPhoto.setVisibility(View.GONE);
+            if (mFlag == CreateRecipeFragment.FLAG_CREATE) {
+                if (mRecipe.getImages() != null) {
+                    mLayoutChangeImage.setVisibility(View.VISIBLE);
+                    mAddPhoto.setVisibility(View.GONE);
+                }
+            } else {
+                mLayoutChangeImage.setVisibility(View.VISIBLE);
+                mAddPhoto.setVisibility(View.GONE);
+            }
             if (mRecipe.getImages() != null && !mRecipe.getImages().isEmpty())
                 mImageLoader.display(mRecipe.getImages(), mImageRecipe);
             else
@@ -165,6 +172,11 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     protected void requestData() {
 
+    }
+
+    @Override
+    protected boolean isDataReady() {
+        return false;
     }
 
     @Override

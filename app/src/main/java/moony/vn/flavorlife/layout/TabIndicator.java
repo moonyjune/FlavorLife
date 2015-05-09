@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.widget.FlTextView;
 
 /**
  * Created by moony on 3/4/15.
@@ -113,6 +114,7 @@ public class TabIndicator extends LinearLayout {
                 mItemIndicator.setGravity(Gravity.CENTER);
                 mItemIndicator.setMaxLines(MAX_NUM_LINES);
                 mItemIndicator.setEllipsize(TextUtils.TruncateAt.END);
+                mItemIndicator.setUpFont(getContext(), FlTextView.ELLE_BASKERVILLE_BOLD);
                 mListItemIndicator.add(mItemIndicator);
 
                 mLayoutContentItem.addView(mItemIndicator);

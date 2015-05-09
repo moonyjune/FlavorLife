@@ -6,6 +6,7 @@ import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,11 +18,12 @@ import moony.vn.flavorlife.entities.Step;
 /**
  * Created by moony on 4/8/15.
  */
-public class CreateEditRecipeItemSectionInstructionView extends LinearLayout implements TextWatcher {
+public class CreateEditRecipeItemSectionInstructionView extends LinearLayout implements TextWatcher, View.OnFocusChangeListener {
     private TextView mNumber;
     private EditText mContent;
     private OnClickListener onDeleteStep;
     private Step mStep;
+    private long mTextLostFocusTimestamp;
 
     public CreateEditRecipeItemSectionInstructionView(Context context) {
         super(context);
@@ -51,6 +53,8 @@ public class CreateEditRecipeItemSectionInstructionView extends LinearLayout imp
         mNumber.setText(String.valueOf(step.getNumberStep()));
         mContent.setText(step.getContent());
         mContent.addTextChangedListener(this);
+        mContent.setOnFocusChangeListener(this);
+        reclaimFocus(mContent, mTextLostFocusTimestamp);
     }
 
     public void setOnDeleteStep(OnClickListener onDeleteStep) {
@@ -71,5 +75,22 @@ public class CreateEditRecipeItemSectionInstructionView extends LinearLayout imp
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        if ((view.getId() == R.id.step_content) && !hasFocus)
+            mTextLostFocusTimestamp = System.currentTimeMillis();
+    }
+
+    private void reclaimFocus(View v, long timestamp) {
+        if (timestamp == -1)
+            return;
+        if ((System.currentTimeMillis() - timestamp) < 250) {
+            v.requestFocus();
+        }
+        if (v == mContent) {
+            mContent.setSelection(mContent.getText().length());
+        }
     }
 }

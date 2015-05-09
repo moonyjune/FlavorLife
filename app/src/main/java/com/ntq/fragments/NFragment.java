@@ -21,12 +21,14 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.android.volley.VolleyError;
 import com.ntq.imageloader.NImageLoader;
+import com.sromku.simple.fb.SimpleFacebook;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.actionbar.CustomActionbar;
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.api.Api;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
+import moony.vn.flavorlife.utils.DialogUtils;
 import moony.vn.flavorlife.utils.ErrorStrings;
 
 /**
@@ -86,18 +88,6 @@ public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-//        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-//        if (mSwipeRefreshLayout != null) {
-//            mSwipeRefreshLayout.setOnRefreshListener(this);
-//            mSwipeRefreshLayout.setEnabled(false);
-//            mSwipeRefreshLayout.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
-//        }
-
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mSaveInstanceStateCalled = false;
@@ -147,27 +137,39 @@ public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     public void showDialogMessageError(String mess) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setMessage(mess);
-        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//        builder.setMessage(mess);
+//        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//            }
+//        });
+//        NAlertDialogFragment.show(getFragmentManager(), builder);
+        DialogUtils.getInstance().showDialog(getActivity(), mess, true, false, "OK", null, new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
+            public void onClick(View view) {
+                DialogUtils.getInstance().dismissDialog();
             }
-        });
-        NAlertDialogFragment.show(getFragmentManager(), builder);
+        }, null);
     }
 
     public void showDialogMessageError(VolleyError error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setMessage(ErrorStrings.get(getActivity(), error));
-        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//        builder.setMessage(ErrorStrings.get(getActivity(), error));
+//        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//            }
+//        });
+//        NAlertDialogFragment.show(getFragmentManager(), builder);
+        DialogUtils.getInstance().showDialog(getActivity(), ErrorStrings.get(getActivity(), error), true, false, "OK", null, new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
+            public void onClick(View view) {
+                DialogUtils.getInstance().dismissDialog();
             }
-        });
-        NAlertDialogFragment.show(getFragmentManager(), builder);
+        }, null);
     }
 
     @Override

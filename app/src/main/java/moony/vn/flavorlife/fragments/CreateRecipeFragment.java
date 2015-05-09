@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,9 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     private static final String FLAG = "flag";
     private static final String RECIPE = "recipe";
     private static final String OLD_RECIPE = "old_recipe";
-    public static final int FLAG_CREATE = 1;
-    public static final int FLAG_EDIT = 2;
-    public static final int FLAG_UPGRADE = 3;
+    public static final int FLAG_CREATE = 0;
+    public static final int FLAG_EDIT = 1;
+    public static final int FLAG_UPGRADE = 2;
     private ViewPager mRecipeViewPager;
     private TabIndicator mTabIndicator;
     private RecipePagerAdapter mRecipePagerAdapter;
@@ -240,24 +241,21 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
                 mRecipe.setListSection(new ArrayList<Section>(sections));
                 switch (mFlag) {
                     case CreateRecipeFragment.FLAG_CREATE:
+                        mRecipe.setTypeRecipe(Recipe.Type.CREATE_NEW);
                         requestCreateRecipe();
                         break;
                     case CreateRecipeFragment.FLAG_UPGRADE:
+                        mRecipe.setTypeRecipe(Recipe.Type.UPGRADE);
                         requestUpgradeRecipe();
                         break;
                     case CreateRecipeFragment.FLAG_EDIT:
-                        //TODO check change data or image
+                        mRecipe.setTypeRecipe(Recipe.Type.EDIT);
                         if (checkChangeData()) {
-                            //TODO request edit data
-                            System.out.println("Mj : edit data");
                             requestEditRecipe();
                         } else {
                             if (checkChangeImage()) {
-                                //TODO request edit image
-                                System.out.println("Mj : edit image");
                                 uploadImage();
                             } else {
-                                //TODO khong thay doi gi, hien thi dialog
                                 showDialogMessageError("You haven't changed anything yet...");
                             }
                         }
@@ -455,6 +453,10 @@ public class CreateRecipeFragment extends NFragment implements Response.ErrorLis
     }
 
     public void collectData() {
+        if (mFlag == FLAG_CREATE) {
+            mPageIngredientSelected = true;
+            mPagedInstructionSelected = true;
+        }
         for (int i = 0; i < fragments.size(); i++) {
             Fragment fragment = fragments.get(i);
             if (fragment instanceof IngredientFragment2) {

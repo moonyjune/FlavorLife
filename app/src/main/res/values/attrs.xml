@@ -10,4 +10,21 @@
     <declare-styleable name="TabIndicator">
         <attr name="gapBetweenItems" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="FlTextView">
+        <attr name="font" format="enum">
+        <enum name="elle_baskerville_bold" value="0" />
+        <enum name="elle_baskerville_bold_it" value="1" />
+        <enum name="elle_baskerville_italic" value="2" />
+        <enum name="elle_baskerville_regular" value="3" />
+        <enum name="elle_baskerville_semibold" value="4" />
+        <enum name="elle_baskerville_semibold_it" value="5" />
+        </attr>
+        <attr name="underLine" format="boolean" />
+        <attr name="txtStyle" format="enum">
+            <enum name="bold" value="0" />
+            <enum name="italic" value="1" />
+            <enum name="normal" value="2" />
+            <enum name="bold_italic" value="3" />
+        </attr>
+    </declare-styleable>
 </resources>

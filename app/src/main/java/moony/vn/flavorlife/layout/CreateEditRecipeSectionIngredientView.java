@@ -14,12 +14,13 @@ import moony.vn.flavorlife.entities.SectionIngredient;
 /**
  * Created by moony on 4/8/15.
  */
-public class CreateEditRecipeSectionIngredientView extends LinearLayout implements View.OnClickListener, TextWatcher {
+public class CreateEditRecipeSectionIngredientView extends LinearLayout implements View.OnClickListener, TextWatcher, View.OnFocusChangeListener {
 //    private ListView mListIngredients;
 //    private ItemSectionIngredientAdapter mItemSectionIngredientAdapter;
     private EditText mName;
     private OnClickListener onDeleteSection;
     private SectionIngredient mSection;
+    private long mTextLostFocusTimestamp;
 
     public CreateEditRecipeSectionIngredientView(Context context) {
         super(context);
@@ -51,6 +52,8 @@ public class CreateEditRecipeSectionIngredientView extends LinearLayout implemen
 //        mItemSectionIngredientAdapter = new ItemSectionIngredientAdapter(getContext(), 0, sectionIngredient.getListIngredients());
 //        mListIngredients.setAdapter(mItemSectionIngredientAdapter);
 //        ListViewUtils.setListViewHeightBasedOnChildren(mListIngredients);
+        mName.setOnFocusChangeListener(this);
+        reclaimFocus(mName, mTextLostFocusTimestamp);
     }
 
     @Override
@@ -77,5 +80,22 @@ public class CreateEditRecipeSectionIngredientView extends LinearLayout implemen
     @Override
     public void afterTextChanged(Editable editable) {
 //        mSection.setName(mName.getText().toString());
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        if ((view.getId() == R.id.create_ingredient_section_name) && !hasFocus)
+            mTextLostFocusTimestamp = System.currentTimeMillis();
+    }
+
+    private void reclaimFocus(View v, long timestamp) {
+        if (timestamp == -1)
+            return;
+        if ((System.currentTimeMillis() - timestamp) < 250) {
+            v.requestFocus();
+        }
+        if (v == mName) {
+            mName.setSelection(mName.getText().length());
+        }
     }
 }
