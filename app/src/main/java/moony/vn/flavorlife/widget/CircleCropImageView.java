@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 
 import com.edmodo.cropper.CropImageView;
 
+
 /**
  * Created by moony on 5/7/15.
  */

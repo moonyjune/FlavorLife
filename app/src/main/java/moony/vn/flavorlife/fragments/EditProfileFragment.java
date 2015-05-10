@@ -199,8 +199,8 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
                 //TODO start choose image
                 NMediaOptions.Builder builder = new NMediaOptions.Builder();
                 NMediaOptions options = NMediaOptions.createDefault();
-                options = builder.setIsCropped(true).setFixAspectRatio(true)
-                        .build();
+                options.setCropCircleImage(true);
+                options = builder.setIsCropped(true).setFixAspectRatio(true).build();;
                 NMediaPickerActivity.open(mNavigationManager.getActivePage(),
                         REQUEST_PROFILE_IMAGE, options);
                 break;

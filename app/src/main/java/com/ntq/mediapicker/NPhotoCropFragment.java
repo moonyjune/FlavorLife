@@ -26,6 +26,7 @@ import com.edmodo.cropper.CropImageView;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.widget.CircleCropImageView;
 
+import com.edmodo.cropper.cropwindow.CropOverlayView;
 import com.ntq.fragments.NFragment;
 import com.ntq.utils.PhotoUtils;
 import com.ntq.utils.StorageUtils;
@@ -119,6 +120,11 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
         mCropImageView.setFixedAspectRatio(mMediaOptions.isFixAspectRatio());
         mCropImageView.setAspectRatio(mMediaOptions.getAspectX(),
                 mMediaOptions.getAspectY());
+        if(mMediaOptions.isCropCircleImage()){
+            mCropImageView.setShapeBorder(CropOverlayView.SHAPE_CIRCLE);
+        }else{
+            mCropImageView.setShapeBorder(CropOverlayView.SHAPE_RECT);
+        }
         String filePath = null;
         String scheme = mMediaItemSelected.getUriOrigin().getScheme();
         if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
