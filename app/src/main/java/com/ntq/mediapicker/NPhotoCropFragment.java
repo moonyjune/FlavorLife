@@ -47,7 +47,7 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
     private NCropListener mCropListener;
     private NMediaOptions mMediaOptions;
     private NMediaItem mMediaItemSelected;
-    private CircleCropImageView mCropImageView;
+    private CropImageView mCropImageView;
     private View mRotateLeft, mRotateRight;
     private View mCancle;
     private View mSave;
@@ -102,7 +102,7 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
     }
 
     private void init(View view) {
-        mCropImageView = (CircleCropImageView) view.findViewById(R.id.crop);
+        mCropImageView = (CropImageView) view.findViewById(R.id.crop);
         mRotateLeft = view.findViewById(R.id.rotate_left);
         mRotateRight = view.findViewById(R.id.rotate_right);
         mCancle = view.findViewById(R.id.cancel);
@@ -120,10 +120,11 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
         mCropImageView.setFixedAspectRatio(mMediaOptions.isFixAspectRatio());
         mCropImageView.setAspectRatio(mMediaOptions.getAspectX(),
                 mMediaOptions.getAspectY());
-        if(mMediaOptions.isCropCircleImage()){
-            mCropImageView.setShapeBorder(CropOverlayView.SHAPE_CIRCLE);
-        }else{
-            mCropImageView.setShapeBorder(CropOverlayView.SHAPE_RECT);
+        if (mMediaOptions.isCropCircleImage()) {
+            mCropImageView.setShape(CropOverlayView.SHAPE_CIRCLE);
+        } else {
+            mCropImageView.setShape(CropOverlayView.SHAPE_RECT);
+//            mCropImageView.setShape(CropOverlayView.SHAPE_RECT);
         }
         String filePath = null;
         String scheme = mMediaItemSelected.getUriOrigin().getScheme();
@@ -225,11 +226,11 @@ public class NPhotoCropFragment extends NFragment implements OnClickListener {
             // set bitmap in mCropImageView
             try {
                 Bitmap bitmap = null;
-                if (mMediaOptions.isCropCircleImage()) {
-                    bitmap = mCropImageView.getCroppedCircleImage();
-                } else {
-                    bitmap = mCropImageView.getCroppedImage();
-                }
+//                if (mMediaOptions.isCropCircleImage()) {
+//                    bitmap = mCropImageView.getCroppedCircleImage();
+//                } else {
+                bitmap = mCropImageView.getCroppedImage();
+//                }
                 uri = saveBitmapCropped(bitmap);
                 if (bitmap != null) {
                     bitmap.recycle();

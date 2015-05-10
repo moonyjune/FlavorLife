@@ -138,6 +138,7 @@ public class NMediaOptions implements Parcelable {
 		this.croppedFile = builder.croppedFile;
 		this.mediaListSelected = builder.mediaListSelected;
 		this.showWarningVideoDuration = builder.showWarningBeforeRecord;
+        this.cropCircleImage = builder.isCircleCrop;
 	}
 
 	/**
@@ -174,6 +175,7 @@ public class NMediaOptions implements Parcelable {
 		private File croppedFile;
 		private List<NMediaItem> mediaListSelected;
 		private boolean showWarningBeforeRecord = false;
+        private boolean isCircleCrop;
 
 		public Builder() {
 		}
@@ -395,6 +397,11 @@ public class NMediaOptions implements Parcelable {
 		public NMediaOptions build() {
 			return new NMediaOptions(this);
 		}
+
+        public Builder setCircleCrop(boolean isCircleCrop){
+            this.isCircleCrop = isCircleCrop;
+            return this;
+        }
 	}
 
 	@Override
@@ -418,6 +425,7 @@ public class NMediaOptions implements Parcelable {
 		dest.writeSerializable(photoCaptureFile);
 		dest.writeSerializable(croppedFile);
 		dest.writeTypedList(mediaListSelected);
+        dest.writeInt(cropCircleImage ? 1 : 0);
 	}
 
 	public NMediaOptions(Parcel in) {
@@ -435,6 +443,7 @@ public class NMediaOptions implements Parcelable {
 		this.photoCaptureFile = (File) in.readSerializable();
 		this.croppedFile = (File) in.readSerializable();
 		in.readTypedList(this.mediaListSelected, NMediaItem.CREATOR);
+        cropCircleImage = in.readInt() == 0 ? false : true;
 	}
 
 	public static final Parcelable.Creator<NMediaOptions> CREATOR = new Creator<NMediaOptions>() {

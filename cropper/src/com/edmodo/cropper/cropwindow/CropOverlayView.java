@@ -15,8 +15,11 @@ package com.edmodo.cropper.cropwindow;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.Region;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Pair;
@@ -36,8 +39,6 @@ import com.edmodo.cropper.util.PaintUtil;
  * the crop window.
  */
 public class CropOverlayView extends View {
-    public static final int SHAPE_CIRCLE = 0;
-    public static final int SHAPE_RECT = 1;
 
     // Private Constants ///////////////////////////////////////////////////////
 
@@ -57,6 +58,9 @@ public class CropOverlayView extends View {
     private static final int GUIDELINES_OFF = 0;
     private static final int GUIDELINES_ON_TOUCH = 1;
     private static final int GUIDELINES_ON = 2;
+
+    public static final int SHAPE_RECT = 0;
+    public static final int SHAPE_CIRCLE = 1;
 
     // Member Variables ////////////////////////////////////////////////////////
 
@@ -115,8 +119,7 @@ public class CropOverlayView extends View {
     private float mCornerExtension;
     private float mCornerOffset;
     private float mCornerLength;
-    private int mShapeBorder;
-
+    private int mShape;
 
     // Constructors ////////////////////////////////////////////////////////////
 
@@ -161,14 +164,15 @@ public class CropOverlayView extends View {
             }
         }
 
-        if (mShapeBorder == SHAPE_RECT) {
+        if (mShape == SHAPE_RECT) {
             // Draws the main crop window border.
             canvas.drawRect(Edge.LEFT.getCoordinate(),
                     Edge.TOP.getCoordinate(),
                     Edge.RIGHT.getCoordinate(),
                     Edge.BOTTOM.getCoordinate(),
                     mBorderPaint);
-        } else if (mShapeBorder == SHAPE_CIRCLE) {
+            drawCorners(canvas);
+        } else if (mShape == SHAPE_CIRCLE) {
             // Draw the circular border
             float cx = (Edge.LEFT.getCoordinate() + Edge.RIGHT.getCoordinate()) / 2;
             float cy = (Edge.TOP.getCoordinate() + Edge.BOTTOM.getCoordinate()) / 2;
@@ -176,7 +180,6 @@ public class CropOverlayView extends View {
 
             canvas.drawCircle(cx, cy, radius, mBorderPaint);
         }
-        drawCorners(canvas);
     }
 
     @Override
@@ -349,6 +352,7 @@ public class CropOverlayView extends View {
             mTargetAspectRatio = ((float) mAspectRatioX) / mAspectRatioY;
         }
 
+//        mShape = shape;
     }
 
     // Private Methods /////////////////////////////////////////////////////////
@@ -476,10 +480,21 @@ public class CropOverlayView extends View {
 
     private void drawRuleOfThirdsGuidelines(Canvas canvas) {
 
+
         final float left = Edge.LEFT.getCoordinate();
         final float top = Edge.TOP.getCoordinate();
         final float right = Edge.RIGHT.getCoordinate();
         final float bottom = Edge.BOTTOM.getCoordinate();
+
+        if (mShape == SHAPE_CIRCLE) {
+            float cx = (left + right) / 2;
+            float cy = (top + bottom) / 2;
+            float radius = (right - left) / 2;
+
+            Path circleSelectionPath = new Path();
+            circleSelectionPath.addCircle(cx, cy, radius, Path.Direction.CW);
+            canvas.clipPath(circleSelectionPath, Region.Op.REPLACE);
+        }
 
         // Draw vertical guidelines.
         final float oneThirdCropWidth = Edge.getWidth() / 3;
@@ -504,8 +519,8 @@ public class CropOverlayView extends View {
         final float top = Edge.TOP.getCoordinate();
         final float right = Edge.RIGHT.getCoordinate();
         final float bottom = Edge.BOTTOM.getCoordinate();
-
-        /*-
+        if (mShape == SHAPE_RECT) {
+             /*-
           -------------------------------------
           |                top                |
           -------------------------------------
@@ -519,11 +534,28 @@ public class CropOverlayView extends View {
           -------------------------------------
          */
 
-        // Draw "top", "bottom", "left", then "right" quadrants.
-        canvas.drawRect(bitmapRect.left, bitmapRect.top, bitmapRect.right, top, mBackgroundPaint);
-        canvas.drawRect(bitmapRect.left, bottom, bitmapRect.right, bitmapRect.bottom, mBackgroundPaint);
-        canvas.drawRect(bitmapRect.left, top, left, bottom, mBackgroundPaint);
-        canvas.drawRect(right, top, bitmapRect.right, bottom, mBackgroundPaint);
+            // Draw "top", "bottom", "left", then "right" quadrants.
+            canvas.drawRect(bitmapRect.left, bitmapRect.top, bitmapRect.right, top, mBackgroundPaint);
+            canvas.drawRect(bitmapRect.left, bottom, bitmapRect.right, bitmapRect.bottom, mBackgroundPaint);
+            canvas.drawRect(bitmapRect.left, top, left, bottom, mBackgroundPaint);
+            canvas.drawRect(right, top, bitmapRect.right, bottom, mBackgroundPaint);
+        } else if (mShape == SHAPE_CIRCLE) {
+            float cx = (left + right) / 2;
+            float cy = (top + bottom) / 2;
+            float radius = (right - left) / 2;
+
+            Path fullCanvasPath = new Path();
+            fullCanvasPath.addRect(bitmapRect.left, bitmapRect.top, bitmapRect.right, bitmapRect.bottom, Path.Direction.CW);
+
+            Path circleSelectionPath = new Path();
+            circleSelectionPath.addCircle(cx, cy, radius, Path.Direction.CCW);
+
+            canvas.clipPath(fullCanvasPath);
+            canvas.clipPath(circleSelectionPath, Region.Op.DIFFERENCE);
+
+            //Draw semi-transparent background
+            canvas.drawRect(bitmapRect.left, bitmapRect.top, bitmapRect.right, bitmapRect.bottom, mBackgroundPaint);
+        }
     }
 
     private void drawCorners(Canvas canvas) {
@@ -644,11 +676,11 @@ public class CropOverlayView extends View {
         invalidate();
     }
 
-    public int getShapeBorder() {
-        return mShapeBorder;
+    public int getShape() {
+        return mShape;
     }
 
-    public void setShapeBorder(int mShapeBorder) {
-        this.mShapeBorder = mShapeBorder;
+    public void setShape(int mShape) {
+        this.mShape = mShape;
     }
 }

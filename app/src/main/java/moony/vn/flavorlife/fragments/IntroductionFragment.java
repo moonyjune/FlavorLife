@@ -200,7 +200,7 @@ public class IntroductionFragment extends NFragmentSwitcher implements View.OnCl
             case R.id.choose_picture:
                 NMediaOptions.Builder builder = new NMediaOptions.Builder();
                 NMediaOptions options = NMediaOptions.createDefault();
-                options = builder.setIsCropped(true).setFixAspectRatio(true)
+                options = builder.setIsCropped(true).setFixAspectRatio(true).setCircleCrop(false)
                         .build();
                 NMediaPickerActivity.open(mNavigationManager.getActivePage(),
                         REQUEST_IMAGE, options);
