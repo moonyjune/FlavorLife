@@ -1,41 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
     android:id="@+id/actionbar_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fl_color"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:gravity="center">
 
     <ImageView
         android:id="@id/search"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
         android:background="@drawable/bg_selector"
+        android:clickable="true"
         android:gravity="center"
+        android:minWidth="30dp"
+        android:padding="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_search" />
 
-    <TextView
-        android:id="@id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+    <ImageView
+        android:id="@id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_selector"
+        android:clickable="true"
         android:gravity="center"
-        android:text="ACTION BAR"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:minWidth="30dp"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_back" />
 
     <ImageView
-        android:id="@id/message"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginRight="15dp"
+        android:id="@id/advance"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/bg_selector"
+        android:clickable="true"
         android:gravity="center"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_messages" />
+        android:minWidth="30dp"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_advance" />
 
-</LinearLayout>
+    <moony.vn.flavorlife.widget.FlEditText
+        android:id="@id/data_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toLeftOf="@id/advance"
+        android:layout_toRightOf="@id/back"
+        android:background="@drawable/bg_edittext_search"
+        android:gravity="left|center_vertical"
+        android:hint="enter name..."
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:text="chicken soup"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        fl:font="elle_baskerville_bold_it" />
+
+</RelativeLayout>

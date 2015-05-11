@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.sromku.simple.fb.SimpleFacebook;
-
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.fragments.ComingSoonFragment;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
-import moony.vn.flavorlife.fragments.FollowsFragment;
+import moony.vn.flavorlife.fragments.PeopleFragment;
 import moony.vn.flavorlife.fragments.HomeFragment;
 import moony.vn.flavorlife.fragments.LoginFragment;
 import moony.vn.flavorlife.fragments.NewRecipesFragment;
@@ -29,7 +27,7 @@ public class MainActivity extends BaseActivity {
 
     public static final String ACTION_OPEN = "open";
     public static final String ACTION_TAG = "tag";
-    private SimpleFacebook mSimpleFacebook;
+//    private SimpleFacebook mSimpleFacebook;
 
     public static void startMainActivity(Context context, int extra) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -57,7 +55,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSimpleFacebook = SimpleFacebook.getInstance(this);
+//        mSimpleFacebook = SimpleFacebook.getInstance(this);
         mTabWidget.setVisibility(View.GONE);
 //        mTabWidget.unFocusAll();
         if (savedInstanceState == null)
@@ -67,7 +65,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mSimpleFacebook = SimpleFacebook.getInstance(this);
+//        mSimpleFacebook = SimpleFacebook.getInstance(this);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class MainActivity extends BaseActivity {
                 replaceFragment(fragment = new NewRecipesFragment());
                 break;
             case EXTRA_OPEN_FOLLOWS:
-                replaceFragment(fragment = new FollowsFragment());
+                replaceFragment(fragment = new PeopleFragment());
                 break;
             case EXTRA_OPEN_CREATE_RECIPE:
                 replaceFragment(fragment = CreateRecipeFragment.newInstance(null, CreateRecipeFragment.FLAG_CREATE));
@@ -110,9 +108,9 @@ public class MainActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.content_layout, fragment).commit();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data);
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data);
+//    }
 }

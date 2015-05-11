@@ -4,24 +4,31 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.activities.BaseActivity;
+import moony.vn.flavorlife.entities.SearchRecipe;
 import moony.vn.flavorlife.fragments.ChapterDetailFragment;
 import moony.vn.flavorlife.fragments.ComingSoonFragment;
 import moony.vn.flavorlife.fragments.CookBookDetailFragment;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
 import moony.vn.flavorlife.fragments.EditProfileFragment;
-import moony.vn.flavorlife.fragments.FollowsFragment;
+import moony.vn.flavorlife.fragments.PeopleFragment;
 import moony.vn.flavorlife.fragments.HomeFragment;
 import moony.vn.flavorlife.fragments.LoginFragment;
 import moony.vn.flavorlife.fragments.MessagesFragment;
 import moony.vn.flavorlife.fragments.NewRecipesFragment;
 import moony.vn.flavorlife.fragments.RecipeDetailFragment;
+import moony.vn.flavorlife.fragments.SearchFragment;
+import moony.vn.flavorlife.fragments.SearchPeopleFragment;
+import moony.vn.flavorlife.fragments.SearchRecipeFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
 public class NativeActionbar implements CustomActionbar {
@@ -34,6 +41,8 @@ public class NativeActionbar implements CustomActionbar {
     private ImageView mMessage;
     private ImageView mFinish;
     private ImageView mBack;
+    private EditText mDataSearch;
+    private ImageView mAdvance;
 
     @Override
     public void initialize(NavigationManager navigationManager,
@@ -86,7 +95,7 @@ public class NativeActionbar implements CustomActionbar {
     protected int findResourceIdForActionbar(Fragment activePage) {
         if (activePage instanceof NewRecipesFragment || activePage instanceof ComingSoonFragment) {
             return R.layout.actionbar;
-        } else {
+        }  else {
             return R.layout.actionbar_2;
         }
 
@@ -100,6 +109,8 @@ public class NativeActionbar implements CustomActionbar {
         mMessage = (ImageView) actionbarView.findViewById(R.id.message);
         mFinish = (ImageView) actionbarView.findViewById(R.id.finish);
         mBack = (ImageView) actionbarView.findViewById(R.id.back);
+        mDataSearch = (EditText) actionbarView.findViewById(R.id.data_search);
+        mAdvance = (ImageView) actionbarView.findViewById(R.id.advance);
     }
 
     protected void removeAllChildViews() {
@@ -118,6 +129,18 @@ public class NativeActionbar implements CustomActionbar {
     private void setupBtnRight() {
         setupBtnMessage();
         setupBtnFinish();
+//        setupBtnAdvance();
+    }
+
+    private void setupBtnAdvance() {
+        if (mAdvance == null) return;
+        mAdvance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                if (mNavigationManager.getActivePage() instanceof SearchRecipeFragment)
+//                    ((SearchRecipeFragment) mNavigationManager.getActivePage()).searchAdvance();
+            }
+        });
     }
 
     private void setupBtnMessage() {
@@ -154,12 +177,7 @@ public class NativeActionbar implements CustomActionbar {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNavigationManager.getActivePage() instanceof OnBackButtonListener) {
-                    boolean handled = ((OnBackButtonListener) mNavigationManager.getActivePage()).onBackButtonClicked();
-                    //TODO ab button left override from fragment
-                } else {
-                    //TODO ab button left
-                }
+                mNavigationManager.showPage(new SearchFragment());
             }
         });
     }
@@ -189,6 +207,31 @@ public class NativeActionbar implements CustomActionbar {
                 // do nothing
             }
         });
+//        if (mDataSearch == null) return;
+//        mDataSearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+//                requestSearch();
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                requestSearch();
+//            }
+//        });
+    }
+
+    private void requestSearch() {
+        if (mDataSearch.getText() != null && !mDataSearch.getText().toString().isEmpty())
+            if (mNavigationManager.getActivePage() instanceof SearchPeopleFragment)
+                ((SearchPeopleFragment) mNavigationManager.getActivePage()).requestSearch(mDataSearch.getText().toString());
+            else if (mNavigationManager.getActivePage() instanceof SearchRecipeFragment)
+                ((SearchRecipeFragment) mNavigationManager.getActivePage()).requestSearch(mDataSearch.getText().toString());
     }
 
     protected void syncChildViews(Fragment activePage) {
@@ -200,12 +243,22 @@ public class NativeActionbar implements CustomActionbar {
     private void syncBtnRight(Fragment activePage) {
         syncBtnMessage(activePage);
         syncBtnFinish(activePage);
+        syncBtnAdvance(activePage);
+    }
+
+    private void syncBtnAdvance(Fragment activePage) {
+        if (mAdvance == null) return;
+        if (activePage instanceof SearchRecipeFragment) {
+            mAdvance.setVisibility(View.VISIBLE);
+        } else {
+            mAdvance.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void syncBtnBack(Fragment activePage) {
         if (mBack == null) return;
         if (activePage instanceof RecipeDetailFragment || activePage instanceof CookBookDetailFragment || activePage instanceof ChapterDetailFragment ||
-                activePage instanceof EditProfileFragment) {
+                activePage instanceof EditProfileFragment || activePage instanceof SearchFragment || activePage instanceof SearchPeopleFragment || activePage instanceof SearchRecipeFragment) {
             mBack.setVisibility(View.VISIBLE);
         } else if (activePage instanceof HomeFragment) {
             if ((((HomeFragment) activePage).isOwner())) {
@@ -247,7 +300,7 @@ public class NativeActionbar implements CustomActionbar {
         if (mSearch == null) return;
         if (activePage instanceof LoginFragment || activePage instanceof RecipeDetailFragment ||
                 activePage instanceof CookBookDetailFragment ||
-                activePage instanceof ChapterDetailFragment ||
+                activePage instanceof ChapterDetailFragment || activePage instanceof SearchFragment ||
                 activePage instanceof HomeFragment || activePage instanceof ComingSoonFragment) {
             mSearch.setVisibility(View.GONE);
         } else {
@@ -262,7 +315,7 @@ public class NativeActionbar implements CustomActionbar {
         String title = "";
         if (activePage instanceof NewRecipesFragment) {
             stringId = R.string.action_bar_title_recipes;
-        } else if (activePage instanceof FollowsFragment) {
+        } else if (activePage instanceof PeopleFragment) {
             stringId = R.string.action_bar_title_follows;
         } else if (activePage instanceof HomeFragment) {
             title = ((HomeFragment) activePage).getTitleActionBar();
@@ -287,6 +340,8 @@ public class NativeActionbar implements CustomActionbar {
             stringId = R.string.action_bar_title_chapter_detail;
         } else if (activePage instanceof EditProfileFragment) {
             stringId = R.string.action_bar_title_edit_profile;
+        } else if (activePage instanceof SearchFragment) {
+            stringId = R.string.action_bar_title_search;
         }
 
         if (stringId != 0) {

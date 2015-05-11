@@ -6,18 +6,22 @@ import android.view.View;
 import com.ntq.imageloader.NImageLoader;
 
 import moony.vn.flavorlife.entities.Chapter;
+import moony.vn.flavorlife.entities.People;
 import moony.vn.flavorlife.entities.RecipeChapter;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Follow;
 import moony.vn.flavorlife.entities.Follower;
 import moony.vn.flavorlife.entities.Message;
 import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.entities.SearchRecipe;
 import moony.vn.flavorlife.layout.CookbookView;
 import moony.vn.flavorlife.layout.ItemChapterView;
 import moony.vn.flavorlife.layout.ItemFollowView;
 import moony.vn.flavorlife.layout.ItemFollowerView;
 import moony.vn.flavorlife.layout.ItemMessageView;
+import moony.vn.flavorlife.layout.ItemPeopleView;
 import moony.vn.flavorlife.layout.ItemRecipeInChapterView;
+import moony.vn.flavorlife.layout.ItemSearchRecipesView;
 import moony.vn.flavorlife.layout.NewsRecipesView;
 import moony.vn.flavorlife.layout.UserNewsRecipesView;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
@@ -87,6 +91,22 @@ public class AdapterViewUtils {
             convertView = new ItemRecipeInChapterView(context, imageLoader, navigationManager);
         }
         ((ItemRecipeInChapterView) convertView).display(chapterRecipe);
+        return convertView;
+    }
+
+    public static View getPeople(Context context, People people, View convertView, NImageLoader imageLoader, NavigationManager navigationManager) {
+        if (convertView == null) {
+            convertView = new ItemPeopleView(context, imageLoader, navigationManager);
+        }
+        ((ItemPeopleView) convertView).display(people);
+        return convertView;
+    }
+
+    public static View getSearchRecipe(Context context, SearchRecipe searchRecipe, View convertView, NImageLoader imageLoader, NavigationManager navigationManager) {
+        if (convertView == null) {
+            convertView = new ItemSearchRecipesView(context, imageLoader, navigationManager);
+        }
+        ((ItemSearchRecipesView) convertView).display(searchRecipe);
         return convertView;
     }
 

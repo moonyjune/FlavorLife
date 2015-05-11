@@ -10,6 +10,7 @@ import java.util.Date;
 import moony.vn.flavorlife.entities.Chapter;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.entities.SearchRecipeCondition;
 import moony.vn.flavorlife.entities.User;
 
 public interface Api {
@@ -18,9 +19,6 @@ public interface Api {
 
     public Request<JSONObject> login(String email,
                                      Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
-
-    public Request<JSONObject> updateProfile(String email,
-                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> createCookbook(Cookbook cookbook,
                                               Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
@@ -71,13 +69,16 @@ public interface Api {
                                         Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> editUserProfile(User user,
-                                        Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+                                               Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    //TODO search
-    public Request<JSONObject> searchUsers(int recipeId,
+    public Request<JSONObject> registerGcm(int userId, String registerId,
                                            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> searchRecipes(int recipeId,
+    //TODO search
+    public Request<JSONObject> searchPeople(String dataSearch, int skip, int take, Date requestDate,
+                                            Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> searchRecipes(SearchRecipeCondition searchRecipeCondition, int take, int skip, Date requestDate,
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     //------------------------------------------------------------
@@ -107,10 +108,13 @@ public interface Api {
                                              Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
     public Request<JSONObject> getChapterDetail(int userId, int chapterId,
-                                             Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+                                                Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
-    public Request<JSONObject> registerGcm(int userId, String registerId,
-                                           Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+    public Request<JSONObject> getPeople(int skip, int take, Date requestDate,
+                                         Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
+
+    public Request<JSONObject> getRecipes(int skip, int take, Date requestDate,
+                                         Response.Listener<JSONObject> listener, Response.ErrorListener errorListener);
 
 
 }

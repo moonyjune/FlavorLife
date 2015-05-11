@@ -34,4 +34,5 @@
     <string name="chapter_name">Chapter %1$s: %2$s</string>
     <string name="type_recipe">From "Who want fried chicken leg"</string>
     <string name="action_bar_title_edit_profile">Edit Profile</string>
+    <string name="action_bar_title_search">Search</string>
 </resources>

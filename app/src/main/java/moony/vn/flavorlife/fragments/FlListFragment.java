@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import moony.vn.flavorlife.adapters.FlListAdapter;
+
 import com.ntq.fragments.NFragmentSwitcher;
 
 import moony.vn.flavorlife.R;
@@ -108,10 +109,13 @@ public abstract class FlListFragment extends NFragmentSwitcher implements SwipeR
 
     @Override
     public void onRefresh() {
-        mFlListAdapter.clearAll();
-        mFlListAdapter.triggerNoneMode();
+        if (mFlListAdapter != null) {
+            mFlListAdapter.clearAll();
+            mFlListAdapter.triggerNoneMode();
+        }
         mFlListAdapter = null;
-        mFlPaginatedList.unregisterAll();
+        if (mFlPaginatedList != null)
+            mFlPaginatedList.unregisterAll();
         mFlPaginatedList = null;
 
         //request new data
@@ -124,4 +128,5 @@ public abstract class FlListFragment extends NFragmentSwitcher implements SwipeR
     public FlListAdapter getAmListAdapter() {
         return mFlListAdapter;
     }
+
 }

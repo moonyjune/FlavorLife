@@ -18,6 +18,7 @@ import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.entities.Chapter;
 import moony.vn.flavorlife.entities.Cookbook;
 import moony.vn.flavorlife.entities.Recipe;
+import moony.vn.flavorlife.entities.SearchRecipeCondition;
 import moony.vn.flavorlife.entities.User;
 import moony.vn.flavorlife.utils.DateFormatUtils;
 
@@ -161,6 +162,37 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
+    public Request<JSONObject> getPeople(int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        //TODO
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
+        list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
+        list.add(new BasicNameValuePair(MY_USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
+        if (requestDate != null) {
+            list.add(new BasicNameValuePair(REQUEST_TIME, mRequestTimeFormat.format(requestDate)));
+        }
+        String url = AppRequest.getUrl(toURL(API_GET_PEOPLE), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
+    }
+
+    @Override
+    public Request<JSONObject> getRecipes(int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
+        list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
+        list.add(new BasicNameValuePair(MY_USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
+        if (requestDate != null) {
+            list.add(new BasicNameValuePair(REQUEST_TIME, mRequestTimeFormat.format(requestDate)));
+        }
+        String url = AppRequest.getUrl(toURL(API_GET_SUGGEST_RECIPES), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
+    }
+
+    @Override
     public Request<JSONObject> login(String email, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
         list.add(new BasicNameValuePair(EMAIL, email));
@@ -170,11 +202,6 @@ public class ApiImpl implements Api, ApiKey {
 
         AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
         return mQueue.add(appRequest);
-    }
-
-    @Override
-    public Request<JSONObject> updateProfile(String email, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
     }
 
     @Override
@@ -349,13 +376,38 @@ public class ApiImpl implements Api, ApiKey {
     }
 
     @Override
-    public Request<JSONObject> searchUsers(int recipeId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+    public Request<JSONObject> searchPeople(String dataSearch, int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(MY_USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
+        list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
+        list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
+        if (requestDate != null) {
+            list.add(new BasicNameValuePair(REQUEST_TIME, mRequestTimeFormat.format(requestDate)));
+        }
+        list.add(new BasicNameValuePair(DATA_SEARCH, dataSearch));
+        String url = AppRequest.getUrl(toURL(API_SEARCH_PEOPLE), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 
+
     @Override
-    public Request<JSONObject> searchRecipes(int recipeId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+    public Request<JSONObject> searchRecipes(SearchRecipeCondition searchRecipeCondition, int skip, int take, Date requestDate, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        list.add(new BasicNameValuePair(MY_USER_ID, String.valueOf(FlavorLifeApplication.get().getUser().getId())));
+        list.add(new BasicNameValuePair(SKIP, String.valueOf(skip)));
+        list.add(new BasicNameValuePair(TAKE, String.valueOf(take)));
+        if (requestDate != null) {
+            list.add(new BasicNameValuePair(REQUEST_TIME, mRequestTimeFormat.format(requestDate)));
+        }
+        Gson gson = new Gson();
+        String data = gson.toJson(searchRecipeCondition);
+        list.add(new BasicNameValuePair(SEARCH_CONDITION, data));
+        String url = AppRequest.getUrl(toURL(API_SEARCH_RECIPE), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 
     @Override

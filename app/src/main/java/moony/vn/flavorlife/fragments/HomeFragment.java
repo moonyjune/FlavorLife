@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -117,7 +118,15 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
             outState.putSerializable(KEY_USER, mUser);
     }
 
-//    @Override
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mTabIndicator = (TabIndicator) view.findViewById(R.id.hf_vp_tab_indicator);
+        mHomePager = (ViewPager) view.findViewById(R.id.hf_view_content);
+        mUserInspiration = (TextView) view.findViewById(R.id.user_inspiration);
+    }
+
+    //    @Override
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        return inflater.inflate(R.layout.fragment_home, container, false);
 //    }
@@ -138,19 +147,20 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
         mDfeGetUserProfile.makeRequest(mUser.getId());
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void inflateFromViewStub(ViewGroup viewGroup) {
+        if (viewGroup == null) return;
+        ViewStub stub = (ViewStub) viewGroup.findViewById(R.id.view_stub);
+        View view = null;
+        if (stub != null)
+            view = stub.inflate();
+        if (view == null) return;
         mUserProfileLayout = (LinearLayout) view.findViewById(R.id.user_profile);
         mUserInforLayout = (LinearLayout) view.findViewById(R.id.user_info);
-        mTabIndicator = (TabIndicator) view.findViewById(R.id.hf_vp_tab_indicator);
-        mHomePager = (ViewPager) view.findViewById(R.id.hf_view_content);
         mEditProfile = (Button) view.findViewById(R.id.edit_profile);
         mUserImage = (ImageView) view.findViewById(R.id.user_image);
         mNumBook = (TextView) view.findViewById(R.id.user_num_book);
         mNumRecipe = (TextView) view.findViewById(R.id.user_num_recipe);
         mNumFollower = (TextView) view.findViewById(R.id.user_num_follower);
-        mUserInspiration = (TextView) view.findViewById(R.id.user_inspiration);
         mBookLabel = (TextView) view.findViewById(R.id.book);
         mRecipeLabel = (TextView) view.findViewById(R.id.recipe);
         mFollowerLabel = (TextView) view.findViewById(R.id.follower);
@@ -162,8 +172,11 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
         super.onActivityCreated(savedInstanceState);
         mActionbar.syncActionBar(this);
         if (isDataReady()) {
+            inflateFromViewStub(mDataView);
+            mUserInspiration.setVisibility(View.VISIBLE);
             setDataToView();
         } else {
+            mUserInspiration.setVisibility(View.INVISIBLE);
             requestData();
         }
     }
@@ -171,6 +184,8 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
     @Override
     public void onDataChanged() {
         super.onDataChanged();
+        inflateFromViewStub(mDataView);
+        mUserInspiration.setVisibility(View.VISIBLE);
         switchToData();
         if (isDataReady()) {
             mUser.updateUser(mDfeGetUserProfile.getUser());
@@ -197,8 +212,8 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
 //                if (user.getSocialNetworkImage() != null && !user.getSocialNetworkImage().isEmpty()) {
 //                    mImageLoader.display(user.getSocialNetworkImage(), mUserImage);
 //                } else {
-                    //TODO can anh default khac LOL
-                    mUserImage.setImageResource(R.drawable.default_monkey_image);
+                //TODO can anh default khac LOL
+                mUserImage.setImageResource(R.drawable.default_monkey_image);
 //                }
             }
 

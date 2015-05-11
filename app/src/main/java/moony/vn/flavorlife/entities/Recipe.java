@@ -11,9 +11,9 @@ import java.util.Date;
  */
 public class Recipe implements Serializable {
     private static final String[] kindNames = new String[]{"Starter", "Main course", "Desserts"};
-    private static final int STARTER = 1;
-    private static final int MAIN_COURSE = 2;
-    private static final int DESSERT = 3;
+    public static final int STARTER = 1;
+    public static final int MAIN_COURSE = 2;
+    public static final int DESSERT = 3;
 
     private static final int CREATE_NEW = 0;
     private static final int EDIT = 1;

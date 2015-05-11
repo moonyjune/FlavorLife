@@ -1,16 +1,28 @@
 package moony.vn.flavorlife.fragments;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.ntq.api.model.OnDataChangedListener;
 import com.ntq.fragments.NFragmentSwitcher;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.entities.Photo;
+import com.sromku.simple.fb.listeners.OnPublishListener;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
@@ -25,6 +37,7 @@ import moony.vn.flavorlife.entities.Recipe;
 import moony.vn.flavorlife.layout.DetailRecipeListIngredientsView;
 import moony.vn.flavorlife.layout.DetailRecipeListInstructionsView;
 import moony.vn.flavorlife.utils.DialogUtils;
+import moony.vn.flavorlife.utils.ToastUtils;
 
 /**
  * Created by moony on 3/9/15.
@@ -43,6 +56,9 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     private DfeUnUseRecipe mDfeUnUseRecipe;
     private DfeDeleteRecipe mDfeDeleteRecipe;
     private LinearLayout mLayoutTips, mLayoutComments;
+    private SimpleFacebook mSimpleFacebook;
+    private View view = null;
+    private ScrollView mScrollView;
     //    private Button mUpgrade, mEdit, mDelete;
 
     private OnDataChangedListener onDeleteRecipeListener = new OnDataChangedListener() {
@@ -104,6 +120,28 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
             }
         }
     };
+    private OnPublishListener onPublishListener = new OnPublishListener() {
+        @Override
+        public void onComplete(String response) {
+            super.onComplete(response);
+            hideDialogLoading();
+            ToastUtils.showToastLong(getActivity(), "You've share a recipe...");
+        }
+
+        @Override
+        public void onException(Throwable throwable) {
+            super.onException(throwable);
+            hideDialogLoading();
+            ToastUtils.showToastShort(getActivity(), throwable.toString());
+        }
+
+        @Override
+        public void onFail(String reason) {
+            super.onFail(reason);
+            hideDialogLoading();
+            showDialogMessageError(reason);
+        }
+    };
 
     public static RecipeDetailFragment newInstance(Recipe recipe) {
         RecipeDetailFragment recipeDetailFragment = new RecipeDetailFragment();
@@ -126,6 +164,7 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
         if (savedInstanceState == null) {
             mRecipe = (Recipe) getArguments().getSerializable(RECIPE);
         } else {
@@ -141,8 +180,46 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActionbar.syncActionBar(this);
+        if (isDataReady()) {
+            inflateFromViewStub(mDataView);
+            switchToData();
+            mDetailRecipeListIngredientsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionIngredients());
+            mDetailRecipeListInstructionsView.setListSectionInstruction(mDfeGetRecipeDetail.getRecipe().getListSectionInstructions());
+            setDataToViews(mDfeGetRecipeDetail.getRecipe());
+        } else {
+            requestData();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
+    }
+
+    @Override
+    protected int getLayoutRes() {
+        return R.layout.fragment_recipe_detail;
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
+        mScrollView = (ScrollView) view.findViewById(R.id.scroll_view);
+    }
+
+    private void inflateFromViewStub(ViewGroup viewGroup) {
+        if (viewGroup == null) return;
+        ViewStub stub = (ViewStub) viewGroup.findViewById(R.id.view_stub);
+        View view = null;
+        if (stub != null)
+            view = stub.inflate();
+
+        if (view == null) return;
         mDetailRecipeListIngredientsView = (DetailRecipeListIngredientsView) view.findViewById(R.id.list_ingredients);
         mDetailRecipeListInstructionsView = (DetailRecipeListInstructionsView) view.findViewById(R.id.list_instruction);
         mLayoutTips = (LinearLayout) view.findViewById(R.id.layout_tips);
@@ -166,25 +243,8 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         mCookingTime = (TextView) view.findViewById(R.id.recipe_cooking_time);
         mType = (TextView) view.findViewById(R.id.recipe_type);
         mSubType = (TextView) view.findViewById(R.id.type_subcontent);
-    }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mActionbar.syncActionBar(this);
-        if (isDataReady()) {
-            switchToData();
-            mDetailRecipeListIngredientsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionIngredients());
-            mDetailRecipeListInstructionsView.setListSectionInstruction(mDfeGetRecipeDetail.getRecipe().getListSectionInstructions());
-            setDataToViews(mDfeGetRecipeDetail.getRecipe());
-        } else {
-            requestData();
-        }
-    }
-
-    @Override
-    protected int getLayoutRes() {
-        return R.layout.fragment_recipe_detail;
+        view.findViewById(R.id.fb_share).setOnClickListener(this);
     }
 
     @Override
@@ -202,6 +262,7 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onDataChanged() {
         super.onDataChanged();
+        inflateFromViewStub(mDataView);
         if (isDataReady()) {
             mRecipe.updateRecipe(mDfeGetRecipeDetail.getRecipe(), true);
             mDetailRecipeListIngredientsView.setListSectionIngredient(mDfeGetRecipeDetail.getRecipe().getListSectionIngredients());
@@ -354,6 +415,52 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
                     }
                 });
                 break;
+            case R.id.fb_share:
+                shareRecipe();
+                break;
+        }
+    }
+
+    private void shareRecipe() {
+        Bitmap bmap = null;
+//        mScrollView.setDrawingCacheEnabled(true);
+
+        bmap = screenShot(view);
+
+        int contentViewTop = getActivity().getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop(); /* skip status bar in screenshot */
+        Bitmap.createBitmap(bmap, 0, contentViewTop, bmap.getWidth(), bmap.getHeight() - contentViewTop, null, true);
+
+//        view.setDrawingCacheEnabled(false);
+
+        if (bmap != null) {
+            Photo photo = new Photo.Builder().setImage(bmap).setName(mRecipe.getName()).build();
+            if (checkFbApp()) {
+                mSimpleFacebook.publish(photo, true, onPublishListener);
+            } else {
+                showDialogLoading();
+                mSimpleFacebook.publish(photo, false, onPublishListener);
+            }
+        }
+    }
+
+    public Bitmap screenShot(View view) {
+        Bitmap bitmap = Bitmap.createBitmap(
+                mScrollView.getChildAt(0).getWidth(),
+                mScrollView.getChildAt(0).getHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bitmap);
+        mScrollView.getChildAt(0).draw(c);
+
+        return bitmap;
+    }
+
+    private boolean checkFbApp() {
+        try {
+            ApplicationInfo info = getActivity().getPackageManager().
+                    getApplicationInfo("com.facebook.katana", 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 

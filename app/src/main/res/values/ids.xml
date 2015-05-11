@@ -154,5 +154,16 @@
     <item name="edit_image" type="id" />
     <item name="user_email" type="id" />
     <item name="change_profile" type="id" />
+    <item name="view_stub" type="id" />
+    <item name="fb_share" type="id" />
+    <item name="scroll_view" type="id" />
+    <item name="advance" type="id" />
+    <item name="data_search" type="id" />
+    <item name="kind_starter" type="id" />
+    <item name="kind_main" type="id" />
+    <item name="kind_dessert" type="id" />
+    <item name="search_name" type="id" />
+    <item name="search_level" type="id" />
+    <item name="search_kind" type="id" />
 
 </resources>

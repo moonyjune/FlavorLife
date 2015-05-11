@@ -113,5 +113,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/red_line" />
+    <!--<include layout="@layout/red_line" />-->
 </LinearLayout>

@@ -19,155 +19,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:fl="http://schemas.android.com/apk/res-auto"
-                android:id="@id/user_profile"
+            <ViewStub
+                android:id="@id/view_stub"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:orientation="vertical">
+                android:layout="@layout/stub_user_profile" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@id/user_image"
-                        android:layout_width="@dimen/user_image_size"
-                        android:layout_height="@dimen/user_image_size"
-                        android:layout_margin="10dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/default_monkey_image"
-                        app:riv_border_color="@android:color/transparent"
-                        app:riv_border_width="1dp"
-                        app:riv_mutate_background="true"
-                        app:riv_oval="true" />
-
-                    <LinearLayout
-                        android:id="@id/user_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <moony.vn.flavorlife.widget.FlTextView
-                                    android:id="@id/user_num_book"
-                                    style="@style/TextBoldRed"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="11"
-                                    android:textSize="30sp" />
-
-                                <moony.vn.flavorlife.widget.FlTextView
-                                    android:id="@id/book"
-                                    style="@style/TextBoldRed"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:singleLine="true"
-                                    android:text="books"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <moony.vn.flavorlife.widget.FlTextView
-                                    android:id="@id/user_num_recipe"
-                                    style="@style/TextBoldRed"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="29"
-                                    android:textSize="30sp" />
-
-                                <moony.vn.flavorlife.widget.FlTextView
-                                    android:id="@id/recipe"
-                                    style="@style/TextBoldRed"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:singleLine="true"
-                                    android:text="recipes"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <moony.vn.flavorlife.widget.FlTextView
-                                    android:id="@id/user_num_follower"
-                                    style="@style/TextBoldRed"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:singleLine="true"
-                                    android:text="869"
-                                    android:textSize="30sp" />
-
-                                <moony.vn.flavorlife.widget.FlTextView
-                                    android:id="@id/follower"
-                                    style="@style/TextBoldRed"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:singleLine="true"
-                                    android:text="followers"
-                                    android:textSize="16sp" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <moony.vn.flavorlife.widget.FlButton
-                            android:id="@id/edit_profile"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/bg_follow_default"
-                            android:text="Edit your profile"
-                            android:textColor="@color/fl_color"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
-                        <moony.vn.flavorlife.widget.FlButton
-                            android:id="@id/follow"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/bg_follow"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:text="@string/plus_follow"
-                            android:textColor="@color/fl_color"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </LinearLayout>
-
-            </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -178,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:maxLines="3"
+        android:visibility="invisible"
         android:text="A monkey can cook" />
 
     <moony.vn.flavorlife.layout.TabIndicator

@@ -12,6 +12,7 @@ import android.view.Window;
 import com.ntq.activities.NActivity;
 import com.ntq.imageloader.NImageLoader;
 import com.ntq.utils.OSUtils;
+import com.sromku.simple.fb.SimpleFacebook;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
@@ -34,6 +35,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     protected NavigationManager mNavigationManager;
     protected CustomActionbar mActionbar;
     protected TabWidget mTabWidget;
+    private SimpleFacebook mSimpleFacebook;
 
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -49,6 +51,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.FLTheme);
         super.onCreate(savedInstanceState);
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
         if (!OSUtils.hasHoneycomb()) {
             supportRequestWindowFeature(Window.FEATURE_ACTION_BAR);
         }
@@ -237,6 +240,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     @Override
     protected void onResume() {
         super.onResume();
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
         if (this instanceof NewRecipesActivity) {
             mTabWidget.focusNewRecipesTab();
         } else if (this instanceof FollowsActivity) {
@@ -263,4 +267,9 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         mActionbar = null;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mSimpleFacebook.onActivityResult(this, requestCode, resultCode, data);
+    }
 }

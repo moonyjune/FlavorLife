@@ -24,6 +24,8 @@ public interface ApiKey {
     public static final String NUMBER_FOLLOWERS = "number_followers";
     public static final String USER_NAME = "user_name";
     public static final String SOCIALNETWORK_IMAGE = "socialnetwork_image";
+    public static final String DATA_SEARCH = "data_search";
+    public static final String SEARCH_CONDITION = "search_condition";
 
     public static final String REQUEST_TIME = "requested_at";
     public static final String DATA = "data";
@@ -39,6 +41,8 @@ public interface ApiKey {
     public static final String API_GET_BOOK_DETAIL = "get_book_detail";
     public static final String API_GET_CHAPTER_DETAIL = "get_chapter_detail";
     public static final String API_GET_USER_INFORMATION = "get_user_information";
+    public static final String API_GET_PEOPLE = "get_people";
+    public static final String API_GET_SUGGEST_RECIPES = "get_suggest_recipe";
 
     public static final String API_REGISTER_GCM = "register_gcm";
     public static final String API_LOGIN = "login";
@@ -58,6 +62,8 @@ public interface ApiKey {
     public static final String API_UPLOAD_USER_IMAGE = "upload_user_image";
     public static final String API_DELETE_RECIPE = "delete_recipe";
     public static final String API_EDIT_PROFILE = "edit_profile";
+    public static final String API_SEARCH_PEOPLE = "search_people";
+    public static final String API_SEARCH_RECIPE = "search_recipe";
 
     public static final int SUCCESS = 0;
 }

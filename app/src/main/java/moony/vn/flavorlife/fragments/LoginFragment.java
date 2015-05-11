@@ -35,6 +35,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
         @Override
         public void onComplete(Profile profile) {
             super.onComplete(profile);
+            hideDialogLoading();
             FlavorLifeApplication.get().updateEmail(profile.getEmail());
             if (!FlavorLifeApplication.get().getUser().isUpdatedProfile()) {
                 FlavorLifeApplication.get().updateUserName(profile.getName());
@@ -48,6 +49,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
         @Override
         public void onException(Throwable throwable) {
             super.onException(throwable);
+            hideDialogLoading();
             System.out.println("MJ : " + throwable.toString());
             ToastUtils.showToastShort(getActivity(), "Exception: " + throwable.toString());
         }
@@ -55,6 +57,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
         @Override
         public void onFail(String reason) {
             super.onFail(reason);
+            hideDialogLoading();
             ToastUtils.showToastShort(getActivity(), "Fail: " + reason);
         }
     };
@@ -160,6 +163,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
 
     private void loginFb() {
         if (mSimpleFacebook.isLogin()) {
+            showDialogLoading();
             getFbProfile();
         } else {
             mSimpleFacebook.login(onLoginListener);

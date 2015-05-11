@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -120,9 +122,11 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
         return R.layout.fragment_edit_profile;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void inflateFromViewStub(ViewGroup viewGroup) {
+        if (viewGroup == null) return;
+        ViewStub stub = (ViewStub) viewGroup.findViewById(R.id.view_stub);
+        View view = stub.inflate();
+
         mUsername = (EditText) view.findViewById(R.id.user_name);
         mEmail = (EditText) view.findViewById(R.id.user_email);
         mInspiration = (EditText) view.findViewById(R.id.user_inspiration);
@@ -162,6 +166,7 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
     @Override
     public void onDataChanged() {
         super.onDataChanged();
+        inflateFromViewStub(mDataView);
         switchToData();
         if (isDataReady()) {
             mUser = new User();
@@ -174,6 +179,7 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (isDataReady()) {
+            inflateFromViewStub(mDataView);
             setDataToView();
         } else {
             requestData();
@@ -199,7 +205,8 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
                 //TODO start choose image
                 NMediaOptions.Builder builder = new NMediaOptions.Builder();
                 NMediaOptions options = NMediaOptions.createDefault();
-                options = builder.setIsCropped(true).setFixAspectRatio(true).setCircleCrop(true).build();;
+                options = builder.setIsCropped(true).setFixAspectRatio(true).setCircleCrop(true).build();
+                ;
                 NMediaPickerActivity.open(mNavigationManager.getActivePage(),
                         REQUEST_PROFILE_IMAGE, options);
                 break;

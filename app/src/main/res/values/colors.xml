@@ -17,6 +17,8 @@
     <color name="fl_color_hint">#a65f5f</color>
     <color name="fl_color_orange">#dc7200</color>
     <color name="fl_color_gray">#949494</color>
+    <color name="fl_color_gray_2">#828282</color>
     <color name="fl_color_gray_red_light">#e8e6e6</color>
+    <color name="fl_color_gray_red_light_2">#e0c9c9</color>
     <color name="while_transparent">#BCffffff</color>
 </resources>
