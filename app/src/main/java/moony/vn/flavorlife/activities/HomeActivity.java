@@ -3,10 +3,13 @@ package moony.vn.flavorlife.activities;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.fragments.HomeFragment;
+import moony.vn.flavorlife.fragments.LoginFragment;
 import moony.vn.flavorlife.gcm.GcmIntentService;
 
 /**
@@ -36,4 +39,5 @@ public class HomeActivity extends BaseActivity {
         super.onPause();
         unregisterReceiver(broadcastReceiver);
     }
+
 }

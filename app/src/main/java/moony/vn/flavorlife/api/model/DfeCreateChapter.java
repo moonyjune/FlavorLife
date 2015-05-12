@@ -41,7 +41,7 @@ public class DfeCreateChapter extends DfeModel implements Response.Listener<JSON
         notifyDataSetChanged();
     }
 
-    public int getRecipeId() {
+    public int getChapterId() {
         return mChapterId;
     }
 }

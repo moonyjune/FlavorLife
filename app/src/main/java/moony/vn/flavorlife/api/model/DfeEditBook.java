@@ -11,13 +11,13 @@ import moony.vn.flavorlife.api.ApiKey;
 import moony.vn.flavorlife.entities.Cookbook;
 
 /**
- * Created by moony on 3/25/15.
+ * Created by moony on 5/12/15.
  */
-public class DfeCreateBook extends DfeModel implements Response.Listener<JSONObject> {
+public class DfeEditBook extends DfeModel implements Response.Listener<JSONObject> {
     private Api mApi;
     private int mCookbookId;
 
-    public DfeCreateBook(Api mApi) {
+    public DfeEditBook(Api mApi) {
         this.mApi = mApi;
     }
 
@@ -27,7 +27,7 @@ public class DfeCreateBook extends DfeModel implements Response.Listener<JSONObj
     }
 
     public void makeRequest(Cookbook cookbook) {
-        mApi.createCookbook(cookbook, this, this);
+        mApi.editCookbook(cookbook, this, this);
     }
 
     @Override

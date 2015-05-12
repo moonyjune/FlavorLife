@@ -132,4 +132,9 @@ public class ChapterDetailFragment extends FlListFragment {
             return mChapter.getName();
         return null;
     }
+
+    public void editChapter(){
+        CreateEditChapterDialogFragment createEditChapterDialogFragment = CreateEditChapterDialogFragment.newInstance(CreateEditChapterDialogFragment.FLAG_EDIT, mChapter);
+        createEditChapterDialogFragment.show(getFragmentManager(), null);
+    }
 }

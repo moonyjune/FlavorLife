@@ -63,6 +63,12 @@ public class UserCookbooksFragment extends FlListFragment {
             if (mFooter == null) {
                 mFooter = getActivity().getLayoutInflater().inflate(R.layout.footer_add_book, listView, false);
             }
+            mFooter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mNavigationManager.showPage(CreateEditBook.newInstance(CreateEditBook.FLAG_CREATE));
+                }
+            });
 
             if (listAdapter != null) {
                 //must remove Adapter before addHeaderView

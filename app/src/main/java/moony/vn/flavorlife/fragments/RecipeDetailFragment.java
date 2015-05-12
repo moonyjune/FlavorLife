@@ -56,7 +56,6 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     private DfeUnUseRecipe mDfeUnUseRecipe;
     private DfeDeleteRecipe mDfeDeleteRecipe;
     private LinearLayout mLayoutTips, mLayoutComments;
-    private SimpleFacebook mSimpleFacebook;
     private View view = null;
     private ScrollView mScrollView;
     //    private Button mUpgrade, mEdit, mDelete;
@@ -164,7 +163,6 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
         if (savedInstanceState == null) {
             mRecipe = (Recipe) getArguments().getSerializable(RECIPE);
         } else {
@@ -192,12 +190,6 @@ public class RecipeDetailFragment extends NFragmentSwitcher implements View.OnCl
         } else {
             requestData();
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
     }
 
     @Override

@@ -18,6 +18,10 @@
     <dimen name="dialog_width">300dp</dimen>
     <dimen name="dialog_search_height">300dp</dimen>
     <dimen name="dialog_search_width">300dp</dimen>
+    <dimen name="dialog_create_book_height">300dp</dimen>
+    <dimen name="dialog_create_book_width">300dp</dimen>
+    <dimen name="dialog_create_chapter_height">200dp</dimen>
+    <dimen name="dialog_create_chapter_width">300dp</dimen>
     <dimen name="fl_textview_padding_ver">6dp</dimen>
     <dimen name="fl_textview_text_size_default">12sp</dimen>
 </resources>

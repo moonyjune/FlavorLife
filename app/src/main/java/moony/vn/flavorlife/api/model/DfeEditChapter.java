@@ -8,40 +8,39 @@ import org.json.JSONObject;
 
 import moony.vn.flavorlife.api.Api;
 import moony.vn.flavorlife.api.ApiKey;
-import moony.vn.flavorlife.entities.Cookbook;
+import moony.vn.flavorlife.entities.Chapter;
 
 /**
  * Created by moony on 3/25/15.
  */
-public class DfeCreateBook extends DfeModel implements Response.Listener<JSONObject> {
+public class DfeEditChapter extends DfeModel implements Response.Listener<JSONObject> {
     private Api mApi;
-    private int mCookbookId;
+    private int mChapterId;
 
-    public DfeCreateBook(Api mApi) {
+    public DfeEditChapter(Api mApi) {
         this.mApi = mApi;
     }
 
     @Override
     public boolean isReady() {
-        return mCookbookId != -1;
+        return mChapterId != -1;
     }
 
-    public void makeRequest(Cookbook cookbook) {
-        mApi.createCookbook(cookbook, this, this);
+    public void makeRequest(Chapter chapter) {
+        mApi.editChapter(chapter, this, this);
     }
 
     @Override
     public void onResponse(JSONObject response) {
-        System.out.println(response.toString());
         try {
-            mCookbookId = response.getInt(ApiKey.COOKBOOK_ID);
+            mChapterId = response.getInt(ApiKey.CHAPTER_ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         notifyDataSetChanged();
     }
 
-    public int getBookId() {
-        return mCookbookId;
+    public int getChapterId() {
+        return mChapterId;
     }
 }

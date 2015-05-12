@@ -1,6 +1,7 @@
 package moony.vn.flavorlife.fragments;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,6 +37,7 @@ import moony.vn.flavorlife.entities.Cookbook;
 public class ChooseBookDialogFragment extends DialogFragment implements OnDataChangedListener, Response.ErrorListener, View.OnClickListener {
     public static final String KEY_BOOK = "book";
     public static final String KEY_DATA = "data";
+    private static final int REQUEST_CREATE_BOOK = 9898;
     private ListView mListBooks;
     private BookAdapter mBookAdapter;
     private View mLayoutContent, mLayoutRetry;
@@ -99,6 +101,14 @@ public class ChooseBookDialogFragment extends DialogFragment implements OnDataCh
             mBookAdapter = new BookAdapter(getActivity(), 0, mListCookbooks);
         if (mFooter == null) {
             mFooter = getActivity().getLayoutInflater().inflate(R.layout.footer_add_book, mListBooks, false);
+            mFooter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CreateNewBookDialogFragment createNewBookDialogFragment = new CreateNewBookDialogFragment();
+                    createNewBookDialogFragment.setTargetFragment(ChooseBookDialogFragment.this, REQUEST_CREATE_BOOK);
+                    createNewBookDialogFragment.show(getChildFragmentManager(), null);
+                }
+            });
         }
         if (mListBooks.getFooterViewsCount() == 0) {
             mListBooks.setAdapter(null);
@@ -193,6 +203,20 @@ public class ChooseBookDialogFragment extends DialogFragment implements OnDataCh
     public void onClick(View view) {
         switchToLoading();
         requestData();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CREATE_BOOK) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                Bundle bundle = data.getBundleExtra(CreateNewBookDialogFragment.DATA);
+                if (bundle != null) {
+                    Cookbook cookbook = (Cookbook) bundle.getSerializable(CreateNewBookDialogFragment.BOOK);
+                    mBookAdapter.addItem(cookbook);
+                }
+            }
+        }
     }
 
 }

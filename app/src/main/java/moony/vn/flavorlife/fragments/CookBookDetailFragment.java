@@ -1,5 +1,7 @@
 package moony.vn.flavorlife.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,6 +13,7 @@ import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.api.model.DfeGetBookDetail;
 import moony.vn.flavorlife.api.model.FlPaginatedList;
+import moony.vn.flavorlife.entities.Chapter;
 import moony.vn.flavorlife.entities.Cookbook;
 
 /**
@@ -19,6 +22,7 @@ import moony.vn.flavorlife.entities.Cookbook;
 public class CookBookDetailFragment extends FlListFragment {
     private static final String KEY_BOOK = "book";
     private static final String KEY_USER_ID = "user_id";
+    private static final int REQUEST_CREATE_CHAPTER = 8022;
     private Cookbook mBook;
     private int mUserId;
     private View mFooter;
@@ -28,6 +32,17 @@ public class CookBookDetailFragment extends FlListFragment {
     public static CookBookDetailFragment newInstance(int userId, Cookbook book) {
         CookBookDetailFragment cookBookDetailFragment = new CookBookDetailFragment();
         Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_BOOK, book);
+        bundle.putInt(KEY_USER_ID, userId);
+        cookBookDetailFragment.setArguments(bundle);
+        return cookBookDetailFragment;
+    }
+
+    public static CookBookDetailFragment newInstance(int userId, int bookId) {
+        CookBookDetailFragment cookBookDetailFragment = new CookBookDetailFragment();
+        Bundle bundle = new Bundle();
+        Cookbook book = new Cookbook();
+        book.setId(bookId);
         bundle.putSerializable(KEY_BOOK, book);
         bundle.putInt(KEY_USER_ID, userId);
         cookBookDetailFragment.setArguments(bundle);
@@ -68,8 +83,19 @@ public class CookBookDetailFragment extends FlListFragment {
             ListAdapter listAdapter = listView.getAdapter();
             if (mFooter == null) {
                 mFooter = getActivity().getLayoutInflater().inflate(R.layout.footer_add_chapter, listView, false);
+                mFooter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Chapter chapter = new Chapter();
+                        chapter.setBookId(mBook.getId());
+                        chapter.setNumChapter(mDfeGetBookDetail.getCount() +1);
+                        CreateEditChapterDialogFragment createEditChapterDialogFragment = CreateEditChapterDialogFragment.newInstance(CreateEditChapterDialogFragment.FLAG_CREATE, chapter);
+                        createEditChapterDialogFragment.setTargetFragment(CookBookDetailFragment.this, REQUEST_CREATE_CHAPTER);
+                        createEditChapterDialogFragment.show(getFragmentManager(), null);
+                    }
+                });
             }
-
+            mNoData.setVisibility(View.GONE);
             if (listAdapter != null) {
                 //must remove Adapter before addHeaderView
                 listView.setAdapter(null);
@@ -101,6 +127,8 @@ public class CookBookDetailFragment extends FlListFragment {
         super.onDataChanged();
         if (!isOwner())
             syncNoDataView();
+        else
+            mNoData.setVisibility(View.GONE);
     }
 
     @Override
@@ -121,4 +149,23 @@ public class CookBookDetailFragment extends FlListFragment {
             return mBook.getName();
         return null;
     }
+
+    public void editCookbook() {
+        mNavigationManager.showPage(CreateEditBook.newInstance(CreateEditBook.FLAG_EDIT, mBook));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CREATE_CHAPTER) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                Bundle bundle = data.getBundleExtra(CreateNewBookDialogFragment.DATA);
+                if (bundle != null) {
+                    Chapter chapter = (Chapter) bundle.getSerializable(CreateEditChapterDialogFragment.CHAPTER);
+                    onRefresh();
+                }
+            }
+        }
+    }
+
 }

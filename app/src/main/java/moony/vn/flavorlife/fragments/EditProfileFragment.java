@@ -5,14 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,6 +20,7 @@ import com.ntq.fragments.NFragmentSwitcher;
 import com.ntq.mediapicker.NMediaItem;
 import com.ntq.mediapicker.NMediaOptions;
 import com.ntq.mediapicker.NMediaPickerActivity;
+import com.sromku.simple.fb.listeners.OnLogoutListener;
 
 import org.json.JSONObject;
 
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
+import moony.vn.flavorlife.activities.HomeActivity;
 import moony.vn.flavorlife.activities.MainActivity;
 import moony.vn.flavorlife.api.ApiKey;
 import moony.vn.flavorlife.api.UploadImage;
@@ -67,13 +68,7 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
                 if (checkChangeImage()) {
                     uploadImage();
                 } else {
-                    if (!mUser.getEmail().equals(mOldUser.getEmail())) {
-                        //TODO logout
-                        MainActivity.startMainActivity(getActivity(), MainActivity.EXTRA_OPEN_LOGIN);
-                    } else {
-                        ToastUtils.showToastShort(getActivity(), "Edit profile successfully");
-                        getActivity().finish();
-                    }
+                    afterChangeEmail();
                 }
             }
         }
@@ -84,6 +79,27 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
         public void onErrorResponse(VolleyError error) {
             hideDialogLoading();
             showDialogMessageError(error);
+        }
+    };
+    private OnLogoutListener onLogoutListener = new OnLogoutListener() {
+        @Override
+        public void onLogout() {
+            logout();
+        }
+
+        @Override
+        public void onThinking() {
+
+        }
+
+        @Override
+        public void onException(Throwable throwable) {
+            ToastUtils.showToastLong(getActivity(), throwable.toString());
+        }
+
+        @Override
+        public void onFail(String reason) {
+            showDialogMessageError(reason);
         }
     };
 
@@ -133,6 +149,9 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
         mUserImage = (ImageView) view.findViewById(R.id.user_image);
         view.findViewById(R.id.edit_image).setOnClickListener(this);
         view.findViewById(R.id.change_profile).setOnClickListener(this);
+        view.findViewById(R.id.logout).setOnClickListener(this);
+        view.findViewById(R.id.switch_account).setOnClickListener(this);
+//        view.findViewById(R.id.exit).setOnClickListener(this);
     }
 
     @Override
@@ -206,7 +225,6 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
                 NMediaOptions.Builder builder = new NMediaOptions.Builder();
                 NMediaOptions options = NMediaOptions.createDefault();
                 options = builder.setIsCropped(true).setFixAspectRatio(true).setCircleCrop(true).build();
-                ;
                 NMediaPickerActivity.open(mNavigationManager.getActivePage(),
                         REQUEST_PROFILE_IMAGE, options);
                 break;
@@ -229,6 +247,13 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
                     }
                 }
                 break;
+            case R.id.logout:
+            case R.id.switch_account:
+                logout();
+                break;
+//            case R.id.exit:
+//                System.exit(0);
+//                break;
         }
     }
 
@@ -331,27 +356,44 @@ public class EditProfileFragment extends NFragmentSwitcher implements View.OnCli
         if (mUser.getImage() != null && !mUser.getImage().isEmpty()) {
             new UploadImage() {
                 @Override
-                protected void onSuccess(JSONObject jsonObject) {
-                    super.onSuccess(jsonObject);
-                    DialogUtils.getInstance().showDialogMessage(getActivity(), "Upload image fail. Do you want to retry ?", new DialogInterface.OnClickListener() {
+                protected void onFail(JSONObject jsonObject) {
+                    super.onFail(jsonObject);
+                    hideDialogLoading();
+                    DialogUtils.getInstance().showDialogMessage(getActivity(), "Upload image fail. Do you want to retry ?", new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onClick(View view) {
                             uploadImage();
                         }
-                    }, new DialogInterface.OnClickListener() {
+                    }, new View.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            getActivity().finish();
+                        public void onClick(View view) {
+                            afterChangeEmail();
                         }
                     });
                 }
 
                 @Override
-                protected void onFailed(JSONObject jsonObject) {
-                    super.onFailed(jsonObject);
-                    getActivity().finish();
+                protected void onSuccess(JSONObject jsonObject) {
+                    super.onSuccess(jsonObject);
+                    hideDialogLoading();
+                    afterChangeEmail();
                 }
             }.execute(params);
         }
+    }
+
+    private void afterChangeEmail() {
+        if (!mUser.getEmail().equals(mOldUser.getEmail())) {
+            mSimpleFacebook.logout(onLogoutListener);
+        } else {
+            ToastUtils.showToastShort(getActivity(), "Edit profile successfully");
+            getActivity().finish();
+        }
+    }
+
+    private void logout() {
+        FlavorLifeApplication.get().clearUser();
+        MainActivity.startLoginScreen(getActivity());
+        FlavorLifeApplication.get().clearApplicationData();
     }
 }

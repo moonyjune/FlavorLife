@@ -21,6 +21,8 @@ public class Cookbook implements Serializable {
     private int userId;
     @SerializedName("create_time")
     private Date createTime;
+    @SerializedName("num_chapter")
+    private int numChapter;
     private boolean isChosen;
 
     public String getImage() {
@@ -77,5 +79,24 @@ public class Cookbook implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public int getNumChapter() {
+        return numChapter;
+    }
+
+    public void setNumChapter(int numChapter) {
+        this.numChapter = numChapter;
+    }
+
+    public void update(Cookbook mOldBook) {
+        setId(mOldBook.getId());
+        setName(mOldBook.getName());
+        setIntro(mOldBook.getIntro());
+        setCreateTime(mOldBook.getCreateTime());
+        setChosen(mOldBook.isChosen());
+        setUserId(mOldBook.getUserId());
+        setImage(mOldBook.getImage());
+        setNumChapter(mOldBook.getNumChapter());
     }
 }

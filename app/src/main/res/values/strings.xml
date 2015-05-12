@@ -35,4 +35,6 @@
     <string name="type_recipe">From "Who want fried chicken leg"</string>
     <string name="action_bar_title_edit_profile">Edit Profile</string>
     <string name="action_bar_title_search">Search</string>
+    <string name="action_bar_title_create_book">Create Book</string>
+    <string name="action_bar_title_edit_book">Edit Book</string>
 </resources>

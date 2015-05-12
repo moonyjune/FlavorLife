@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fl="http://schemas.android.com/apk/res-auto"
+    android:id="@id/dialog_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <moony.vn.flavorlife.widget.FlTextView
+            android:id="@id/dialog_title"
+            style="@style/TextBoldWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fl_color"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="CREATE BOOK" />
+
+        <ImageView
+            android:id="@id/finish"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/dialog_title"
+            android:layout_alignEnd="@id/dialog_title"
+            android:layout_alignRight="@id/dialog_title"
+            android:layout_alignTop="@id/dialog_title"
+            android:scaleType="centerInside"
+
+            android:src="@drawable/ic_finish" />
+    </RelativeLayout>
+
+    <moony.vn.flavorlife.widget.FlEditText
+        android:id="@id/book_name"
+        style="@style/EditTextItemItalic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/et_border_red"
+        android:hint="Title"
+        android:padding="5dp"
+        android:singleLine="true" />
+
+    <moony.vn.flavorlife.widget.FlEditText
+        android:id="@id/book_intro"
+        style="@style/EditTextItemItalic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/et_border_red"
+        android:gravity="top|left"
+        android:hint="Introduction"
+        android:minHeight="100dp"
+        android:padding="5dp" />
+
+
+</LinearLayout>

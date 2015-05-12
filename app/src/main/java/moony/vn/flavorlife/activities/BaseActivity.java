@@ -125,6 +125,7 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
     private void initView() {
         mTabWidget = (TabWidget) findViewById(R.id.tab_indicator);
         mTabWidget.setTabMainChangeListener(this);
+        mTabWidget.setNumNotification(AppPrefers.getInstance().getNumberNotifications());
     }
 
     @Override
@@ -132,12 +133,18 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         final Fragment activePage = mNavigationManager.getActivePage();
         if (activePage instanceof CreateRecipeFragment) {
             if (((CreateRecipeFragment) activePage).hasData()) {
-                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new View.OnClickListener() {
+
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         if (BaseActivity.this instanceof CreateNewRecipeActivity)
                             BaseActivity.this.finish();
                         mNavigationManager.showNewRecipes();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DialogUtils.getInstance().dismissDialog();
                     }
                 });
             } else {
@@ -155,14 +162,14 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         final Fragment activePage = mNavigationManager.getActivePage();
         if (activePage instanceof CreateRecipeFragment) {
             if (((CreateRecipeFragment) activePage).hasData()) {
-                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         if (BaseActivity.this instanceof CreateNewRecipeActivity)
                             BaseActivity.this.finish();
                         mNavigationManager.showFollows();
                     }
-                });
+                }, null);
             } else {
                 if (BaseActivity.this instanceof CreateNewRecipeActivity)
                     BaseActivity.this.finish();
@@ -179,14 +186,14 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         if (activePage instanceof CreateRecipeFragment) {
             if (((CreateRecipeFragment) activePage).hasData()) {
                 //TODO sua message tuong ung
-                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         if (BaseActivity.this instanceof CreateNewRecipeActivity)
                             BaseActivity.this.finish();
                         mNavigationManager.showHome();
                     }
-                });
+                }, null);
             } else {
                 if (BaseActivity.this instanceof CreateNewRecipeActivity)
                     BaseActivity.this.finish();
@@ -202,14 +209,14 @@ public abstract class BaseActivity extends NActivity implements TabWidget.OnTabC
         final Fragment activePage = mNavigationManager.getActivePage();
         if (activePage instanceof CreateRecipeFragment) {
             if (((CreateRecipeFragment) activePage).hasData()) {
-                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new DialogInterface.OnClickListener() {
+                DialogUtils.getInstance().showDialogMessage(BaseActivity.this, "Are u sure that u wanna destroyed recipe u are creating ?", new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         if (BaseActivity.this instanceof CreateNewRecipeActivity)
                             BaseActivity.this.finish();
                         mNavigationManager.showNotification();
                     }
-                });
+                }, null);
             } else {
                 if (BaseActivity.this instanceof CreateNewRecipeActivity)
                     BaseActivity.this.finish();

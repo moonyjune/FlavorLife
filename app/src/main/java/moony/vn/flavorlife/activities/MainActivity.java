@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.fragments.ComingSoonFragment;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
@@ -24,6 +26,7 @@ public class MainActivity extends BaseActivity {
     public static final int EXTRA_OPEN_CREATE_RECIPE = 4;
     public static final int EXTRA_OPEN_NOTIFICATION = 5;
     public static final int EXTRA_OPEN_HOME = 6;
+    public static final int EXTRA_OPEN_LOGOUT_FINISH = 7;
 
     public static final String ACTION_OPEN = "open";
     public static final String ACTION_TAG = "tag";
@@ -44,13 +47,21 @@ public class MainActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-//    public static void startLoginScreen(Context context) {
-//        Intent intent = new Intent(context, MainActivity.class);
-//        intent.putExtra(ACTION_OPEN, EXTRA_OPEN_LOGIN);
-//        intent.putExtra(KEY_CLEAR_ALL_STACK, true);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.startActivity(intent);
-//    }
+    public static void startLogoutFinishScreen(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(ACTION_OPEN, EXTRA_OPEN_LOGOUT_FINISH);
+        intent.putExtra(KEY_CLEAR_ALL_STACK, true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void startLoginScreen(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(ACTION_OPEN, EXTRA_OPEN_LOGIN);
+        intent.putExtra(KEY_CLEAR_ALL_STACK, true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +109,7 @@ public class MainActivity extends BaseActivity {
                 replaceFragment(fragment = new ComingSoonFragment());
                 break;
             case EXTRA_OPEN_HOME:
-                replaceFragment(fragment = new HomeFragment());
+                replaceFragment(fragment = HomeFragment.newInstance(FlavorLifeApplication.get().getUser()));
                 break;
         }
         mActionbar.syncActionBar(fragment);

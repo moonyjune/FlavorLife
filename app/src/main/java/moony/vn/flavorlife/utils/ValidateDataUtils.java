@@ -34,6 +34,10 @@ public class ValidateDataUtils {
     public static final int RECIPE_BOOK_EMPTY = -16;
     public static final int RECIPE_CHAPTER_EMPTY = -17;
     public static final int RECIPE_IMAGE_EMPTY = -18;
+    public static final int BOOK_IMAGE_EMPTY = -19;
+    public static final int BOOK_NAME_EMPTY = -20;
+    public static final int BOOK_INTRO_EMPTY = -21;
+    public static final int CHAPTER_NAME_EMPTY = -22;
 
     public static final int USERNAME_EMPTY = -19;
     public static final int EMAIL_EMPTY = -20;
@@ -78,6 +82,14 @@ public class ValidateDataUtils {
                 return "recipe cooking time empty";
             case RECIPE_IMAGE_EMPTY:
                 return "recipe image empty";
+            case BOOK_IMAGE_EMPTY:
+                return "book image empty";
+            case BOOK_INTRO_EMPTY:
+                return "book intro empty";
+            case BOOK_NAME_EMPTY:
+                return "book name empty";
+            case CHAPTER_NAME_EMPTY:
+                return "book name empty";
         }
         return s;
     }

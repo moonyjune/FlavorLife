@@ -18,6 +18,7 @@ import moony.vn.flavorlife.entities.SearchRecipe;
 import moony.vn.flavorlife.fragments.ChapterDetailFragment;
 import moony.vn.flavorlife.fragments.ComingSoonFragment;
 import moony.vn.flavorlife.fragments.CookBookDetailFragment;
+import moony.vn.flavorlife.fragments.CreateEditBook;
 import moony.vn.flavorlife.fragments.CreateRecipeFragment;
 import moony.vn.flavorlife.fragments.EditProfileFragment;
 import moony.vn.flavorlife.fragments.PeopleFragment;
@@ -29,6 +30,7 @@ import moony.vn.flavorlife.fragments.RecipeDetailFragment;
 import moony.vn.flavorlife.fragments.SearchFragment;
 import moony.vn.flavorlife.fragments.SearchPeopleFragment;
 import moony.vn.flavorlife.fragments.SearchRecipeFragment;
+import moony.vn.flavorlife.fragments.UserCookbooksFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
 public class NativeActionbar implements CustomActionbar {
@@ -95,7 +97,7 @@ public class NativeActionbar implements CustomActionbar {
     protected int findResourceIdForActionbar(Fragment activePage) {
         if (activePage instanceof NewRecipesFragment || activePage instanceof ComingSoonFragment) {
             return R.layout.actionbar;
-        }  else {
+        } else {
             return R.layout.actionbar_2;
         }
 
@@ -129,7 +131,7 @@ public class NativeActionbar implements CustomActionbar {
     private void setupBtnRight() {
         setupBtnMessage();
         setupBtnFinish();
-//        setupBtnAdvance();
+        setupBtnAdvance();
     }
 
     private void setupBtnAdvance() {
@@ -137,8 +139,10 @@ public class NativeActionbar implements CustomActionbar {
         mAdvance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (mNavigationManager.getActivePage() instanceof SearchRecipeFragment)
-//                    ((SearchRecipeFragment) mNavigationManager.getActivePage()).searchAdvance();
+                if (mNavigationManager.getActivePage() instanceof CookBookDetailFragment)
+                    ((CookBookDetailFragment) mNavigationManager.getActivePage()).editCookbook();
+                else if (mNavigationManager.getActivePage() instanceof ChapterDetailFragment)
+                    ((ChapterDetailFragment) mNavigationManager.getActivePage()).editChapter();
             }
         });
     }
@@ -162,6 +166,8 @@ public class NativeActionbar implements CustomActionbar {
                 Fragment fragment = mNavigationManager.getActivePage();
                 if (fragment instanceof CreateRecipeFragment) {
                     ((CreateRecipeFragment) fragment).request();
+                } else if (fragment instanceof CreateEditBook) {
+                    ((CreateEditBook) fragment).finish();
                 }
             }
         });
@@ -248,17 +254,18 @@ public class NativeActionbar implements CustomActionbar {
 
     private void syncBtnAdvance(Fragment activePage) {
         if (mAdvance == null) return;
-        if (activePage instanceof SearchRecipeFragment) {
+        if (activePage instanceof CookBookDetailFragment || activePage instanceof ChapterDetailFragment) {
             mAdvance.setVisibility(View.VISIBLE);
         } else {
-            mAdvance.setVisibility(View.INVISIBLE);
+            mAdvance.setVisibility(View.GONE);
         }
     }
 
     private void syncBtnBack(Fragment activePage) {
         if (mBack == null) return;
         if (activePage instanceof RecipeDetailFragment || activePage instanceof CookBookDetailFragment || activePage instanceof ChapterDetailFragment ||
-                activePage instanceof EditProfileFragment || activePage instanceof SearchFragment || activePage instanceof SearchPeopleFragment || activePage instanceof SearchRecipeFragment) {
+                activePage instanceof EditProfileFragment || activePage instanceof SearchFragment || activePage instanceof SearchPeopleFragment ||
+                activePage instanceof SearchRecipeFragment || activePage instanceof CreateEditBook) {
             mBack.setVisibility(View.VISIBLE);
         } else if (activePage instanceof HomeFragment) {
             if ((((HomeFragment) activePage).isOwner())) {
@@ -274,7 +281,8 @@ public class NativeActionbar implements CustomActionbar {
     private void syncBtnMessage(Fragment activePage) {
         if (mMessage == null) return;
         if (activePage instanceof LoginFragment || activePage instanceof ComingSoonFragment || activePage instanceof CreateRecipeFragment ||
-                activePage instanceof EditProfileFragment) {
+                activePage instanceof EditProfileFragment || activePage instanceof CreateEditBook || activePage instanceof CookBookDetailFragment ||
+                activePage instanceof ChapterDetailFragment) {
             mMessage.setVisibility(View.GONE);
         } else {
             mMessage.setVisibility(View.VISIBLE);
@@ -283,7 +291,7 @@ public class NativeActionbar implements CustomActionbar {
 
     private void syncBtnFinish(Fragment activePage) {
         if (mFinish == null) return;
-        if (activePage instanceof CreateRecipeFragment) {
+        if (activePage instanceof CreateRecipeFragment || activePage instanceof CreateEditBook) {
             mFinish.setVisibility(View.VISIBLE);
         } else {
             mFinish.setVisibility(View.GONE);
@@ -299,7 +307,7 @@ public class NativeActionbar implements CustomActionbar {
     private void syncBtnSearch(Fragment activePage) {
         if (mSearch == null) return;
         if (activePage instanceof LoginFragment || activePage instanceof RecipeDetailFragment ||
-                activePage instanceof CookBookDetailFragment ||
+                activePage instanceof CookBookDetailFragment || activePage instanceof CreateEditBook ||
                 activePage instanceof ChapterDetailFragment || activePage instanceof SearchFragment ||
                 activePage instanceof HomeFragment || activePage instanceof ComingSoonFragment) {
             mSearch.setVisibility(View.GONE);
@@ -312,7 +320,7 @@ public class NativeActionbar implements CustomActionbar {
         if (mTitle == null) return;
         mTitle.setVisibility(View.VISIBLE);
         int stringId = R.string.app_name;
-        String title = "";
+        String title = "FlavorLife";
         if (activePage instanceof NewRecipesFragment) {
             stringId = R.string.action_bar_title_recipes;
         } else if (activePage instanceof PeopleFragment) {
@@ -342,6 +350,8 @@ public class NativeActionbar implements CustomActionbar {
             stringId = R.string.action_bar_title_edit_profile;
         } else if (activePage instanceof SearchFragment) {
             stringId = R.string.action_bar_title_search;
+        } else if (activePage instanceof CreateEditBook) {
+            stringId = ((CreateEditBook) activePage).getTitle();
         }
 
         if (stringId != 0) {

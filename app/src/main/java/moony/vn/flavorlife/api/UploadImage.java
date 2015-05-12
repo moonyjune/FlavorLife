@@ -39,6 +39,7 @@ public class UploadImage extends AsyncTask<String, Void, String> {
     private String api;
     private String recipeId;
     private String userId;
+    private String bookId;
 
     @Override
     protected String doInBackground(String... params) {
@@ -50,6 +51,9 @@ public class UploadImage extends AsyncTask<String, Void, String> {
         } else if (api.equals(ApiKey.API_UPLOAD_USER_IMAGE)) {
             userId = params[2];
             s = uploadMultipart(userId, SERVER_IMAGE + api, params[1]);
+        } else if (api.equals(ApiKey.API_UPLOAD_BOOK_IMAGE)) {
+            bookId = params[2];
+            s = uploadMultipart(bookId, SERVER_IMAGE + api, params[1]);
         }
 
         return s;
@@ -64,9 +68,9 @@ public class UploadImage extends AsyncTask<String, Void, String> {
             jsonObject = new JSONObject(result);
             int code = jsonObject.getInt(ApiKey.CODE);
             if (code != ApiKey.SUCCESS) {
-                onSuccess(jsonObject);
+                onFail(jsonObject);
             } else {
-                onFailed(jsonObject);
+                onSuccess(jsonObject);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -78,11 +82,11 @@ public class UploadImage extends AsyncTask<String, Void, String> {
 
     }
 
-    protected void onFailed(JSONObject jsonObject) {
+    protected void onSuccess(JSONObject jsonObject) {
 
     }
 
-    protected void onSuccess(JSONObject jsonObject) {
+    protected void onFail(JSONObject jsonObject) {
 
     }
 
@@ -101,6 +105,9 @@ public class UploadImage extends AsyncTask<String, Void, String> {
             } else if (id.equals(userId)) {
                 reqEntity.addPart("user_id", new StringBody(id));
                 imageName = getImageFileName(String.valueOf(FlavorLifeApplication.get().getUser().getId()));
+            } else if (id.equals(bookId)) {
+                reqEntity.addPart("book_id", new StringBody(id));
+                imageName = getImageFileName(String.valueOf(FlavorLifeApplication.get().getUser().getId()), id);
             }
             reqEntity.addPart("file_name", new StringBody(imageName));
             httpPost.setEntity(reqEntity);
@@ -132,9 +139,9 @@ public class UploadImage extends AsyncTask<String, Void, String> {
         return baos.toByteArray();
     }
 
-    private String getImageFileName(String userId, String recipeId) {
+    private String getImageFileName(String userId, String recipeOrBookId) {
         String timeStamp = new SimpleDateFormat(DateFormatUtils.IMAGE_DATE_FORMAT).format(new Date());
-        String fileName = APP_NAME + "_" + userId + "_" + recipeId + "_" + timeStamp;
+        String fileName = APP_NAME + "_" + userId + "_" + recipeOrBookId + "_" + timeStamp;
         return fileName;
     }
 

@@ -48,6 +48,7 @@ public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshL
     protected AppAnalytics mAppAnalytics;
     private ProgressDialog mProgressDialog;
     protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected SimpleFacebook mSimpleFacebook;
 
     public NFragment() {
         setArguments(new Bundle());
@@ -77,6 +78,7 @@ public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
         mSaveInstanceStateCalled = false;
     }
 
@@ -90,6 +92,7 @@ public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshL
     @Override
     public void onResume() {
         super.onResume();
+        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
         mSaveInstanceStateCalled = false;
     }
 
@@ -137,15 +140,6 @@ public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     public void showDialogMessageError(String mess) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//        builder.setMessage(mess);
-//        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//            }
-//        });
-//        NAlertDialogFragment.show(getFragmentManager(), builder);
         DialogUtils.getInstance().showDialog(getActivity(), mess, true, false, "OK", null, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,15 +149,6 @@ public class NFragment extends Fragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     public void showDialogMessageError(VolleyError error) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//        builder.setMessage(ErrorStrings.get(getActivity(), error));
-//        builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//            }
-//        });
-//        NAlertDialogFragment.show(getFragmentManager(), builder);
         DialogUtils.getInstance().showDialog(getActivity(), ErrorStrings.get(getActivity(), error), true, false, "OK", null, new View.OnClickListener() {
             @Override
             public void onClick(View view) {

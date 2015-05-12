@@ -66,4 +66,12 @@ public class Chapter implements Serializable {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    public void updateChapter(Chapter oldChapter){
+        setId(oldChapter.getId());
+        setBookId(oldChapter.getBookId());
+        setNumChapter(oldChapter.getNumChapter());
+        setName(oldChapter.getName());
+        setUserId(oldChapter.getUserId());
+    }
 }

@@ -64,6 +64,11 @@ public interface ApiKey {
     public static final String API_EDIT_PROFILE = "edit_profile";
     public static final String API_SEARCH_PEOPLE = "search_people";
     public static final String API_SEARCH_RECIPE = "search_recipe";
+    public static final String API_UPLOAD_BOOK_IMAGE = "upload_book_image";
+    public static final String API_CREATE_BOOK = "create_book";
+    public static final String API_EDIT_BOOK = "edit_book";
+    public static final String API_CREATE_CHAPTER = "create_chapter";
+    public static final String API_EDIT_CHAPTER = "edit_chapter";
 
     public static final int SUCCESS = 0;
 }

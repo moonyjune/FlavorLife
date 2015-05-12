@@ -50,33 +50,25 @@ public class DialogUtils {
     }
 
     public void showDialogMessageError(Context context, String mess) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(mess);
-        builder.setNegativeButton(context.getString(R.string.ok), null);
-        NAlertDialogFragment.show(((BaseActivity) context).getSupportFragmentManager(), builder);
+        DialogUtils.getInstance().showDialog(context, mess, true, false, "OK", null, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogUtils.getInstance().dismissDialog();
+            }
+        }, null);
     }
 
-    public void showDialogMessage(Context context, String mess, DialogInterface.OnClickListener onClickListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(mess);
-        builder.setNegativeButton(context.getString(R.string.ok), onClickListener);
-        builder.setPositiveButton(context.getString(R.string.cancel), null);
-        NAlertDialogFragment.show(((BaseActivity) context).getSupportFragmentManager(), builder);
+    public void showDialogMessageError(Context activity, VolleyError error) {
+        DialogUtils.getInstance().showDialog(activity, ErrorStrings.get(activity, error), true, false, "OK", null, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogUtils.getInstance().dismissDialog();
+            }
+        }, null);
     }
 
-    public void showDialogMessage(Context context, String mess, DialogInterface.OnClickListener onClickListener, DialogInterface.OnClickListener onClickListener2) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(mess);
-        builder.setNegativeButton(context.getString(R.string.ok), onClickListener);
-        builder.setPositiveButton(context.getString(R.string.cancel), onClickListener2);
-        NAlertDialogFragment.show(((BaseActivity) context).getSupportFragmentManager(), builder);
-    }
-
-    public void showDialogMessageError(Context context, VolleyError error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(ErrorStrings.get(context, error));
-        builder.setNegativeButton(context.getString(R.string.ok), null);
-        NAlertDialogFragment.show(((BaseActivity) context).getSupportFragmentManager(), builder);
+    public void showDialogMessage(Context context, String mess, View.OnClickListener onClickListener, View.OnClickListener onClickListener2) {
+        showDialog(context, mess, true, true, context.getString(R.string.ok), context.getString(R.string.cancel), onClickListener, onClickListener2);
     }
 
     public void showDialog(Context context, String messages, boolean isHaveLeft, boolean isHaveRight, String buttonLeft, String buttonRight, View.OnClickListener onListenerLeft, View.OnClickListener onListenerRight) {
@@ -106,7 +98,15 @@ public class DialogUtils {
         no.setText(buttonRight);
 
         yes.setOnClickListener(onListenerLeft);
-        no.setOnClickListener(onListenerRight);
+        if (onListenerRight != null)
+            no.setOnClickListener(onListenerRight);
+        else
+            no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismissDialog();
+                }
+            });
         dialog.show();
     }
 

@@ -9,10 +9,12 @@ import android.view.View;
 import com.ntq.activities.NActivity;
 import com.ntq.imageloader.NImageLoader;
 
+import moony.vn.flavorlife.FlavorLifeApplication;
 import moony.vn.flavorlife.R;
 import moony.vn.flavorlife.actionbar.CustomActionbar;
 import moony.vn.flavorlife.analytics.AppAnalytics;
 import moony.vn.flavorlife.api.Api;
+import moony.vn.flavorlife.entities.User;
 import moony.vn.flavorlife.fragments.SplashFragment;
 import moony.vn.flavorlife.navigationmanager.NavigationManager;
 
@@ -35,8 +37,12 @@ public class SplashActivity extends NActivity {
             public void run() {
                 if (mHandlerPosted) return;
                 mHandlerPosted = true;
-                //TODO xac nhan tinh trang dang nhap
-                MainActivity.startMainActivity(SplashActivity.this, MainActivity.EXTRA_OPEN_LOGIN);
+                User.State state = FlavorLifeApplication.get().getUser().getState();
+                if (state == User.State.LOGGED_OUT) {
+                    MainActivity.startMainActivity(SplashActivity.this, MainActivity.EXTRA_OPEN_LOGIN);
+                } else if(state == User.State.LOGGED_IN) {
+                    MainActivity.startMainActivity(SplashActivity.this, MainActivity.EXTRA_OPEN_NEWSRECIPE);
+                }
                 finish();
             }
         }, 1000);

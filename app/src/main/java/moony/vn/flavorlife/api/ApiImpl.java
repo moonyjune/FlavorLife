@@ -206,22 +206,52 @@ public class ApiImpl implements Api, ApiKey {
 
     @Override
     public Request<JSONObject> createCookbook(Cookbook cookbook, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+        cookbook.setUserId(FlavorLifeApplication.get().getUser().getId());
+        cookbook.setCreateTime(new Date());
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
+        String data = gson.toJson(cookbook);
+        list.add(new BasicNameValuePair(DATA, data));
+        String url = AppRequest.getUrl(toURL(API_CREATE_BOOK), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 
     @Override
     public Request<JSONObject> editCookbook(Cookbook cookbook, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
+        String data = gson.toJson(cookbook);
+        list.add(new BasicNameValuePair(DATA, data));
+        String url = AppRequest.getUrl(toURL(API_EDIT_BOOK), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 
     @Override
     public Request<JSONObject> createChapter(Chapter chapter, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
+        String data = gson.toJson(chapter);
+        list.add(new BasicNameValuePair(DATA, data));
+        String url = AppRequest.getUrl(toURL(API_CREATE_CHAPTER), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 
     @Override
     public Request<JSONObject> editChapter(Chapter chapter, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        return null;
+        ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+        Gson gson = new GsonBuilder().setDateFormat(DateFormatUtils.DATE_FORMAT).create();
+        String data = gson.toJson(chapter);
+        list.add(new BasicNameValuePair(DATA, data));
+        String url = AppRequest.getUrl(toURL(API_EDIT_CHAPTER), list);
+
+        AppRequest appRequest = new AppRequest(Request.Method.POST, url, null, listener, errorListener);
+        return mQueue.add(appRequest);
     }
 
     @Override

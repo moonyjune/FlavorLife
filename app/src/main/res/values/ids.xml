@@ -165,5 +165,10 @@
     <item name="search_name" type="id" />
     <item name="search_level" type="id" />
     <item name="search_kind" type="id" />
+    <item name="dialog_title" type="id" />
+    <item name="chapter_num" type="id" />
+    <item name="switch_account" type="id" />
+    <item name="logout" type="id" />
+    <item name="exit" type="id" />
 
 </resources>

@@ -29,7 +29,6 @@ import moony.vn.flavorlife.utils.ToastUtils;
 public class LoginFragment extends NFragment implements View.OnClickListener, OnDataChangedListener, Response.ErrorListener {
     private DfeLogin mDfeLogin;
     private EditText mEmail;
-    private SimpleFacebook mSimpleFacebook;
 
     private OnProfileListener onProfileListener = new OnProfileListener() {
         @Override
@@ -108,12 +107,6 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
@@ -132,12 +125,6 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
         view.findViewById(R.id.login_gplus).setOnClickListener(this);
         view.findViewById(R.id.login_twitter).setOnClickListener(this);
         view.findViewById(R.id.login).setOnClickListener(this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mSimpleFacebook = SimpleFacebook.getInstance(getActivity());
     }
 
     @Override
@@ -162,11 +149,16 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
     }
 
     private void loginFb() {
-        if (mSimpleFacebook.isLogin()) {
-            showDialogLoading();
-            getFbProfile();
-        } else {
+        User.State state = FlavorLifeApplication.get().getUser().getState();
+        if (state == User.State.LOGGED_OUT) {
             mSimpleFacebook.login(onLoginListener);
+        } else if (state == User.State.LOGGED_IN) {
+            if (mSimpleFacebook.isLogin()) {
+                showDialogLoading();
+                getFbProfile();
+            } else {
+                mSimpleFacebook.login(onLoginListener);
+            }
         }
     }
 
@@ -185,6 +177,7 @@ public class LoginFragment extends NFragment implements View.OnClickListener, On
         hideDialogLoading();
         if (mDfeLogin != null && mDfeLogin.isReady()) {
             FlavorLifeApplication.get().updateIdUser(mDfeLogin.getUserId());
+            FlavorLifeApplication.get().updateStateUser(true);
             mNavigationManager.showNewRecipes();
             getActivity().finish();
         }

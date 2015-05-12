@@ -34,6 +34,7 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
     public static final String KEY_BOOK = "book";
     public static final String KEY_CHAPTER = "chapter";
     public static final String KEY_DATA = "data";
+    private static final int REQUEST_CREATE_CHAPTER = 1009;
     private ListView mListViewChapters;
     private ChapterAdapter mChapterAdapter;
     private View mLayoutContent, mLayoutRetry;
@@ -103,6 +104,17 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
             mChapterAdapter = new ChapterAdapter(getActivity(), 0, mListChapters);
         if (mFooter == null) {
             mFooter = getActivity().getLayoutInflater().inflate(R.layout.footer_add_chapter, mListViewChapters, false);
+            mFooter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Chapter chapter = new Chapter();
+                    chapter.setBookId(mBook.getId());
+                    chapter.setNumChapter(mListChapters.size() + 1);
+                    CreateEditChapterDialogFragment createEditChapterDialogFragment = CreateEditChapterDialogFragment.newInstance(CreateEditChapterDialogFragment.FLAG_CREATE, chapter);
+                    createEditChapterDialogFragment.setTargetFragment(ChooseChapterDialogFragment.this, REQUEST_CREATE_CHAPTER);
+                    createEditChapterDialogFragment.show(getChildFragmentManager(), null);
+                }
+            });
         }
         if (mListViewChapters.getFooterViewsCount() == 0) {
             mListViewChapters.setAdapter(null);
@@ -196,5 +208,19 @@ public class ChooseChapterDialogFragment extends DialogFragment implements OnDat
     public void onClick(View view) {
         switchToLoading();
         requestData();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CREATE_CHAPTER) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                Bundle bundle = data.getBundleExtra(CreateNewBookDialogFragment.DATA);
+                if (bundle != null) {
+                    Chapter chapter = (Chapter) bundle.getSerializable(CreateEditChapterDialogFragment.CHAPTER);
+                    mChapterAdapter.addItem(chapter);
+                }
+            }
+        }
     }
 }

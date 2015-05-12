@@ -273,11 +273,14 @@ public class HomeFragment extends NFragmentSwitcher implements View.OnClickListe
     }
 
     public boolean isOwner() {
-        if (mUser.getId() == FlavorLifeApplication.get().getUser().getId()) {
+        if (mUser != null)
+            if (mUser.getId() == FlavorLifeApplication.get().getUser().getId()) {
+                return true;
+            } else {
+                return false;
+            }
+        else
             return true;
-        } else {
-            return false;
-        }
     }
 
     @Override

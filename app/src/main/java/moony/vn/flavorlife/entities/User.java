@@ -115,7 +115,7 @@ public class User implements Serializable {
         return image;
     }
 
-    public String getImageDisplay(){
+    public String getImageDisplay() {
         if (image != null && !image.isEmpty())
             return image;
         else
@@ -186,5 +186,21 @@ public class User implements Serializable {
 
     public void setUpdatedProfile(boolean isUpdatedProfile) {
         this.isUpdatedProfile = isUpdatedProfile;
+    }
+
+    public void clear() {
+        id = -1;
+        email = null;
+        userName = null;
+        image = null;
+        inspiration = null;
+        numBooks = -1;
+        numFollowers = -1;
+        numFollows = -1;
+        numRecipes = -1;
+        isFollowed = 0;
+        socialNetworkImage = null;
+        isUpdatedProfile = false;
+        state = 2;
     }
 }
